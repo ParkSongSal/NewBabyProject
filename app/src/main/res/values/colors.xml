@@ -3,4 +3,19 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+
+
+    <!--메인 노란색-->
+    <color name="mainColor">#fff5d6</color>
+
+    <!--메인바탕(밝은회색)-->
+    <color name="mainBackGroundColor">#f2f1ed</color>
+
+    <!--메인텍스트(회색)-->
+    <color name="mainTextColor">#676d72</color>
+
+    <!--강조노란색-->
+    <color name="mainAccentColor">#f9ce42</color>
+
 </resources>
