@@ -18,4 +18,10 @@
     <!--강조노란색-->
     <color name="mainAccentColor">#f9ce42</color>
 
+    <!--흰색-->
+    <color name="whiteColor">#ffffff</color>
+
+    <!--검은색-->
+    <color name="blackColor">#000000</color>
+
 </resources>
