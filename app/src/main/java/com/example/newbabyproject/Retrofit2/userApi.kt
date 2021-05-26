@@ -24,6 +24,7 @@ interface userApi {
                      @Query("userName") userName : String,
                      @Query("userPhone") userPhone : String,
                      @Query("babyNum") babyNum : String,
+                     @Query("babyRelation") babyRelation : String,
                      @Query("regDate") regDate : String,
                      @Query("userAuth") userAuth : String) : Call<ResultModel>
 

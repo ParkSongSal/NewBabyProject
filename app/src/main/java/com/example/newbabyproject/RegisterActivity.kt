@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnFocusChangeListener
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var dlg : AlertDialog.Builder
 
     private var passwordOk = true
+    private var babyRelation = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -49,8 +51,26 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
+        babyRelationRadioGroup.setOnCheckedChangeListener{radioGroup, i ->
+            when(i){
+                R.id.dadRadio ->
+                    if(dadRadio.isChecked){
+                        babyRelation = "D"
+                    }
+                R.id.momRadio ->
+                    if(momRadio.isChecked){
+                        babyRelation = "M"
+                    }
+            }
+
+        }
+
+
+
         initRetrofit()
     }
+
+
 
     // Retrofit 서버연결
     fun initRetrofit(){
@@ -85,11 +105,12 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(
                         this@RegisterActivity,
                         "사용 가능한 ID 입니다.",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                     userIdEdit.isEnabled = false
                     validate = true
-                    valiBtn.setBackgroundColor(resources.getColor(R.color.colorAccent))
+                    valiBtn.setBackgroundColor(resources.getColor(R.color.mainTextColor))
+                    valiBtn.setTextColor(resources.getColor(R.color.whiteColor))
                 } else {
                     //중복인 닉네임 존재
                     dlg.setMessage("이미 사용중인 ID 입니다.")
@@ -103,7 +124,7 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(
                     this@RegisterActivity,
                     "데이터 접속 상태를 확인 후 다시 시도해주세요.",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         })
@@ -117,6 +138,7 @@ class RegisterActivity : AppCompatActivity() {
         val userPhone = phoneEdit.text.toString()
         val babyNum = babyNumEdit.text.toString()
         val regDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
+        babyRelation
         var userAuth = "U"
         if("admin" == userId){
             userAuth = "A"
@@ -142,7 +164,7 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        mUserApi.userRegister(userId, userPw, userName, userPhone, babyNum, regDate, userAuth).enqueue(object :
+        mUserApi.userRegister(userId, userPw, userName, userPhone, babyNum, babyRelation, regDate, userAuth).enqueue(object :
             Callback<ResultModel> {
             override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
 
