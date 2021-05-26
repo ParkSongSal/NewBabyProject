@@ -38,11 +38,16 @@ class LoginActivity : AppCompatActivity() {
 
         when (view.id) {
             R.id.loginBtn -> Login()
-            //R.id.registerTxt -> Register()
+            R.id.registerTxt -> Register()
             //R.id.inquireTxt -> Inquire()
         }
     }
 
+    // 회원가입 화면 이동
+    fun Register(){
+        //로그인 성공
+        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+    }
 
     // Retrofit 서버연결
     fun initRetrofit(){

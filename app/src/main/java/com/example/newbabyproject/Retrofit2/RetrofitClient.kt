@@ -8,8 +8,7 @@ object RetrofitClient {
     private var instance: Retrofit? = null
     private val gson = GsonBuilder().setLenient().create()
 
-    //private val BASE_URL = "http://tkdanr2427.cafe24.com/NewBaby"
-    private val BASE_URL = "http://tkdanr2427.cafe24.com/Gwangju_Univ/"
+    private val BASE_URL = "http://tkdanr2427.cafe24.com/NewBaby/"
 
     // SingleTon
     fun getInstance(): Retrofit {
