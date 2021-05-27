@@ -1,16 +1,10 @@
 package com.example.newbabyproject
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
-import android.telephony.PhoneNumberUtils
-import android.text.Editable
-import android.text.TextWatcher
-import android.text.method.KeyListener
 import android.util.Log
 import android.view.View
 import android.view.View.OnFocusChangeListener
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
