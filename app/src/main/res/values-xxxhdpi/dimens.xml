@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--1440 x 2960 -->
+<resources>
+    <dimen name="register_marginTop">15dp</dimen>
+    <dimen name="register_marginLeft">20dp</dimen>
+    <dimen name="register_marginRight">20dp</dimen>
+    <dimen name="register_marginBottom">15dp</dimen>
+    <dimen name="register_main_txt_mt">12dp</dimen>
+    <dimen name="register_edit_1_mt">20dp</dimen>
+    <dimen name="register_edit_mt">10dp</dimen>
+    <dimen name="register_btn_mt">25dp</dimen>
+</resources>

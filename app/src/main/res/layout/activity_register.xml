@@ -11,10 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="@dimen/register_marginTop"
+        android:layout_marginLeft="@dimen/register_marginLeft"
+        android:layout_marginRight="@dimen/register_marginRight"
+        android:layout_marginBottom="@dimen/register_marginBottom"
         android:orientation="vertical">
 
 
@@ -37,10 +37,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/register_main_txt_mt"
                     android:text="회원가입"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="35dp"
+                    android:textSize="35sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -50,7 +50,7 @@
                     android:layout_marginTop="5dp"
                     android:text="아래 정보를 입력해주세요."
                     android:textColor="@color/mainTextColor"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
 
@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/register_edit_1_mt"
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -99,6 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginTop="@dimen/register_edit_mt"
                     app:passwordToggleEnabled="true"
                     >
                 <com.google.android.material.textfield.TextInputEditText
@@ -116,6 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginTop="@dimen/register_edit_mt"
                     app:passwordToggleEnabled="true"
                     >
                     <com.google.android.material.textfield.TextInputEditText
@@ -133,7 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/register_edit_mt"
                     android:layout_marginRight="15dp"
                     android:hint="이름을 입력해주세요"
                     android:inputType="text"
@@ -144,6 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginTop="@dimen/register_edit_mt"
                     app:counterEnabled="true"
                     app:counterMaxLength="13"
                     app:passwordToggleEnabled="true"
@@ -164,7 +167,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="@dimen/register_edit_mt"
                     android:layout_marginRight="15dp"
                     android:hint="아기등록번호를 입력해주세요"
                     android:inputType="number"
@@ -182,7 +185,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/register_edit_mt"
                     android:orientation="horizontal">
 
                     <TextView
@@ -222,7 +225,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/register_btn_mt"
                     android:gravity="center"
                     android:orientation="horizontal">
 
