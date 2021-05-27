@@ -107,7 +107,6 @@ class LoginActivity : AppCompatActivity() {
             userPassword = setting.getString("PW", "").toString()
             idEditText.setText(userId)
             pwEditText.setText(userPassword)
-
             Login(userId, userPassword)
 
             chk_auto.isChecked = true
