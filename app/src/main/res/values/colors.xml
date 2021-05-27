@@ -16,12 +16,14 @@
     <color name="mainTextColor">#676d72</color>
 
     <!--강조노란색-->
-    <color name="mainAccentColor">#f9ce42</color>
+    <color name="mainAccentColor">#E8C85C</color>
 
     <!--흰색-->
     <color name="whiteColor">#ffffff</color>
 
     <!--검은색-->
     <color name="blackColor">#000000</color>
+
+
 
 </resources>

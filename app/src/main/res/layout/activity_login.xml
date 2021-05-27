@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/whiteColor"
+    android:background="@color/mainColor"
     tools:context=".LoginActivity">
 
         <ImageView
@@ -97,7 +97,7 @@
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:text="로그인"
-                android:background="@color/mainColor"
+                android:background="@drawable/ripple_ok_btn"
                 android:textColor="@color/mainTextColor"
                 android:textSize="24sp"
                 android:textStyle="bold"
