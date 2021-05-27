@@ -35,7 +35,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var dlg : AlertDialog.Builder
 
     private var passwordOk = true
-    private var babyRelation = ""
+    private var babyRelation = "D"
     private var mAfter : Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
