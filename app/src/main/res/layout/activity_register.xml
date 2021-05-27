@@ -58,19 +58,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/userIdEdit"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:layout_weight="1"
-                        android:inputType="text"
-                        android:hint="ID를 입력하세요"
-                        android:textSize="20sp" />
+
+                        android:layout_weight="1">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/userIdEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/mainTextColor"
+                            android:hint="아이디를 입력해주세요"/>
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                     <Button
                         android:id="@+id/valiBtn"
@@ -87,27 +94,39 @@
 
                 </LinearLayout>
 
-                <EditText
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    app:passwordToggleEnabled="true"
+                    >
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:hint="비밀번호를 입력하세요"
+                    android:hint="패스워드를 입력해주세요"
+                    android:textSize="20sp"
                     android:inputType="textPassword"
-                    android:textSize="20sp" />
+                    android:layout_marginTop="10dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/password2Edit"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginRight="15dp"
-                    android:hint="비밀번호를 확인해주세요"
-                    android:inputType="textPassword"
-                    android:textSize="20sp" />
+                    app:passwordToggleEnabled="true"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password2Edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="패스워드를 확인해주세요"
+                        android:textSize="20sp"
+                        android:inputType="textPassword"
+                        android:layout_marginTop="10dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <EditText
                     android:id="@+id/nameEdit"
@@ -120,26 +139,36 @@
                     android:inputType="text"
                     android:textSize="20sp" />
 
-                <EditText
-                    android:id="@+id/phoneEdit"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginRight="15dp"
-                    android:hint="연락처를 입력해주세요"
-                    android:inputType="phone"
-                    android:textSize="20sp" />
+                    app:counterEnabled="true"
+                    app:counterMaxLength="13"
+                    app:passwordToggleEnabled="true"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="연락처를 입력해주세요"
+                        android:maxLength="13"
+                        android:textSize="20sp"
+                        android:inputType="phone"
+                        android:layout_marginTop="10dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <EditText
                     android:id="@+id/babyNumEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="7dp"
                     android:layout_marginRight="15dp"
                     android:hint="아기등록번호를 입력해주세요"
                     android:inputType="number"
+                    android:maxLength="13"
                     android:textSize="20sp" />
                 <TextView
                     android:layout_width="wrap_content"

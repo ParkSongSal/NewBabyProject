@@ -1,6 +1,12 @@
 package com.example.newbabyproject
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.telephony.PhoneNumberFormattingTextWatcher
+import android.telephony.PhoneNumberUtils
+import android.text.Editable
+import android.text.TextWatcher
+import android.text.method.KeyListener
 import android.util.Log
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -30,11 +36,11 @@ class RegisterActivity : AppCompatActivity() {
 
     private var passwordOk = true
     private var babyRelation = ""
+    private var mAfter : Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        dlg = AlertDialog.Builder(this@RegisterActivity, android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth)
         password2Edit.onFocusChangeListener = OnFocusChangeListener { view, hasFocus ->
             if (!hasFocus) {
                 //Toast.makeText(getApplicationContext(), "Focus Lose", Toast.LENGTH_SHORT).show();
@@ -51,6 +57,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
+        // 아기와의 관계 라디오 버튼 클릭시
         babyRelationRadioGroup.setOnCheckedChangeListener{radioGroup, i ->
             when(i){
                 R.id.dadRadio ->
@@ -65,17 +72,19 @@ class RegisterActivity : AppCompatActivity() {
 
         }
 
+        phoneEdit.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+        init()
 
 
-        initRetrofit()
     }
 
-
-
     // Retrofit 서버연결
-    fun initRetrofit(){
+    fun init(){
         retrofit = RetrofitClient.getInstance()
         mUserApi = retrofit.create(userApi::class.java)
+
+        // AlertDialog Init
+        dlg = AlertDialog.Builder(this@RegisterActivity, android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth)
     }
 
     fun onClick(view: View) {
@@ -120,6 +129,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResultModel>, t: Throwable) {
+                Log.d("TAG","중복검사 Failed ${t.message}")
                 // 네트워크 문제
                 Toast.makeText(
                     this@RegisterActivity,
