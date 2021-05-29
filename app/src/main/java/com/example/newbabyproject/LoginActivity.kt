@@ -171,6 +171,9 @@ class LoginActivity : AppCompatActivity() {
 
                 if ("success" == response.body()?.result) { // 로그인 성공
 
+                    editor.putString("loginId", userId)
+                    editor.apply()
+
                     //로그인 성공
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()

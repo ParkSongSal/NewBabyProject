@@ -58,35 +58,49 @@
                     android:layout_height="match_parent"
                     android:paddingTop="15dp">
 
-                    <EditText
-                        android:id="@+id/idEditText"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/idInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:drawableStart="@drawable/ic_person_black_24dp"
-                        android:drawableLeft="@drawable/ic_person_black_24dp"
-                        android:focusable="auto"
-                        android:hint="아이디를 입력하세요"
-                        android:inputType="text"
-                        android:textSize="20sp"
-                         />
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        app:passwordToggleEnabled="true">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/idEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="auto"
+                            android:inputType="text"
+                            android:textSize="20sp"
+                            android:drawableStart="@drawable/ic_person_black_24dp"
+                            android:drawableLeft="@drawable/ic_person_black_24dp"
+                            android:textColorHint="@color/mainTextColor"
+                            android:hint="아이디를 입력하세요"/>
 
-                    <EditText
-                        android:id="@+id/pwEditText"
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/idEditText"
-                        android:layout_marginTop="15dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:focusable="auto"
-                        android:hint="패스워드를 입력하세요"
-                        android:drawableStart="@drawable/ic_lock_black_24dp"
-                        android:drawableLeft="@drawable/ic_lock_black_24dp"
-                        android:inputType="textPassword"
-                        android:textSize="20sp" />
+                        android:layout_below="@id/idInputLayout"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        app:passwordToggleEnabled="true">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/pwEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="auto"
+                            android:inputType="textPassword"
+                            android:textSize="20sp"
+                            android:textColorHint="@color/mainTextColor"
+                            android:drawableStart="@drawable/ic_lock_black_24dp"
+                            android:drawableLeft="@drawable/ic_lock_black_24dp"
+                            android:hint="패스워드를 입력하세요"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
                 </RelativeLayout>
 
             </LinearLayout>
