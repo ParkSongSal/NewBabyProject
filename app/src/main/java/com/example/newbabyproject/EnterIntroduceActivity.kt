@@ -2,13 +2,12 @@ package com.example.newbabyproject
 
 import android.content.Intent
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_app_introduce.*
 
-class AppIntroduceActivity : AppCompatActivity() {
+class EnterIntroduceActivity : AppCompatActivity() {
 
     var loginId = ""
 
@@ -20,7 +19,8 @@ class AppIntroduceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_app_introduce)
+        setContentView(R.layout.activity_enter_introduce)
+
 
         setting = getSharedPreferences("setting", MODE_PRIVATE)
         editor = setting.edit()
@@ -33,14 +33,14 @@ class AppIntroduceActivity : AppCompatActivity() {
             modifyBtn.visibility = View.VISIBLE
             // 관리자만 수정 가능
             modifyBtn.setOnClickListener{
-                var intent = Intent(this@AppIntroduceActivity, AppIntroduceModifyActivity::class.java)
-                intent.putExtra("boardGubun", "0")
+                var intent = Intent(this@EnterIntroduceActivity, AppIntroduceModifyActivity::class.java)
+                intent.putExtra("boardGubun", "1")
                 startActivity(intent)
             }
         }else{
             modifyBtn.visibility = View.GONE
         }
 
+
     }
 }
-

@@ -25,6 +25,12 @@ class MainActivity : AppCompatActivity() {
             }
 
 
+            /* 입원 안내문 소개  */
+            R.id.enter_card,
+            R.id.enterBtn,
+            R.id.enter_img ->{
+                Common.intentCommon(this@MainActivity, EnterIntroduceActivity::class.java)
+            }
 
             /* 설정 */
             R.id.settingImg,
@@ -32,6 +38,8 @@ class MainActivity : AppCompatActivity() {
             R.id.settingBtn -> {
                 Common.intentCommon(this@MainActivity, SettingActivity::class.java)
             }
+
+
 
         }
     }

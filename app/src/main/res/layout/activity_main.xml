@@ -139,7 +139,7 @@
         android:rowCount="3">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/club_card"
+            android:id="@+id/enter_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -158,7 +158,7 @@
 
 
                 <TextView
-                    android:id="@+id/clubBtn"
+                    android:id="@+id/enterBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -169,7 +169,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/club_img"
+                    android:id="@+id/enter_img"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:onClick="mOnClick"

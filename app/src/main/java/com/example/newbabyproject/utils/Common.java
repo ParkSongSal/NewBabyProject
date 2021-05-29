@@ -123,6 +123,7 @@ public class Common {
     }
 
     public static void intentCommon(Activity activity, Class cls2) {
+
         Intent intent = new Intent(activity, cls2);
         activity.startActivity(intent);
     }
