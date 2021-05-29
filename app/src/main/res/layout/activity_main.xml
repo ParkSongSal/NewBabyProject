@@ -45,7 +45,7 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/board_card"
+            android:id="@+id/intro_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -66,7 +66,7 @@
 
 
                 <TextView
-                    android:id="@+id/boardBtn"
+                    android:id="@+id/appIntro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -77,7 +77,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/board_img"
+                    android:id="@+id/intro_img"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:onClick="mOnClick"
@@ -270,7 +270,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/dept_card"
+            android:id="@+id/setting_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -300,7 +300,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/dept_img"
+                    android:id="@+id/settingImg"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:onClick="mOnClick"
