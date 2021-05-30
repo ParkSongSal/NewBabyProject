@@ -23,10 +23,6 @@ import retrofit2.Retrofit
 class AppIntroduceActivity : BaseActivity() {
 
     var loginId = ""
-    // 아이디 저장 기능
-    lateinit var setting: SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

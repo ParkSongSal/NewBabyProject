@@ -1,6 +1,7 @@
 package com.example.newbabyproject
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -30,17 +31,31 @@ abstract class BaseActivity : AppCompatActivity() {
 
     lateinit var coxt : Context
 
-    // Retrofit 서버연결
+    // 아이디 저장 기능
+    lateinit var setting : SharedPreferences
+    lateinit var editor: SharedPreferences.Editor
+
+
+
     fun init(context : Context) {
+
+        coxt = context
+
+        // Retrofit Init
         retrofit = RetrofitClient.getInstance()
         mBoardApi = retrofit.create(boardApi::class.java)
         mUserApi = retrofit.create(userApi::class.java)
+
         // AlertDialog Init
         dlg = AlertDialog.Builder(
             context,
             android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth
         )
-        coxt = context
+
+        // SharedPreferences Init
+        setting = getSharedPreferences("setting", MODE_PRIVATE)
+        editor = setting.edit()
+        editor.apply()
     }
 
     /* 앱소개

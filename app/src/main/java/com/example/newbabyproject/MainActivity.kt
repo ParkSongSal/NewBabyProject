@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
             R.id.setting_card,
             R.id.settingBtn -> {
                 Common.intentCommon(this@MainActivity, SettingActivity::class.java)
+                finish()
             }
 
 

@@ -11,13 +11,11 @@ import kotlinx.android.synthetic.main.activity_setting.*
 
 class SettingActivity : BaseActivity() {
 
-    lateinit var setting : SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
-        init(applicationContext)
+        init(this@SettingActivity)
 
         logoutBtn.setOnClickListener{
 
@@ -34,7 +32,8 @@ class SettingActivity : BaseActivity() {
                             "로그아웃하지 않습니다",
                             Toast.LENGTH_SHORT
                         ).show()
-                    }).show()
+                    })
+            dlg.show()
 
         }
     }
@@ -48,6 +47,8 @@ class SettingActivity : BaseActivity() {
         //editor.commit();
         editor.apply()
         intent = Intent(this@SettingActivity, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
         startActivity(intent)
         finish()
     }

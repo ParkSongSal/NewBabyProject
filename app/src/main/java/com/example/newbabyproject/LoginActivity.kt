@@ -27,13 +27,6 @@ class LoginActivity : BaseActivity() {
     var userId = ""
     var userPassword = ""
 
-
-    // 아이디 저장 기능
-    lateinit var setting : SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
-
-    private val TAG = this::class.java.simpleName
-
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,11 +59,6 @@ class LoginActivity : BaseActivity() {
                 PERMISSION_ALLOW
             )
         }
-
-
-        setting = getSharedPreferences("setting", MODE_PRIVATE)
-        editor = setting.edit()
-        editor.apply()
 
         chk_auto.setOnCheckedChangeListener { buttonView, isChecked ->
             if (chk_auto.isChecked) {

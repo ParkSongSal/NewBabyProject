@@ -25,11 +25,6 @@ class AppIntroduceModifyActivity : BaseActivity() {
     var loginId = ""
     var resultMsg = ""
 
-
-    // 아이디 저장 기능
-    lateinit var setting: SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
-
     lateinit var call: Call<ResultModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
