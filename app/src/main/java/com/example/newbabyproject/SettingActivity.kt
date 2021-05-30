@@ -9,9 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 
-class SettingActivity : AppCompatActivity() {
-
-    private lateinit var dlg : AlertDialog.Builder
+class SettingActivity : BaseActivity() {
 
     lateinit var setting : SharedPreferences
     lateinit var editor: SharedPreferences.Editor
@@ -19,7 +17,7 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
-        init()
+        init(applicationContext)
 
         logoutBtn.setOnClickListener{
 
@@ -52,15 +50,6 @@ class SettingActivity : AppCompatActivity() {
         intent = Intent(this@SettingActivity, LoginActivity::class.java)
         startActivity(intent)
         finish()
-    }
-
-    // Retrofit 서버연결
-    fun init(){
-        // AlertDialog Init
-        dlg = AlertDialog.Builder(
-            this@SettingActivity,
-            android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth
-        )
     }
 
     override fun onBackPressed() {

@@ -19,11 +19,10 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private val PERMISSION_ALLOW = 1
     val READ_PHONE_PERMISSON = 1
-
 
     var userId = ""
     var userPassword = ""
@@ -34,11 +33,6 @@ class LoginActivity : AppCompatActivity() {
     lateinit var editor: SharedPreferences.Editor
 
     private val TAG = this::class.java.simpleName
-    private lateinit var retrofit : Retrofit
-    private lateinit var mUserApi: userApi
-
-    private lateinit var dlg : AlertDialog.Builder
-
 
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         // Retrofit 서버연결
-        initRetrofit()
+        init(applicationContext)
 
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -138,19 +132,6 @@ class LoginActivity : AppCompatActivity() {
     fun Register(){
         startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
     }
-
-    // Retrofit 서버연결
-    fun initRetrofit(){
-        retrofit = RetrofitClient.getInstance()
-        mUserApi = retrofit.create(userApi::class.java)
-        // AlertDialog Init
-        dlg = AlertDialog.Builder(
-            this@LoginActivity,
-            android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth
-        )
-    }
-
-
 
     fun Login(userId: String, userPassword: String){
 

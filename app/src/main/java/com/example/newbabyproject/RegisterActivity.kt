@@ -18,22 +18,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class RegisterActivity : AppCompatActivity() {
-
-    private lateinit var dialog: AlertDialog
-    private lateinit var retrofit : Retrofit
-    private lateinit var mUserApi: userApi
-
-    private var validate = false
-
-    private lateinit var dlg : AlertDialog.Builder
+class RegisterActivity : BaseActivity() {
 
     private var passwordOk = true
     private var babyRelation = "D"
-    private var mAfter : Int = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        init(applicationContext)
 
         password2Edit.onFocusChangeListener = OnFocusChangeListener { view, hasFocus ->
             if (!hasFocus) {
@@ -67,18 +61,8 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         phoneEdit.addTextChangedListener(PhoneNumberFormattingTextWatcher())
-        init()
 
 
-    }
-
-    // Retrofit 서버연결
-    fun init(){
-        retrofit = RetrofitClient.getInstance()
-        mUserApi = retrofit.create(userApi::class.java)
-
-        // AlertDialog Init
-        dlg = AlertDialog.Builder(this@RegisterActivity, android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth)
     }
 
     fun onClick(view: View) {
@@ -200,23 +184,3 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 }
-
-
-/*
-
-userIdEdit 아이디
-valiBtn 중복검사 버튼
-
-passwordEdit 비밀번호
-password2Edit 비밀번호 확인
-nameEdit 이름
-phoneEdit 연락처
-babyNumEdit 아기등록번호
-
-radioGroup1
-radio0
-radio1
-
-registerBtn
-cancelBtn
-        */
