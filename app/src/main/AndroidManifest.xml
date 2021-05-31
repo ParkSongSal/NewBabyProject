@@ -15,13 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EnterIntroduceActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".EnterIntroduceActivity" />
         <activity android:name=".AppIntroduceModifyActivity" />
         <activity android:name=".AppIntroduceActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -24,6 +24,8 @@
     <!--검은색-->
     <color name="blackColor">#000000</color>
 
+    <!--로딩화면 배경색-->
+    <color name="splash_bg">#eee</color>
 
 
 </resources>
