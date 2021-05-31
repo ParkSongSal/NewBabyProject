@@ -15,22 +15,41 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun mOnClick(view: View) {
-        when(view.id){
+        when (view.id) {
 
             /* 앱 소개 */
-           /* R.id.intro_card,
+            R.id.intro_ll,
             R.id.appIntro,
-            R.id.intro_img ->{
+            R.id.intro_img -> {
                 Common.intentCommon(this@MainActivity, AppIntroduceActivity::class.java)
             }
 
-
-            *//* 입원 안내문 소개  *//*
-            R.id.enter_card,
-            R.id.enterBtn,
+            /* 입원 안내문 소개  */
+            R.id.enter_ll,
+            R.id.enterTxt,
             R.id.enter_img ->{
                 Common.intentCommon(this@MainActivity, EnterIntroduceActivity::class.java)
+            }
+
+            /* 퇴원 안내문 소개*/
+            R.id.leave_ll,
+            R.id.leave_txt,
+            R.id.leave_img ->{
+                Common.intentCommon(this@MainActivity, EnterIntroduceActivity::class.java)
+            }
+
+            /* 공지사항 */
+            /*R.id.notice_ll,
+            R.id.notice_txt,
+            R.id.notice_img ->{
+                Common.intentCommon(this@MainActivity, EnterIntroduceActivity::class.java)
             }*/
+        }
+    }
+}
+
+
+
 
            /* *//* 설정 *//*
             R.id.settingImg,
@@ -40,8 +59,3 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
 */
-
-
-        }
-    }
-}
