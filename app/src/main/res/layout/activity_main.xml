@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,306 +9,292 @@
     tools:context=".MainActivity">
 
 
-    <TextView
-        android:id="@+id/main_welcome"
+    <LinearLayout
+        android:id="@+id/mainLl"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mainTitleTxt"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="경산대학교병원 신생아\n중환자실"
+            android:lineSpacingExtra ="7dp"
+            android:textColor="@color/mainTextBoldColor"
+            android:textSize="18sp" />
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view2"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/mainLl"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="@color/mainAccentColor2"
+        app:cardCornerRadius="5dp">
+
+        <TextView
+            android:id="@+id/Login_txt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="우리아이 정보"
+            android:textColor="@color/mainTextBoldColor"
+            android:textSize="16sp" />
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:text="관리자님"
-        android:textColor="@color/mainTextColor"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp" />
-
-
-    <TextView
-        android:id="@+id/main_welcome2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:text="환영합니다!"
-        android:textColor="@color/mainTextColor"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp" />
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:alignmentMode="alignMargins"
-        android:columnCount="2"
-        android:columnOrderPreserved="false"
-        android:rowCount="3">
-
+        android:layout_below="@id/card_view2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-15dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/intro_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="15dp"
-            android:onClick="mOnClick"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="10dp">
-
-
-            <LinearLayout
-                android:id="@+id/board_ll"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-
-                <TextView
-                    android:id="@+id/appIntro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:onClick="mOnClick"
-                    android:text="앱소개"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/intro_img"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:onClick="mOnClick"
-                    android:src="@drawable/logo" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/notice_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="15dp"
-            android:onClick="mOnClick"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="6dp">
+            android:id="@+id/card_view1"
+            android:layout_width="280dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="30dp"
+            tools:ignore="MissingConstraints">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:paddingTop="10dp">
 
-
-                <TextView
-                    android:id="@+id/noticeBtn"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:onClick="mOnClick"
-                    android:text="공지사항"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:paddingStart="40dp"
+                    android:paddingLeft="40dp">
 
-                <ImageView
-                    android:id="@+id/notice_img"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:onClick="mOnClick"
-                    android:src="@drawable/logo" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="● "
+                        android:textSize="8sp"/>
+
+                    <TextView
+                        android:id="@+id/babyInfo1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="류지민(Nb) 00786543"
+                        android:textSize="12sp"
+                        android:textColor="@color/mainTextBoldColor" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="40dp"
+                    android:paddingLeft="40dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="● "
+                        android:textSize="8sp"/>
+
+                    <TextView
+                        android:id="@+id/babyInfo2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/babyInfo1"
+                        android:text="2021년 05월 05일 13시 21분 출생"
+                        android:textSize="12sp"
+                        android:textColor="@color/mainTextBoldColor" />
+                </LinearLayout>
+
+
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-    </GridLayout>
 
-    <GridLayout
-        android:layout_width="match_parent"
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:alignmentMode="alignMargins"
+        android:layout_below="@+id/rl"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
 
-        android:columnCount="2"
-        android:columnOrderPreserved="false"
-        android:rowCount="3">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/enter_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="15dp"
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="150dp"
+            android:background="@drawable/border_card"
             android:onClick="mOnClick"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="10dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <TextView
+                android:id="@+id/busBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:onClick="mOnClick"
+                android:text="면회"
+                android:textColor="@color/mainTextColor"
+                android:textSize="18sp" />
 
+            <ImageView
+                android:id="@+id/bus_img"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:onClick="mOnClick"
+                android:src="@drawable/logo" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/enterBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:onClick="mOnClick"
-                    android:text="입원"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+    </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/enter_img"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:onClick="mOnClick"
-                    android:src="@drawable/logo" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/food_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="15dp"
-            android:onClick="mOnClick"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="6dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/food_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:onClick="mOnClick"
-                    android:text="퇴원"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/food_img"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:onClick="mOnClick"
-                    android:src="@drawable/logo" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-    </GridLayout>
-
-    <GridLayout
-        android:id="@+id/gl3"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:alignmentMode="alignMargins"
-        android:columnCount="2"
-        android:columnOrderPreserved="false"
-        android:rowCount="3">
+        android:layout_below="@+id/ll1"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/bus_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="15dp"
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/border_card"
             android:onClick="mOnClick"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="6dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:onClick="mOnClick"
+                android:text="앱소개"
+                android:textColor="@color/mainTextColor"
+                android:textSize="18sp" />
 
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:onClick="mOnClick"
+                android:src="@drawable/logo" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/busBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:onClick="mOnClick"
-                    android:text="면회"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/bus_img"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:onClick="mOnClick"
-                    android:src="@drawable/logo" />
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/setting_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="15dp"
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/border_card"
             android:onClick="mOnClick"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="6dp">
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:onClick="mOnClick"
+                android:text="면회"
+                android:textColor="@color/mainTextColor"
+                android:textSize="18sp" />
 
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:onClick="mOnClick"
+                android:src="@drawable/logo" />
+        </LinearLayout>
+    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/settingBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:onClick="mOnClick"
-                    android:text="설정"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll2"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
 
-                <ImageView
-                    android:id="@+id/settingImg"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:onClick="mOnClick"
-                    android:src="@drawable/logo" />
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/border_card"
+            android:onClick="mOnClick"
+            android:orientation="vertical">
 
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:onClick="mOnClick"
+                android:text="면회"
+                android:textColor="@color/mainTextColor"
+                android:textSize="18sp" />
 
-        </androidx.cardview.widget.CardView>
-    </GridLayout>
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:onClick="mOnClick"
+                android:src="@drawable/logo" />
+        </LinearLayout>
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/border_card"
+            android:onClick="mOnClick"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:onClick="mOnClick"
+                android:text="면회"
+                android:textColor="@color/mainTextColor"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:onClick="mOnClick"
+                android:src="@drawable/logo" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

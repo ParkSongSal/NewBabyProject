@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainColor"
+    android:focusable="true"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
@@ -49,9 +50,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/mainAccentColor"
-                android:drawableStart="@drawable/ic_person_black_24dp"
-                android:drawableLeft="@drawable/ic_person_black_24dp"
-                android:focusable="auto"
                 android:hint="아이디"
                 android:inputType="text"
                 android:textColorHint="@color/mainTextColor"
@@ -72,9 +70,6 @@
                 android:id="@+id/pwEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_lock_black_24dp"
-                android:drawableLeft="@drawable/ic_lock_black_24dp"
-                android:focusable="auto"
                 android:hint="비밀번호"
                 android:inputType="textPassword"
                 android:textColorHint="@color/mainTextColor"

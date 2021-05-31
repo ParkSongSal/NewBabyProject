@@ -18,28 +18,28 @@ class MainActivity : AppCompatActivity() {
         when(view.id){
 
             /* 앱 소개 */
-            R.id.intro_card,
+           /* R.id.intro_card,
             R.id.appIntro,
             R.id.intro_img ->{
                 Common.intentCommon(this@MainActivity, AppIntroduceActivity::class.java)
             }
 
 
-            /* 입원 안내문 소개  */
+            *//* 입원 안내문 소개  *//*
             R.id.enter_card,
             R.id.enterBtn,
             R.id.enter_img ->{
                 Common.intentCommon(this@MainActivity, EnterIntroduceActivity::class.java)
-            }
+            }*/
 
-            /* 설정 */
+           /* *//* 설정 *//*
             R.id.settingImg,
             R.id.setting_card,
             R.id.settingBtn -> {
                 Common.intentCommon(this@MainActivity, SettingActivity::class.java)
                 finish()
             }
-
+*/
 
 
         }
