@@ -15,6 +15,9 @@
     <!--메인텍스트(회색)-->
     <color name="mainTextColor">#676d72</color>
 
+    <!--메인텍스트(진한 회색)-->
+    <color name="mainTextBoldColor">#2e2e2e</color>
+
     <!--강조노란색-->
     <color name="mainAccentColor">#E8C85C</color>
 

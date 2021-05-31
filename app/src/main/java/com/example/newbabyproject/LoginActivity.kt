@@ -33,7 +33,7 @@ class LoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
 
         // Retrofit 서버연결
-        init(applicationContext)
+        init(this@LoginActivity)
 
         if (ActivityCompat.checkSelfPermission(
                 this,
