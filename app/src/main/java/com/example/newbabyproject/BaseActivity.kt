@@ -6,10 +6,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.newbabyproject.Retrofit2.ResultModel
-import com.example.newbabyproject.Retrofit2.RetrofitClient
-import com.example.newbabyproject.Retrofit2.boardApi
-import com.example.newbabyproject.Retrofit2.userApi
+import com.example.newbabyproject.Retrofit2.*
+import kotlinx.android.synthetic.main.activity_app_introduce.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -19,6 +17,9 @@ import retrofit2.Retrofit
 
 abstract class BaseActivity : AppCompatActivity() {
 
+    var introContent : String? = ""
+    var enterContent : String? = ""
+    var outContent : String? = ""
     var boardGubun: String? = ""
     var actGubun : String? = ""
     var validate = false
@@ -37,7 +38,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
 
 
-    fun init(context : Context) {
+    fun init(context: Context) {
 
         coxt = context
 
@@ -63,7 +64,7 @@ abstract class BaseActivity : AppCompatActivity() {
     * 퇴원 안내문
     * 등록 / 수정 체크
     * */
-    fun introduceValidate(boardGubun : String) {
+    fun introduceValidate(boardGubun: String) {
 
         val boardGubunPart = RequestBody.create(MultipartBody.FORM, boardGubun)
 
@@ -107,4 +108,40 @@ abstract class BaseActivity : AppCompatActivity() {
         })
     }
 
+
+    fun introduceList(){
+        mBoardApi.getIntroduceList().enqueue(object : Callback<List<ResultIntroduce>> {
+            override fun onResponse(
+                call: Call<List<ResultIntroduce>>,
+                response: Response<List<ResultIntroduce>>
+            ) {
+
+
+                //정상 결과
+                val result: List<ResultIntroduce>? = response.body()
+
+                Log.d("TAG","list : $result")
+                for (i in result!!.indices) {
+                    val SEQ = result[i].seq
+                    val boardGb: String = result[i].boardGubun
+
+                    when(boardGb){
+                        "0"-> appIntroTxt.text = result[i].boardContent
+                        "1"-> enterContent = result[i].boardContent
+                        "2"-> outContent = result[i].boardContent
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<ResultIntroduce>>, t: Throwable) {
+                // 네트워크 문제
+                Toast.makeText(
+                    coxt,
+                    "데이터 접속 상태를 확인 후 다시 시도해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
 }

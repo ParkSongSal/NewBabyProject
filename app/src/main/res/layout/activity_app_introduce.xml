@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <TextView
-            android:text="NICU 소개글 논문에 대한 간략 소개 또는 주의사항 등"
+            android:id="@+id/appIntroTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"

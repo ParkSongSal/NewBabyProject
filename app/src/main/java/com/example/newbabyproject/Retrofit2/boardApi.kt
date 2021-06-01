@@ -40,4 +40,10 @@ interface boardApi {
     @POST("introduce_validate.php")
     fun getIntroduceValidate(@Part("boardGubun") boardGubun: RequestBody) : Call<ResultModel>
 
+
+    /* 소개문 List*/
+    @POST("introduceList.php")
+    fun getIntroduceList() : Call<List<ResultIntroduce>>
+
+
 }

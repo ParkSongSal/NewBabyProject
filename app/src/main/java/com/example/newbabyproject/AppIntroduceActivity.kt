@@ -64,6 +64,8 @@ class AppIntroduceActivity : BaseActivity() {
             modifyBtn.visibility = View.GONE
         }
 
+        introduceList()
+
     }
 
 
