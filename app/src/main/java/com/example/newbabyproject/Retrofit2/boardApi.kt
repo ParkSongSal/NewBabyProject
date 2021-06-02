@@ -1,14 +1,11 @@
 package com.example.newbabyproject.Retrofit2
 
+import com.example.newbabyproject.Notice.ResultNotice
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface boardApi {
-
-    /* 공지사항 목록 */
-    @POST("getNoticeList.php")
-    fun getNoticeList() : Call<ResultModel>
 
     /* 소개문 내용*/
     @Multipart
@@ -46,5 +43,10 @@ interface boardApi {
     @POST("introduceList.php")
     fun getIntroduceList(@Part("boardGubun") boardGubun: RequestBody) : Call<List<ResultIntroduce>>
 
+
+
+    /* 공지사항 목록 */
+    @POST("getNoticeList.php")
+    fun getNoticeList() : Call<List<ResultNotice>>
 
 }
