@@ -1,9 +1,8 @@
 package com.example.newbabyproject
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.newbabyproject.utils.Common
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             R.id.leave_ll,
             R.id.leave_txt,
             R.id.leave_img ->{
-                Common.intentCommon(this@MainActivity, EnterIntroduceActivity::class.java)
+                Common.intentCommon(this@MainActivity, OutIntroduceActivity::class.java)
             }
 
             /* 공지사항 */

@@ -8,6 +8,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.newbabyproject.Retrofit2.*
 import kotlinx.android.synthetic.main.activity_app_introduce.*
+import kotlinx.android.synthetic.main.activity_enter_introduce.*
+import kotlinx.android.synthetic.main.activity_out_introduce.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -16,6 +18,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 abstract class BaseActivity : AppCompatActivity() {
+
+    var loginId = ""
 
     var introContent : String? = ""
     var enterContent : String? = ""
@@ -78,21 +82,9 @@ abstract class BaseActivity : AppCompatActivity() {
                 if (response.body()!!.result == "insert") {
                     actGubun = "insert"
                     validate = true
-                    Toast.makeText(
-                        coxt,
-                        "소개문을 신규 작성합니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
                 } else {
                     actGubun = "update"
                     validate = true
-                    Toast.makeText(
-                        coxt,
-                        "소개문을 수정 작성합니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
                 }
             }
 
@@ -109,8 +101,10 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
 
-    fun introduceList(){
-        mBoardApi.getIntroduceList().enqueue(object : Callback<List<ResultIntroduce>> {
+    fun introduceList(boardGubun: String){
+        val boardGubunPart = RequestBody.create(MultipartBody.FORM, boardGubun)
+
+        mBoardApi.getIntroduceList(boardGubunPart).enqueue(object : Callback<List<ResultIntroduce>> {
             override fun onResponse(
                 call: Call<List<ResultIntroduce>>,
                 response: Response<List<ResultIntroduce>>
@@ -122,13 +116,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
                 Log.d("TAG","list : $result")
                 for (i in result!!.indices) {
-                    val SEQ = result[i].seq
                     val boardGb: String = result[i].boardGubun
 
                     when(boardGb){
                         "0"-> appIntroTxt.text = result[i].boardContent
-                        "1"-> enterContent = result[i].boardContent
-                        "2"-> outContent = result[i].boardContent
+                        "1"-> enterIntroTxt.text = result[i].boardContent
+                        "2"-> outIntroTxt.text = result[i].boardContent
                     }
                 }
 

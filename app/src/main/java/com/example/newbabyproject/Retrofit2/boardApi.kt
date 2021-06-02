@@ -42,8 +42,9 @@ interface boardApi {
 
 
     /* 소개문 List*/
+    @Multipart
     @POST("introduceList.php")
-    fun getIntroduceList() : Call<List<ResultIntroduce>>
+    fun getIntroduceList(@Part("boardGubun") boardGubun: RequestBody) : Call<List<ResultIntroduce>>
 
 
 }

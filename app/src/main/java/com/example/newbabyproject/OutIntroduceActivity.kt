@@ -1,33 +1,21 @@
 package com.example.newbabyproject
 
 import android.content.Intent
-import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import com.example.newbabyproject.Retrofit2.ResultModel
-import com.example.newbabyproject.Retrofit2.RetrofitClient
-import com.example.newbabyproject.Retrofit2.boardApi
 import kotlinx.android.synthetic.main.activity_app_introduce.*
-import kotlinx.android.synthetic.main.activity_register.*
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
-class AppIntroduceActivity : BaseActivity() {
+class OutIntroduceActivity : BaseActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_app_introduce)
+        setContentView(R.layout.activity_out_introduce)
 
         init(applicationContext)
-        introduceValidate("0")  // 앱 소개문
+        introduceValidate("2")  // 퇴원 안내문
 
         setting = getSharedPreferences("setting", MODE_PRIVATE)
         editor = setting.edit()
@@ -44,14 +32,14 @@ class AppIntroduceActivity : BaseActivity() {
 
                 if (validate) {
                     val intent =
-                        Intent(this@AppIntroduceActivity, AppIntroduceModifyActivity::class.java)
-                    intent.putExtra("boardGubun", "0")
+                        Intent(this@OutIntroduceActivity, AppIntroduceModifyActivity::class.java)
+                    intent.putExtra("boardGubun", "2")
                     intent.putExtra("actGubun", actGubun)
                     startActivity(intent)
                     finish()
                 } else {
                     Toast.makeText(
-                        this@AppIntroduceActivity,
+                        this@OutIntroduceActivity,
                         "다시 시도 바랍니다.",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -63,11 +51,7 @@ class AppIntroduceActivity : BaseActivity() {
             modifyBtn.visibility = View.GONE
         }
 
-        introduceList("0")
+        introduceList("2")
 
     }
-
-
 }
-
-

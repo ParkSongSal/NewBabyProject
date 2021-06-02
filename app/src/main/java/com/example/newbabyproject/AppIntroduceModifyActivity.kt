@@ -22,7 +22,6 @@ import retrofit2.Retrofit
 
 class AppIntroduceModifyActivity : BaseActivity() {
 
-    var loginId = ""
     var resultMsg = ""
 
     lateinit var call: Call<ResultModel>
@@ -51,6 +50,10 @@ class AppIntroduceModifyActivity : BaseActivity() {
             "1" -> {
                 board_gubun.text = "입원안내문"
                 intent = Intent(this@AppIntroduceModifyActivity, EnterIntroduceActivity::class.java)
+            }
+            "2" -> {
+                board_gubun.text = "퇴원안내문"
+                intent = Intent(this@AppIntroduceModifyActivity, OutIntroduceActivity::class.java)
             }
         }
 
@@ -146,5 +149,9 @@ class AppIntroduceModifyActivity : BaseActivity() {
         })
     }
 
+    override fun onBackPressed() {
+        startActivity(intent)
+        finish()
+    } //뒤로가기 종료버튼
 
 }

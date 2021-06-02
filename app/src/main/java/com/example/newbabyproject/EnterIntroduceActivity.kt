@@ -7,20 +7,14 @@ import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_app_introduce.*
 
-class EnterIntroduceActivity : AppCompatActivity() {
-
-    var loginId = ""
-
-
-    // 아이디 저장 기능
-    lateinit var setting : SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
-
+class EnterIntroduceActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enter_introduce)
 
+        init(applicationContext)
+        introduceValidate("1")  // 입원 안내문
 
         setting = getSharedPreferences("setting", MODE_PRIVATE)
         editor = setting.edit()
@@ -35,12 +29,15 @@ class EnterIntroduceActivity : AppCompatActivity() {
             modifyBtn.setOnClickListener{
                 var intent = Intent(this@EnterIntroduceActivity, AppIntroduceModifyActivity::class.java)
                 intent.putExtra("boardGubun", "1")
+                intent.putExtra("actGubun", actGubun)
                 startActivity(intent)
+                finish()
             }
         }else{
             modifyBtn.visibility = View.GONE
         }
 
+        introduceList("1")
 
     }
 }
