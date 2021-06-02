@@ -59,11 +59,11 @@ class MainActivity : BaseActivity() {
             }
 
             /* 공지사항 */
-            /*R.id.notice_ll,
+            R.id.notice_ll,
             R.id.notice_txt,
             R.id.notice_img ->{
-                Common.intentCommon(this@MainActivity, EnterIntroduceActivity::class.java)
-            }*/
+                Common.intentCommon(this@MainActivity, NoticeListActivity::class.java)
+            }
         }
     }
 
