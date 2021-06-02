@@ -70,11 +70,13 @@ class LoginActivity : BaseActivity() {
                         .setNegativeButton("다시 시도", null)
                     dlg.show()
                     chk_auto.isChecked = false
+                }else if(ID != "" && PW != ""){
+                    editor.putString("ID", ID)
+                    editor.putString("PW", PW)
+                    editor.putBoolean("chk_auto", true)
+                    editor.apply()
                 }
-                editor.putString("ID", ID)
-                editor.putString("PW", PW)
-                editor.putBoolean("chk_auto", true)
-                editor.apply()
+
             } else {
                 setting = getSharedPreferences("setting", MODE_PRIVATE)
                 editor = setting.edit()

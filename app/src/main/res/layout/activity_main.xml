@@ -27,8 +27,10 @@
             android:textColor="@color/mainTextBoldColor"
             android:textSize="18sp" />
         <ImageView
+            android:id="@+id/logoutImg"
             android:layout_width="100dp"
             android:layout_height="40dp"
+            android:onClick="mOnClick"
             android:src="@drawable/logo"
             android:layout_gravity="center"/>
     </LinearLayout>
