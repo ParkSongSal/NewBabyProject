@@ -1,13 +1,18 @@
 package com.example.newbabyproject
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.newbabyproject.Notice.NoticeDataAdapter
+import com.example.newbabyproject.Notice.NoticeDetailActivity
 import com.example.newbabyproject.Notice.ResultNotice
+import kotlinx.android.synthetic.main.activity_app_introduce.*
 import kotlinx.android.synthetic.main.activity_notice_list.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,18 +23,27 @@ class NoticeListActivity : BaseActivity() {
 
     private var mAdapter: NoticeDataAdapter? = null
 
+
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notice_list)
 
         init(this@NoticeListActivity)
 
+        loginId = setting.getString("loginId", "").toString()
 
-        fab.setOnClickListener(View.OnClickListener {
-            intent = Intent(applicationContext, NoticeInsertActivity::class.java)
-            startActivity(intent)
-            finish()
-        })
+        if (loginId == "admin") {
+            fab.visibility = View.VISIBLE
+            // 관리자만 수정 가능
+            fab.setOnClickListener {
+                intent = Intent(this@NoticeListActivity, NoticeInsertActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        } else {
+            fab.visibility = View.GONE
+        }
 
         getServerData()
     }
@@ -44,7 +58,7 @@ class NoticeListActivity : BaseActivity() {
                 response: Response<List<ResultNotice>>
             ) {
 
-                Log.d("TAG","response ${response.body()}")
+                Log.d("TAG", "response ${response.body()}")
                 //정상 결과
                 val result: List<ResultNotice> = response.body()!!
                 for (i in result.indices) {
@@ -55,7 +69,15 @@ class NoticeListActivity : BaseActivity() {
                     val INSERT_DATE: String = result[i].insertDate
                     val UPDATE_ID: String = result[i].updateId
                     val UPDATE_DATE: String = result[i].updateDate
-                    val getServerdata = ResultNotice(SEQ, TITLE, CONTENT, INSERT_ID, INSERT_DATE, UPDATE_ID, UPDATE_DATE)
+                    val getServerdata = ResultNotice(
+                        SEQ,
+                        TITLE,
+                        CONTENT,
+                        INSERT_ID,
+                        INSERT_DATE,
+                        UPDATE_ID,
+                        UPDATE_DATE
+                    )
                     boardList.add(getServerdata)
                     //saveList.add(getServerdata)
                     mAdapter = NoticeDataAdapter(applicationContext, boardList)
@@ -72,5 +94,33 @@ class NoticeListActivity : BaseActivity() {
                 ).show()
             }
         })
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+
+    // 보낸이 : NoticeDataAdapter
+    @SuppressLint("RestrictedApi")
+    @Subscribe
+    fun onItemClick(event: NoticeDataAdapter.ItemClickEvent) {
+
+        val intent = Intent(applicationContext, NoticeDetailActivity::class.java)
+            intent.putExtra("Seq", boardList[event.position].seq)
+            intent.putExtra("TITLE", boardList[event.position].title)
+            intent.putExtra("WRITER", boardList[event.position].updateId)
+            intent.putExtra("CONTENT", boardList[event.position].content)
+            intent.putExtra("DATE", boardList[event.position].updateDate)
+
+        startActivity(intent)
+        finish()
     }
 }

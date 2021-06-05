@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NoticeInsertActivity"></activity>
+        <activity android:name=".Notice.NoticeUpdateActivity"></activity>
+        <activity android:name=".Notice.NoticeDetailActivity" />
+        <activity android:name=".NoticeInsertActivity" />
         <activity android:name=".NoticeListActivity" />
         <activity android:name=".OutIntroduceActivity" />
         <activity android:name=".LoginActivity" />

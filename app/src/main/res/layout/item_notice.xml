@@ -33,9 +33,10 @@
             android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/titleTxt"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:paddingRight="10dp"
                 android:gravity="start"
                 android:text="제목입니다."
                 android:textColor="@color/mainTextBoldColor"
@@ -43,7 +44,8 @@
                 android:textSize="21sp"
                 android:ellipsize="marquee"
                 android:singleLine="true"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:paddingEnd="10dp" />
 
         </LinearLayout>
         <LinearLayout

@@ -34,7 +34,7 @@ open class NoticeDataAdapter     //this.saveList = saveList;
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.user_txt.text = mData[position].insertId
         var msg: String? = ""
-        msg = Common.formatTimeString(mData[position].insertDate)
+        msg = Common.formatTimeString(mData[position].updateDate)
         viewHolder.date_txt.text = msg
         viewHolder.title_txt.text = mData[position].title
         viewHolder.title_txt.isSelected = true

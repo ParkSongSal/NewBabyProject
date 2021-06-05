@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.newbabyproject.Retrofit2.*
@@ -25,6 +26,7 @@ abstract class BaseActivity : AppCompatActivity() {
     var enterContent : String? = ""
     var outContent : String? = ""
     var boardGubun: String? = ""
+    var noticeActGubun : String? = ""
     var actGubun : String? = ""
     var validate = false
 
@@ -39,7 +41,6 @@ abstract class BaseActivity : AppCompatActivity() {
     // 아이디 저장 기능
     lateinit var setting : SharedPreferences
     lateinit var editor: SharedPreferences.Editor
-
 
 
     fun init(context: Context) {
@@ -61,6 +62,8 @@ abstract class BaseActivity : AppCompatActivity() {
         setting = getSharedPreferences("setting", MODE_PRIVATE)
         editor = setting.edit()
         editor.apply()
+
+
     }
 
     /* 앱소개
@@ -100,7 +103,11 @@ abstract class BaseActivity : AppCompatActivity() {
         })
     }
 
-
+    /* 앱소개
+    * 입원 안내문
+    * 퇴원 안내문
+    * 등록 내용 셋팅
+    * */
     fun introduceList(boardGubun: String){
         val boardGubunPart = RequestBody.create(MultipartBody.FORM, boardGubun)
 

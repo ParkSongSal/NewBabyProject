@@ -60,4 +60,12 @@ interface boardApi {
                      @Part("updateId") updateId : RequestBody,
                      @Part("updateDate") updateDate : RequestBody) : Call<ResultNotice>
 
+    /* 공지사항 수정*/
+    @Multipart
+    @POST("notice_modify.php")
+    fun NoticeUpdate(@Part("seq") seq : RequestBody,
+                     @Part("title") title : RequestBody,
+                     @Part("content") content : RequestBody,
+                     @Part("updateId") updateId : RequestBody,
+                     @Part("updateDate") updateDate : RequestBody) : Call<ResultNotice>
 }

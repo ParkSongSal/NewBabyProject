@@ -1,75 +1,92 @@
-package com.example.newbabyproject
+package com.example.newbabyproject.Notice
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
-import com.example.newbabyproject.Notice.ResultNotice
-import com.example.newbabyproject.Retrofit2.ResultModel
+import com.example.newbabyproject.BaseActivity
+import com.example.newbabyproject.MainActivity
+import com.example.newbabyproject.NoticeListActivity
+import com.example.newbabyproject.R
 import com.example.newbabyproject.utils.Common
-import kotlinx.android.synthetic.main.activity_notice_insert.*
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_notice_update.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NoticeInsertActivity : BaseActivity() {
+class NoticeUpdateActivity : BaseActivity() {
 
     lateinit var call: Call<ResultNotice>
 
     var resultMsg = ""
-    var noticeTitle = ""
-    var noticeContent = ""
+    var updateSeq = 0
+    var updateTitle : String? = ""
+    var updateContent : String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notice_insert)
+        setContentView(R.layout.activity_notice_update)
 
-        init(this@NoticeInsertActivity)
+        init(this@NoticeUpdateActivity)
 
         val actionBar: ActionBar? = supportActionBar
-        actionBar?.title = "공지사항 등록"
+        actionBar?.title = "공지사항 수정"
 
-        insertBtn.setOnClickListener {
-            NoticeWriteAct()
+        if(intent != null){
+            //Update
+            updateSeq = intent.getIntExtra("updateSeq", 0) //글번호
+            Log.d("TAG","updateSeq : $updateSeq")
+            updateTitle = intent.getStringExtra("updateTitle")
+            updateContent = intent.getStringExtra("updateContent")
+
+            titleTxt.setText(updateTitle)
+            contentTxt.setText(updateContent)
+
+        } else {
+            Common.intentCommon(this@NoticeUpdateActivity, MainActivity::class.java)
+            Toast.makeText(applicationContext, "잘못된 경로입니다.", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+
+        // 수정하기 버튼
+        updateBtn.setOnClickListener{
+            NoticeUpdateAct()
         }
     }
 
     // 공지사항 등록
-    private fun NoticeWriteAct() {
+    private fun NoticeUpdateAct() {
 
-        noticeTitle = titleTxt.text.toString()
-        noticeContent = contentTxt.text.toString()
+        updateTitle = titleTxt.text.toString()
+        updateContent = contentTxt.text.toString()
         loginId = setting.getString("loginId", "").toString()
         val regDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
 
-        if (noticeTitle == "" || noticeContent == "") {
+        if (updateTitle == "" || updateContent == "") {
             dlg.setMessage("빈 칸 없이 입력해주세요.")
                 .setNegativeButton("확인", null)
             dlg.show()
             return
         }
 
-        val noticeTitlePart = RequestBody.create(MultipartBody.FORM, noticeTitle)
-        val noticeContentPart = RequestBody.create(MultipartBody.FORM, noticeContent)
-        val noticeInsertIdPart = RequestBody.create(MultipartBody.FORM, loginId)
-        val noticeInsertDatePart = RequestBody.create(MultipartBody.FORM, regDate)
+        val noticeSeqPart = RequestBody.create(MultipartBody.FORM, updateSeq.toString())
+        val noticeTitlePart = RequestBody.create(MultipartBody.FORM, updateTitle)
+        val noticeContentPart = RequestBody.create(MultipartBody.FORM, updateContent)
         val noticeUpdateIdPart = RequestBody.create(MultipartBody.FORM, loginId)
         val noticeUpdateDatePart = RequestBody.create(MultipartBody.FORM, regDate)
 
-        call = mBoardApi.NoticeInsert(
+        call = mBoardApi.NoticeUpdate(
+            noticeSeqPart,
             noticeTitlePart,
             noticeContentPart,
-            noticeInsertIdPart,
-            noticeInsertDatePart,
             noticeUpdateIdPart,
             noticeUpdateDatePart
         )
 
-        resultMsg = "등록되었습니다."
+        resultMsg = "수정되었습니다."
 
         call.enqueue(object : Callback<ResultNotice> {
 
@@ -77,12 +94,12 @@ class NoticeInsertActivity : BaseActivity() {
 
                 // 정상결과
                 if (response.body()!!.result == "success") {
-                    intent = Intent(this@NoticeInsertActivity, NoticeListActivity::class.java)
+                    intent = Intent(this@NoticeUpdateActivity, NoticeListActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivity(intent)
                     finish()
                     Toast.makeText(
-                        this@NoticeInsertActivity,
+                        this@NoticeUpdateActivity,
                         resultMsg,
                         Toast.LENGTH_SHORT
                     ).show()
@@ -98,7 +115,7 @@ class NoticeInsertActivity : BaseActivity() {
             override fun onFailure(call: Call<ResultNotice>, t: Throwable) {
                 // 네트워크 문제
                 Toast.makeText(
-                    this@NoticeInsertActivity,
+                    this@NoticeUpdateActivity,
                     "데이터 접속 상태를 확인 후 다시 시도해주세요.",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -107,7 +124,6 @@ class NoticeInsertActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this@NoticeInsertActivity, NoticeListActivity::class.java))
         finish()
     } //뒤로가기 종료버튼
 
