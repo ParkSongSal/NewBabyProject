@@ -49,4 +49,15 @@ interface boardApi {
     @POST("getNoticeList.php")
     fun getNoticeList() : Call<List<ResultNotice>>
 
+
+    /* 공지사항 등록 */
+    @Multipart
+    @POST("notice_insert.php")
+    fun NoticeInsert(@Part("title") title : RequestBody,
+                     @Part("content") content : RequestBody,
+                     @Part("insertId") insertId : RequestBody,
+                     @Part("insertDate") insertDate : RequestBody,
+                     @Part("updateId") updateId : RequestBody,
+                     @Part("updateDate") updateDate : RequestBody) : Call<ResultNotice>
+
 }

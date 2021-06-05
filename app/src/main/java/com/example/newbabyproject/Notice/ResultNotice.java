@@ -1,6 +1,9 @@
 package com.example.newbabyproject.Notice;
 
 public class ResultNotice {
+
+    public String result;
+
     public int seq;
     private String title;
     private String content;
@@ -18,6 +21,14 @@ public class ResultNotice {
         this.updateId = updateId;
         this.updateDate = updateDate;
 
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 
     public int getSeq() {
