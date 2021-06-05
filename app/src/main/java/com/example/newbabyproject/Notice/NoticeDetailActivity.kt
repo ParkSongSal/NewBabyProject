@@ -53,6 +53,8 @@ class NoticeDetailActivity : BaseActivity() {
             // 관리자만 수정, 삭제 가능
             if (loginId == "admin") {
                 btnLl.visibility = View.VISIBLE
+
+                // 수정 버튼
                 updateBtn.setOnClickListener{
                     intent = Intent(this@NoticeDetailActivity, NoticeUpdateActivity::class.java)
                     intent.putExtra("updateSeq",seq)
@@ -60,6 +62,7 @@ class NoticeDetailActivity : BaseActivity() {
                     intent.putExtra("updateContent",content)
                     startActivity(intent)
                 }
+                // 삭제버튼
                 deleteBtn.setOnClickListener{
                     dlg.setTitle("삭제 알림")
                         .setMessage("공지사항을 삭제 하시겠습니까?")
@@ -68,7 +71,6 @@ class NoticeDetailActivity : BaseActivity() {
                         })
                         .setNegativeButton("아니오",null)
                     dlg.show()
-
                 }
             } else {
                 btnLl.visibility = View.GONE
@@ -82,6 +84,7 @@ class NoticeDetailActivity : BaseActivity() {
 
     }
 
+    // 공지사항 삭제 로직
     private fun NoticeDeleteAct(){
 
         val noticeSeqPart = RequestBody.create(MultipartBody.FORM, seq.toString())
@@ -123,8 +126,9 @@ class NoticeDetailActivity : BaseActivity() {
 
     }
 
+    //뒤로가기 종료버튼
     override fun onBackPressed() {
         startActivity(Intent(this@NoticeDetailActivity, NoticeListActivity::class.java))
         finish()
-    } //뒤로가기 종료버튼
+    }
 }
