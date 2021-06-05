@@ -68,4 +68,9 @@ interface boardApi {
                      @Part("content") content : RequestBody,
                      @Part("updateId") updateId : RequestBody,
                      @Part("updateDate") updateDate : RequestBody) : Call<ResultNotice>
+
+    /* 공지사항 수정*/
+    @Multipart
+    @POST("notice_delete.php")
+    fun NoticeDelete(@Part("seq") seq : RequestBody) : Call<ResultNotice>
 }

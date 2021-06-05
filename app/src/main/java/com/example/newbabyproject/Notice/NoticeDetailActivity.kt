@@ -1,5 +1,6 @@
 package com.example.newbabyproject.Notice
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,8 +10,15 @@ import com.example.newbabyproject.*
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_notice_detail.*
 import kotlinx.android.synthetic.main.activity_notice_list.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class NoticeDetailActivity : BaseActivity() {
+
+    lateinit var call: Call<ResultNotice>
 
     var seq = 0
     var title : String?  = ""
@@ -52,6 +60,16 @@ class NoticeDetailActivity : BaseActivity() {
                     intent.putExtra("updateContent",content)
                     startActivity(intent)
                 }
+                deleteBtn.setOnClickListener{
+                    dlg.setTitle("삭제 알림")
+                        .setMessage("공지사항을 삭제 하시겠습니까?")
+                        .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                            NoticeDeleteAct()
+                        })
+                        .setNegativeButton("아니오",null)
+                    dlg.show()
+
+                }
             } else {
                 btnLl.visibility = View.GONE
             }
@@ -61,6 +79,47 @@ class NoticeDetailActivity : BaseActivity() {
             Toast.makeText(applicationContext, "잘못된 경로입니다.", Toast.LENGTH_SHORT).show()
             finish()
         }
+
+    }
+
+    private fun NoticeDeleteAct(){
+
+        val noticeSeqPart = RequestBody.create(MultipartBody.FORM, seq.toString())
+
+        call = mBoardApi.NoticeDelete(noticeSeqPart)
+        call.enqueue(object : Callback<ResultNotice> {
+
+            override fun onResponse(call: Call<ResultNotice>, response: Response<ResultNotice>) {
+
+                // 정상결과
+                if (response.body()!!.result == "success") {
+                    intent = Intent(this@NoticeDetailActivity, NoticeListActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    startActivity(intent)
+                    finish()
+                    Toast.makeText(
+                        this@NoticeDetailActivity,
+                        "삭제되었습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else {
+                    //중복인 닉네임 존재
+                    dlg.setMessage("다시 시도 바랍니다.")
+                        .setNegativeButton("확인", null)
+                    dlg.show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultNotice>, t: Throwable) {
+                // 네트워크 문제
+                Toast.makeText(
+                    this@NoticeDetailActivity,
+                    "데이터 접속 상태를 확인 후 다시 시도해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
 
     }
 
