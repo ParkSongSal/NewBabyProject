@@ -1,14 +1,20 @@
 package com.example.newbabyproject
 
+import android.annotation.SuppressLint
+import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.newbabyproject.Notice.NoticeDataAdapter
+import com.example.newbabyproject.Notice.NoticeDetailActivity
 import com.example.newbabyproject.Notice.ResultNotice
 import com.example.newbabyproject.Visit.ResultVisit
 import com.example.newbabyproject.Visit.VisitUserDataAdapter
 import kotlinx.android.synthetic.main.activity_notice_list.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -74,6 +80,35 @@ class VisitAdminUserSelActivity : BaseActivity() {
                 ).show()
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+
+    // 보낸이 : NoticeDataAdapter
+    @SuppressLint("RestrictedApi")
+    @Subscribe
+    fun onItemClick(event: VisitUserDataAdapter.ItemClickEvent) {
+
+
+        val parentName = userList[event.position].userName
+
+        dlg.setTitle("보호자 선택 알림")
+            .setMessage("선택하신 보호자($parentName)에게 작성한 게시글을 확인하시겠습니까?")
+            .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                Toast.makeText(applicationContext, "이동합니다.", Toast.LENGTH_SHORT).show()
+            })
+            .setNegativeButton("아니오", null)
+        dlg.show()
+
     }
 
 }

@@ -151,9 +151,9 @@ class LoginActivity : BaseActivity() {
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
 
-                    Toast.makeText(this@LoginActivity, "$userId 님 환영합니다!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@LoginActivity, "$userId 님 환영합니다!", Toast.LENGTH_SHORT).show()
                 } else {  // 로그인 실패
-                    Toast.makeText(this@LoginActivity, "입력하신 정보를 다시 확인바랍니다.", Toast.LENGTH_LONG)
+                    Toast.makeText(this@LoginActivity, "입력하신 정보를 다시 확인바랍니다.", Toast.LENGTH_SHORT)
                         .show()
                 }
             }

@@ -14,6 +14,9 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         init(this@MainActivity)
+
+        loginId = setting.getString("loginId", "").toString()
+
     }
 
     fun mOnClick(view: View) {
@@ -64,11 +67,20 @@ class MainActivity : BaseActivity() {
             R.id.notice_img ->{
                 Common.intentCommon(this@MainActivity, NoticeListActivity::class.java)
             }
-            /* 공지사항 */
+            /* 면회 */
             R.id.visit_ll,
             R.id.visitBtn,
             R.id.visit_img ->{
-                Common.intentCommon(this@MainActivity, VisitAdminUserSelActivity::class.java)
+                if("admin" == loginId){
+                    Common.intentCommon(this@MainActivity, VisitAdminUserSelActivity::class.java)
+                }else{
+                    Toast.makeText(
+                        this@MainActivity,
+                        "관리자만 접근 가능합니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             }
         }
     }
