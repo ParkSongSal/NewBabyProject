@@ -33,6 +33,8 @@ abstract class BaseActivity : AppCompatActivity() {
     lateinit var retrofit: Retrofit
     lateinit var mBoardApi: boardApi
     lateinit var mUserApi: userApi
+    lateinit var mVisitApi: visitApi
+
 
     lateinit var dlg: AlertDialog.Builder
 
@@ -51,7 +53,7 @@ abstract class BaseActivity : AppCompatActivity() {
         retrofit = RetrofitClient.getInstance()
         mBoardApi = retrofit.create(boardApi::class.java)
         mUserApi = retrofit.create(userApi::class.java)
-
+        mVisitApi = retrofit.create(visitApi::class.java)
         // AlertDialog Init
         dlg = AlertDialog.Builder(
             context,

@@ -64,6 +64,12 @@ class MainActivity : BaseActivity() {
             R.id.notice_img ->{
                 Common.intentCommon(this@MainActivity, NoticeListActivity::class.java)
             }
+            /* 공지사항 */
+            R.id.visit_ll,
+            R.id.visitBtn,
+            R.id.visit_img ->{
+                Common.intentCommon(this@MainActivity, VisitAdminUserSelActivity::class.java)
+            }
         }
     }
 
