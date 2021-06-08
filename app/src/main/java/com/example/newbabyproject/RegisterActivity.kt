@@ -124,9 +124,9 @@ class RegisterActivity : BaseActivity() {
         val userPw = passwordEdit.text.toString()
         val userName = nameEdit.text.toString()
         val userPhone = phoneEdit.text.toString()
+        val babyName = babyNameEdit.text.toString()
         val babyNum = babyNumEdit.text.toString()
         val regDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
-        babyRelation
         var userAuth = "U"
         if("admin" == userId){
             userAuth = "A"
@@ -139,7 +139,7 @@ class RegisterActivity : BaseActivity() {
             return
         }
 
-        if (userId == "" || userPw == "") {
+        if (userId == "" || userPw == "" || userName == "" || userPhone == "" || babyName == "" || babyNum == "") {
             dlg.setMessage("빈 칸 없이 입력해주세요.")
                 .setNegativeButton("확인", null)
             dlg.show()
@@ -152,7 +152,7 @@ class RegisterActivity : BaseActivity() {
             return
         }
 
-        mUserApi.userRegister(userId, userPw, userName, userPhone, babyNum, babyRelation, regDate, userAuth).enqueue(object :
+        mUserApi.userRegister(userId, userPw, userName, userPhone, babyName, babyNum, babyRelation, regDate, userAuth).enqueue(object :
             Callback<ResultModel> {
             override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
 

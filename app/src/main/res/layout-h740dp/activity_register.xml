@@ -137,7 +137,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/register_edit_mt"
                     android:layout_marginRight="15dp"
-                    android:hint="이름을 입력해주세요"
+                    android:hint="보호자 이름을 입력해주세요"
                     android:inputType="text"
                     android:textSize="20sp" />
 
@@ -146,11 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="@dimen/register_edit_mt"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="13"
-                    app:passwordToggleEnabled="true"
-                    >
+                    android:layout_marginTop="@dimen/register_edit_mt">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/phoneEdit"
                         android:layout_width="match_parent"
@@ -158,9 +154,19 @@
                         android:hint="연락처를 입력해주세요"
                         android:maxLength="13"
                         android:textSize="20sp"
-                        android:inputType="phone"
-                        android:layout_marginTop="10dp"/>
+                        android:inputType="phone"/>
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <EditText
+                    android:id="@+id/babyNameEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/register_edit_mt"
+                    android:layout_marginRight="15dp"
+                    android:hint="아기 이름을 입력해주세요"
+                    android:inputType="text"
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/babyNumEdit"
@@ -169,7 +175,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/register_edit_mt"
                     android:layout_marginRight="15dp"
-                    android:hint="아기등록번호를 입력해주세요"
+                    android:hint="아기 등록번호를 입력해주세요"
                     android:inputType="number"
                     android:maxLength="13"
                     android:textSize="20sp" />
