@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VisitAdminUserSelActivity"></activity>
+        <activity android:name=".Visit.VisitAdminCalendarActivity"></activity>
+        <activity android:name=".VisitAdminUserSelActivity" />
         <activity android:name=".Notice.NoticeUpdateActivity" />
         <activity android:name=".Notice.NoticeDetailActivity" />
         <activity android:name=".NoticeInsertActivity" />

@@ -2,12 +2,14 @@ package com.example.newbabyproject
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import com.example.newbabyproject.Visit.ResultVisit
+import com.example.newbabyproject.Visit.VisitAdminCalendarActivity
 import com.example.newbabyproject.Visit.VisitUserDataAdapter
 import kotlinx.android.synthetic.main.activity_notice_list.*
 import kotlinx.android.synthetic.main.activity_notice_list.recycle_view
@@ -35,6 +37,7 @@ class VisitAdminUserSelActivity : BaseActivity() {
 
         getUserList()
 
+        // 보호자 검색
         userSelectEdit.addTextChangedListener (object: TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 //Do Nothing
@@ -51,7 +54,7 @@ class VisitAdminUserSelActivity : BaseActivity() {
 
 
 
-    //게시판 리스트 조회
+    // 보호자 리스트 조회
     private fun getUserList() {
         val call: Call<List<ResultVisit>> = mVisitApi.VisitAdminUserList()
         call.enqueue(object : Callback<List<ResultVisit>> {
@@ -59,8 +62,6 @@ class VisitAdminUserSelActivity : BaseActivity() {
                 call: Call<List<ResultVisit>>,
                 response: Response<List<ResultVisit>>
             ) {
-
-                Log.d("TAG", "response ${response.body()}")
                 //정상 결과
                 val result: List<ResultVisit> = response.body()!!
                 for (i in result.indices) {
@@ -112,13 +113,16 @@ class VisitAdminUserSelActivity : BaseActivity() {
     @Subscribe
     fun onItemClick(event: VisitUserDataAdapter.ItemClickEvent) {
 
-
         val parentName = userList[event.position].userName
-
+        val userId = userList[event.position].userId
         dlg.setTitle("보호자 선택 알림")
             .setMessage("선택하신 보호자($parentName)에게 작성한 게시글을 확인하시겠습니까?")
             .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
-                Toast.makeText(applicationContext, "이동합니다.", Toast.LENGTH_SHORT).show()
+                var intent = Intent(this@VisitAdminUserSelActivity, VisitAdminCalendarActivity::class.java)
+                intent.putExtra("userId", userId)
+                intent.putExtra("parentName", parentName)
+                startActivity(intent)
+                finish()
             })
             .setNegativeButton("아니오", null)
         dlg.show()
