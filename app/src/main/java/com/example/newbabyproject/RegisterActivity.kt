@@ -1,27 +1,27 @@
 package com.example.newbabyproject
 
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.util.Log
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import com.example.newbabyproject.Retrofit2.ResultModel
-import com.example.newbabyproject.Retrofit2.RetrofitClient
-import com.example.newbabyproject.Retrofit2.userApi
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_register.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
+
 
 class RegisterActivity : BaseActivity() {
 
     private var passwordOk = true
     private var babyRelation = "D"
+
+    private var callbackMethod : DatePickerDialog.OnDateSetListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,14 +46,14 @@ class RegisterActivity : BaseActivity() {
         }
 
         // 아기와의 관계 라디오 버튼 클릭시
-        babyRelationRadioGroup.setOnCheckedChangeListener{radioGroup, i ->
+        babyRelationRadioGroup.setOnCheckedChangeListener{ radioGroup, i ->
             when(i){
                 R.id.dadRadio ->
-                    if(dadRadio.isChecked){
+                    if (dadRadio.isChecked) {
                         babyRelation = "D"
                     }
                 R.id.momRadio ->
-                    if(momRadio.isChecked){
+                    if (momRadio.isChecked) {
                         babyRelation = "M"
                     }
             }
@@ -62,7 +62,7 @@ class RegisterActivity : BaseActivity() {
 
         phoneEdit.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
-
+        this.InitializeListener()
     }
 
     fun onClick(view: View) {
@@ -107,7 +107,7 @@ class RegisterActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<ResultModel>, t: Throwable) {
-                Log.d("TAG","중복검사 Failed ${t.message}")
+                Log.d("TAG", "중복검사 Failed ${t.message}")
                 // 네트워크 문제
                 Toast.makeText(
                     this@RegisterActivity,
@@ -152,7 +152,17 @@ class RegisterActivity : BaseActivity() {
             return
         }
 
-        mUserApi.userRegister(userId, userPw, userName, userPhone, babyName, babyNum, babyRelation, regDate, userAuth).enqueue(object :
+        mUserApi.userRegister(
+            userId,
+            userPw,
+            userName,
+            userPhone,
+            babyName,
+            babyNum,
+            babyRelation,
+            regDate,
+            userAuth
+        ).enqueue(object :
             Callback<ResultModel> {
             override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
 
@@ -182,5 +192,17 @@ class RegisterActivity : BaseActivity() {
             }
         })
 
+    }
+
+    fun InitializeListener() {
+        callbackMethod =
+            OnDateSetListener { view, year, monthOfYear, dayOfMonth -> babyBirthDate.setText(year.toString() + "년" + monthOfYear + "월" + dayOfMonth + "일") }
+    }
+
+    fun OnClickHandler(view: View) {
+
+        val dialog = DatePickerDialog(this, callbackMethod, 2021, 6, 10)
+
+        dialog.show()
     }
 }

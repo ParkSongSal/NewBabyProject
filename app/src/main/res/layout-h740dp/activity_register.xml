@@ -43,22 +43,11 @@
                     android:textSize="35sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:text="아래 정보를 입력해주세요."
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/register_edit_1_mt"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -99,17 +88,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="@dimen/register_edit_mt"
-                    app:passwordToggleEnabled="true"
-                    >
+                    app:passwordToggleEnabled="true">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="패스워드를 입력해주세요"
                     android:textSize="20sp"
-                    android:inputType="textPassword"
-                    android:layout_marginTop="10dp"/>
+                    android:inputType="textPassword"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -117,7 +103,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="@dimen/register_edit_mt"
                     app:passwordToggleEnabled="true"
                     >
                     <com.google.android.material.textfield.TextInputEditText
@@ -126,8 +111,7 @@
                         android:layout_height="wrap_content"
                         android:hint="패스워드를 확인해주세요"
                         android:textSize="20sp"
-                        android:inputType="textPassword"
-                        android:layout_marginTop="10dp"/>
+                        android:inputType="textPassword"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <EditText
@@ -135,7 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="@dimen/register_edit_mt"
+                    android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
                     android:hint="보호자 이름을 입력해주세요"
                     android:inputType="text"
@@ -146,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="@dimen/register_edit_mt">
+                    android:layout_marginTop="5dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/phoneEdit"
                         android:layout_width="match_parent"
@@ -162,7 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="@dimen/register_edit_mt"
+                    android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
                     android:hint="아기 이름을 입력해주세요"
                     android:inputType="text"
@@ -173,12 +157,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="@dimen/register_edit_mt"
+                    android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
                     android:hint="아기 등록번호를 입력해주세요"
                     android:inputType="number"
                     android:maxLength="13"
                     android:textSize="20sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -187,10 +172,37 @@
                     android:textColor="@color/blackColor"
                     android:layout_marginLeft="20dp" />
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/register_edit_mt"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:weightSum="2"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/babyBirthDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableRight="@drawable/ic_baseline_date_range_24"
+                        android:hint="출생일자"
+                        android:onClick="OnClickHandler" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="출생시간"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -230,7 +242,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/register_btn_mt"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
