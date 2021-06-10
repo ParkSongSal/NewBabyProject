@@ -19,10 +19,10 @@
 
         <TextView
             android:id="@+id/mainTitleTxt"
-            android:layout_width="210dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="경산대학교병원 신생아\n중환자실"
+            android:text="경상국립대학교병원 신생아\n중환자실"
             android:lineSpacingExtra ="7dp"
             android:textColor="@color/mainTextBoldColor"
             android:textSize="18sp" />

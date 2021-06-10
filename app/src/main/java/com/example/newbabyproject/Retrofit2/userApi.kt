@@ -23,6 +23,7 @@ interface userApi {
                      @Query("userPw") userPw: String,
                      @Query("userName") userName : String,
                      @Query("userPhone") userPhone : String,
+                     @Query("babyName") babyName : String,
                      @Query("babyNum") babyNum : String,
                      @Query("babyRelation") babyRelation : String,
                      @Query("regDate") regDate : String,
