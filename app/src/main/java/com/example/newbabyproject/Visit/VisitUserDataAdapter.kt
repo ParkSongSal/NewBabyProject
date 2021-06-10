@@ -5,19 +5,24 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newbabyproject.Notice.ResultNotice
 import com.example.newbabyproject.R
-import com.example.newbabyproject.utils.Common
 import com.github.siyamed.shapeimageview.RoundedImageView
 import org.greenrobot.eventbus.EventBus
 
 open class VisitUserDataAdapter     //this.saveList = saveList;
     (//private final List<getServerImage> saveList;
-    private val context: Context,
-    private val mData: MutableList<ResultVisit>
+    private var context: Context,
+    private var mData: MutableList<ResultVisit>,
+
 ) :
-    RecyclerView.Adapter<VisitUserDataAdapter.ViewHolder>() {
+    RecyclerView.Adapter<VisitUserDataAdapter.ViewHolder>(), Filterable {
+
+    private var filterList : MutableList<ResultVisit> = mData
 
     //Event Bus 클래스
     class ItemClickEvent     //this.id = id;
@@ -66,6 +71,33 @@ open class VisitUserDataAdapter     //this.saveList = saveList;
             this.imageView = imageView
             this.babyNameTxt = babyNameTxt
             this.parentNameTxt = parentNameTxt
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence): FilterResults {
+                val charString = constraint.toString()
+                mData = if (charString.isEmpty()) {
+                    filterList
+                } else {
+                    val filteredList : MutableList<ResultVisit> = arrayListOf()
+                    for (item in filterList) {
+                        if(item.userName.contains(charString.toLowerCase())) {
+                            filteredList.add(item)
+                        }
+                    }
+                    filteredList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = mData
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence, results: FilterResults) {
+                mData  = results.values as MutableList<ResultVisit>
+                notifyDataSetChanged()
+            }
         }
     }
 }

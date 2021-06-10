@@ -75,4 +75,18 @@ public class ResultVisit {
     public void setBabyRelation(String babyRelation) {
         this.babyRelation = babyRelation;
     }
+
+
+    @Override
+    public String toString() {
+        return "ResultVisit{" +
+                "result='" + result + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", babyName='" + babyName + '\'' +
+                ", babyNum='" + babyNum + '\'' +
+                ", babyRelation='" + babyRelation + '\'' +
+                '}';
+    }
 }

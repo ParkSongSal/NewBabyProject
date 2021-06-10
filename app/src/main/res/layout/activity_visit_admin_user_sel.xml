@@ -40,7 +40,7 @@
             tools:ignore="MissingConstraints">
 
             <EditText
-                android:id="@+id/EditTextFilter"
+                android:id="@+id/userSelectEdit"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:drawableEnd="@drawable/ic_search_black_24dp"
@@ -50,6 +50,8 @@
                 android:paddingLeft="10dp"
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_view"

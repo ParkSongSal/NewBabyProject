@@ -2,28 +2,28 @@ package com.example.newbabyproject
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
-import com.example.newbabyproject.Notice.NoticeDataAdapter
-import com.example.newbabyproject.Notice.NoticeDetailActivity
-import com.example.newbabyproject.Notice.ResultNotice
 import com.example.newbabyproject.Visit.ResultVisit
 import com.example.newbabyproject.Visit.VisitUserDataAdapter
 import kotlinx.android.synthetic.main.activity_notice_list.*
+import kotlinx.android.synthetic.main.activity_notice_list.recycle_view
+import kotlinx.android.synthetic.main.activity_visit_admin_user_sel.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class VisitAdminUserSelActivity : BaseActivity() {
 
-    var  userList: MutableList<ResultVisit> = arrayListOf()
-    private var mAdapter: VisitUserDataAdapter? = null
+    var userList: MutableList<ResultVisit> = arrayListOf()
 
+    private var mAdapter: VisitUserDataAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +33,23 @@ class VisitAdminUserSelActivity : BaseActivity() {
 
         loginId = setting.getString("loginId", "").toString()
 
-
         getUserList()
+
+        userSelectEdit.addTextChangedListener (object: TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //Do Nothing
+            }
+            override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                mAdapter?.filter?.filter(charSequence)
+            }
+            override fun afterTextChanged(charSequence: Editable?) {
+                //Do Nothing
+            }
+        })
     }
+
+
+
 
     //게시판 리스트 조회
     private fun getUserList() {
