@@ -5,18 +5,22 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newbabyproject.R
 import com.example.newbabyproject.utils.Common
 import org.greenrobot.eventbus.EventBus
 
-open class NoticeDataAdapter     //this.saveList = saveList;
-    (//private final List<getServerImage> saveList;
-    private val context: Context,
-    private val mData: MutableList<ResultNotice>
-) :
-    RecyclerView.Adapter<NoticeDataAdapter.ViewHolder>() {
+open class NoticeDataAdapter(
+    var context: Context,
+    var mData: MutableList<ResultNotice>
+) : RecyclerView.Adapter<NoticeDataAdapter.ViewHolder>(), Filterable{
+
+    //private var mData : MutableList<ResultNotice>
+    private var filterList : MutableList<ResultNotice> = mData
+
 
     //Event Bus 클래스
     class ItemClickEvent     //this.id = id;
@@ -60,6 +64,33 @@ open class NoticeDataAdapter     //this.saveList = saveList;
             this.title_txt = title_txt
             this.user_txt = user_txt
             this.date_txt = date_txt
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence): FilterResults {
+                val charString = constraint.toString()
+                mData = if (charString.isEmpty()) {
+                    filterList
+                } else {
+                    val filteredList : MutableList<ResultNotice> = arrayListOf()
+                    for (item in filterList) {
+                        if(item.title.contains(charString.toLowerCase())) {
+                            filteredList.add(item)
+                        }
+                    }
+                    filteredList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = mData
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence, results: FilterResults) {
+                mData  = results.values as MutableList<ResultNotice>
+                notifyDataSetChanged()
+            }
         }
     }
 }

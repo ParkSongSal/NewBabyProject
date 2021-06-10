@@ -3,6 +3,8 @@ package com.example.newbabyproject
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -46,6 +48,18 @@ class NoticeListActivity : BaseActivity() {
         }
 
         getServerData()
+
+        EditTextFilter.addTextChangedListener (object: TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //Do Nothing
+            }
+            override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                mAdapter?.filter?.filter(charSequence)
+            }
+            override fun afterTextChanged(charSequence: Editable?) {
+                //Do Nothing
+            }
+        })
     }
 
 

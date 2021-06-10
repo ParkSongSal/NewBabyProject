@@ -45,7 +45,7 @@
                 android:layout_height="50dp"
                 android:drawableEnd="@drawable/ic_search_black_24dp"
                 android:drawableRight="@drawable/ic_search_black_24dp"
-                android:hint="닉네임 혹은 제목을 입력하세요"
+                android:hint="제목을 입력하세요"
                 android:paddingStart="5dp"
                 android:paddingLeft="10dp"
                 android:textStyle="bold" />
