@@ -6,14 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".Visit.VisitAdminCalendarActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:mcv_selectionColor="#A9E68181"
         app:mcv_showOtherDates="defaults" />
 
+        <TextView
+            android:id="@+id/parentNameTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="보호자명 : "/>
+
+        <TextView
+            android:id="@+id/writeDateTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="작성일자 : "/>
+
+        <TextView
+            android:id="@+id/visitNoticeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="면회시 주의사항 : "/>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

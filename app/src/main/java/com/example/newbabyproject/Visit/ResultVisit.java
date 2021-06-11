@@ -11,6 +11,10 @@ public class ResultVisit {
     public String babyNum;
     public String babyRelation;
 
+    private String parentId;
+    private String parentName;
+    private String visitNotice;
+    private String writeDate;
 
     public ResultVisit(String userId, String userName, String userPhone, String babyName, String babyNum, String babyRelation) {
         this.userId = userId;
@@ -19,6 +23,13 @@ public class ResultVisit {
         this.babyName = babyName;
         this.babyNum = babyNum;
         this.babyRelation = babyRelation;
+    }
+
+    public ResultVisit(String parentId, String parentName, String visitNotice, String writeDate) {
+        this.parentId = parentId;
+        this.parentName = parentName;
+        this.visitNotice = visitNotice;
+        this.writeDate = writeDate;
     }
 
     public String getResult() {
@@ -77,17 +88,35 @@ public class ResultVisit {
         this.babyRelation = babyRelation;
     }
 
+    public String getParentId() {
+        return parentId;
+    }
 
-    @Override
-    public String toString() {
-        return "ResultVisit{" +
-                "result='" + result + '\'' +
-                ", userId='" + userId + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPhone='" + userPhone + '\'' +
-                ", babyName='" + babyName + '\'' +
-                ", babyNum='" + babyNum + '\'' +
-                ", babyRelation='" + babyRelation + '\'' +
-                '}';
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getWriteDate() {
+        return writeDate;
+    }
+
+    public void setWriteDate(String writeDate) {
+        this.writeDate = writeDate;
+    }
+
+    public String getVisitNotice() {
+        return visitNotice;
+    }
+
+    public void setVisitNotice(String visitNotice) {
+        this.visitNotice = visitNotice;
     }
 }

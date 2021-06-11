@@ -16,7 +16,7 @@ interface visitApi {
     fun VisitAdminUserList() : Call<List<ResultVisit>>
 
 
-    /* 소개문 등록*/
+    /* 관리자To보호자 게시글 등록*/
     @Multipart
     @POST("to_parent_board_insert.php")
     fun toParentInsert(@Part("parentId") parentId : RequestBody,
@@ -32,4 +32,10 @@ interface visitApi {
                        @Part("updateId") updateId : RequestBody,
                        @Part("updateDate") updateDate : RequestBody
     ) : Call<ResultVisit>
+
+
+    /* 관리자To보호자 게시글 리스트 */
+    @Multipart
+    @POST("to_parent_board_List.php")
+    fun toParentList(@Part("parentId") parentId : RequestBody) : Call<List<ResultVisit>>
 }

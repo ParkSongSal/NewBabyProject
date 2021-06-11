@@ -12,6 +12,7 @@ public class ResultNotice {
     private String updateId;
     private String updateDate;
 
+
     public ResultNotice(int seq, String title, String content, String insertId, String insertDate, String updateId, String updateDate) {
         this.seq = seq;
         this.title = title;
@@ -87,16 +88,5 @@ public class ResultNotice {
         this.updateDate = updateDate;
     }
 
-    @Override
-    public String toString() {
-        return "ResultNotice{" +
-                "seq=" + seq +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", insertId='" + insertId + '\'' +
-                ", insertDate='" + insertDate + '\'' +
-                ", updateId='" + updateId + '\'' +
-                ", updateDate='" + updateDate + '\'' +
-                '}';
-    }
+
 }
