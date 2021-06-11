@@ -23,8 +23,10 @@ import kotlinx.android.synthetic.main.activity_visit_admin_calendar.fab
 import java.util.*
 
 class VisitAdminCalendarActivity : BaseActivity() {
+
     var parentName : String? = ""
-    var userId : String? = ""
+    var parentId : String? = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visit_admin_calendar)
@@ -33,7 +35,7 @@ class VisitAdminCalendarActivity : BaseActivity() {
 
         if(intent != null){
             parentName = intent.getStringExtra("parentName")
-            userId = intent.getStringExtra("userId")
+            parentId = intent.getStringExtra("parentId")
         }else{
             Common.intentCommon(this@VisitAdminCalendarActivity, MainActivity::class.java)
             Toast.makeText(applicationContext, "잘못된 경로입니다.", Toast.LENGTH_SHORT).show()
@@ -103,9 +105,9 @@ class VisitAdminCalendarActivity : BaseActivity() {
         })
 
         fab.setOnClickListener {
-            intent = Intent(this@VisitAdminCalendarActivity, NoticeInsertActivity::class.java)
+            intent = Intent(this@VisitAdminCalendarActivity, VisitAdminWriteActivity::class.java)
             intent.putExtra("parentName", parentName)
-            intent.putExtra("userId", userId)
+            intent.putExtra("parentId", parentId)
             startActivity(intent)
             finish()
         }

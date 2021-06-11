@@ -11,6 +11,7 @@ public class ResultVisit {
     public String babyNum;
     public String babyRelation;
 
+
     public ResultVisit(String userId, String userName, String userPhone, String babyName, String babyNum, String babyRelation) {
         this.userId = userId;
         this.userName = userName;

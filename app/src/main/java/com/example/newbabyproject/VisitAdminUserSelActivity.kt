@@ -114,12 +114,12 @@ class VisitAdminUserSelActivity : BaseActivity() {
     fun onItemClick(event: VisitUserDataAdapter.ItemClickEvent) {
 
         val parentName = userList[event.position].userName
-        val userId = userList[event.position].userId
+        val parentId = userList[event.position].userId
         dlg.setTitle("보호자 선택 알림")
             .setMessage("선택하신 보호자($parentName)에게 작성한 게시글을 확인하시겠습니까?")
             .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
                 var intent = Intent(this@VisitAdminUserSelActivity, VisitAdminCalendarActivity::class.java)
-                intent.putExtra("userId", userId)
+                intent.putExtra("parentId", parentId)
                 intent.putExtra("parentName", parentName)
                 startActivity(intent)
                 finish()
