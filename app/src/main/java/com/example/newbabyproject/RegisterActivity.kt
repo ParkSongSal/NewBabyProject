@@ -2,6 +2,8 @@ package com.example.newbabyproject
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.app.TimePickerDialog
+import android.app.TimePickerDialog.OnTimeSetListener
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.util.Log
@@ -21,7 +23,8 @@ class RegisterActivity : BaseActivity() {
     private var passwordOk = true
     private var babyRelation = "D"
 
-    private var callbackMethod : DatePickerDialog.OnDateSetListener? = null
+    private var dateCallbackMethod: DatePickerDialog.OnDateSetListener? = null
+    private var timeCallbackMethod: TimePickerDialog.OnTimeSetListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +49,8 @@ class RegisterActivity : BaseActivity() {
         }
 
         // 아기와의 관계 라디오 버튼 클릭시
-        babyRelationRadioGroup.setOnCheckedChangeListener{ radioGroup, i ->
-            when(i){
+        babyRelationRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
+            when (i) {
                 R.id.dadRadio ->
                     if (dadRadio.isChecked) {
                         babyRelation = "D"
@@ -63,6 +66,38 @@ class RegisterActivity : BaseActivity() {
         phoneEdit.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
         this.InitializeListener()
+
+
+        babyBirthDate.onFocusChangeListener =
+            OnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    //  .. 포커스시
+                    val dialog = DatePickerDialog(this, dateCallbackMethod, 2021, 6, 10)
+
+                    dialog.show()
+                } else {
+                    //  .. 포커스 뺏겼을 때
+                }
+            }
+
+        babyBirthTime.onFocusChangeListener =
+            OnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    //  .. 포커스시
+                    val dialog = TimePickerDialog(
+                        this,
+                        android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                        timeCallbackMethod,
+                        8,
+                        10,
+                        false
+                    )
+
+                    dialog.show()
+                } else {
+                    //  .. 포커스 뺏겼을 때
+                }
+            }
     }
 
     fun onClick(view: View) {
@@ -74,10 +109,10 @@ class RegisterActivity : BaseActivity() {
     }
 
     // ID 중복검사
-    private fun validateAct(){
+    private fun validateAct() {
         val userId = userIdEdit.text.toString()
 
-        if(userId == ""){
+        if (userId == "") {
             dlg.setMessage("ID를 입력해주세요.")
                 .setNegativeButton("확인", null)
             dlg.show()
@@ -119,7 +154,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     // 회원가입
-    private fun RegisterAct(){
+    private fun RegisterAct() {
         val userId = userIdEdit.text.toString()
         val userPw = passwordEdit.text.toString()
         val userName = nameEdit.text.toString()
@@ -128,11 +163,11 @@ class RegisterActivity : BaseActivity() {
         val babyNum = babyNumEdit.text.toString()
         val regDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
         var userAuth = "U"
-        if("admin" == userId){
+        if ("admin" == userId) {
             userAuth = "A"
         }
 
-        if(!validate){
+        if (!validate) {
             dlg.setMessage("먼저 중복 체크를 해주세요.")
                 .setNegativeButton("확인", null)
             dlg.show()
@@ -145,7 +180,7 @@ class RegisterActivity : BaseActivity() {
             dlg.show()
             return
         }
-        if(!passwordOk){
+        if (!passwordOk) {
             dlg.setMessage("입력하신 패스워드가 일치하지 않습니다.")
                 .setNegativeButton("확인", null)
             dlg.show()
@@ -195,14 +230,13 @@ class RegisterActivity : BaseActivity() {
     }
 
     fun InitializeListener() {
-        callbackMethod =
-            OnDateSetListener { view, year, monthOfYear, dayOfMonth -> babyBirthDate.setText(year.toString() + "년" + monthOfYear + "월" + dayOfMonth + "일") }
-    }
+        dateCallbackMethod = OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            babyBirthDate.setText(
+                year.toString() + "년" + monthOfYear + "월" + dayOfMonth + "일"
+            )
+        }
 
-    fun OnClickHandler(view: View) {
-
-        val dialog = DatePickerDialog(this, callbackMethod, 2021, 6, 10)
-
-        dialog.show()
+        timeCallbackMethod =
+            OnTimeSetListener { view, hourOfDay, minute -> babyBirthTime.setText(hourOfDay.toString() + "시" + minute + "분") }
     }
 }
