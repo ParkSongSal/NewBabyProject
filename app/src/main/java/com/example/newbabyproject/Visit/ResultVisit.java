@@ -14,8 +14,15 @@ public class ResultVisit {
     private String parentId;
     private String parentName;
     private String visitNotice;
+    private String babyWeight;
+    private String babyLactation;
+    private String babyRequireItem;
+    private String babyEtc;
+    private String boardConfirm;
     private String writeDate;
-
+    private String replyCnt;
+    private String path;
+    private String insertDate;
     public ResultVisit(String userId, String userName, String userPhone, String babyName, String babyNum, String babyRelation) {
         this.userId = userId;
         this.userName = userName;
@@ -25,11 +32,19 @@ public class ResultVisit {
         this.babyRelation = babyRelation;
     }
 
-    public ResultVisit(String parentId, String parentName, String visitNotice, String writeDate) {
+    public ResultVisit(String parentId, String parentName, String visitNotice, String babyWeight, String babyLactation, String babyRequireItem, String babyEtc,  String writeDate, String boardConfirm, String path, String replyCnt, String insertDate) {
         this.parentId = parentId;
         this.parentName = parentName;
         this.visitNotice = visitNotice;
+        this.babyWeight = babyWeight;
+        this.babyLactation = babyLactation;
+        this.babyRequireItem = babyRequireItem;
+        this.babyEtc = babyEtc;
         this.writeDate = writeDate;
+        this.boardConfirm = boardConfirm;
+        //this.path = path;
+        //this.replyCnt = replyCnt;
+        this.insertDate = insertDate;
     }
 
     public String getResult() {
@@ -118,5 +133,70 @@ public class ResultVisit {
 
     public void setVisitNotice(String visitNotice) {
         this.visitNotice = visitNotice;
+    }
+
+
+    public String getBabyWeight() {
+        return babyWeight;
+    }
+
+    public void setBabyWeight(String babyWeight) {
+        this.babyWeight = babyWeight;
+    }
+
+    public String getBabyLactation() {
+        return babyLactation;
+    }
+
+    public void setBabyLactation(String babyLactation) {
+        this.babyLactation = babyLactation;
+    }
+
+    public String getBabyRequireItem() {
+        return babyRequireItem;
+    }
+
+    public void setBabyRequireItem(String babyRequireItem) {
+        this.babyRequireItem = babyRequireItem;
+    }
+
+    public String getBabyEtc() {
+        return babyEtc;
+    }
+
+    public void setBabyEtc(String babyEtc) {
+        this.babyEtc = babyEtc;
+    }
+
+    public String getBoardConfirm() {
+        return boardConfirm;
+    }
+
+    public void setBoardConfirm(String boardConfirm) {
+        this.boardConfirm = boardConfirm;
+    }
+
+    public String getReplyCnt() {
+        return replyCnt;
+    }
+
+    public void setReplyCnt(String replyCnt) {
+        this.replyCnt = replyCnt;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getInsertDate() {
+        return insertDate;
+    }
+
+    public void setInsertDate(String insertDate) {
+        this.insertDate = insertDate;
     }
 }

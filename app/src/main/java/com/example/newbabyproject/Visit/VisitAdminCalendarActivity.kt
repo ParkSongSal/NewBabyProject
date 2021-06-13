@@ -51,7 +51,7 @@ class VisitAdminCalendarActivity : BaseActivity() {
             finish()
         }
 
-        getToParentBoard(parentId)
+        //getToParentBoard(parentId)
 
 
         calendarView.state().edit()
@@ -103,7 +103,7 @@ class VisitAdminCalendarActivity : BaseActivity() {
             finish()
         }
     }
-
+/*
     fun getToParentBoard(parentId : String?){
 
         val parentIdPart = RequestBody.create(MultipartBody.FORM, parentId)
@@ -175,5 +175,5 @@ class VisitAdminCalendarActivity : BaseActivity() {
                 ).show()
             }
         })
-    }
+    }*/
 }

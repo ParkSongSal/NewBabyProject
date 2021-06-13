@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.newbabyproject.Visit.ResultVisit
 import com.example.newbabyproject.Visit.VisitAdminCalendarActivity
+import com.example.newbabyproject.Visit.VisitAdmintoParentListActivity
 import com.example.newbabyproject.Visit.VisitUserDataAdapter
 import kotlinx.android.synthetic.main.activity_notice_list.*
 import kotlinx.android.synthetic.main.activity_notice_list.recycle_view
@@ -118,7 +119,7 @@ class VisitAdminUserSelActivity : BaseActivity() {
         dlg.setTitle("보호자 선택 알림")
             .setMessage("선택하신 보호자($parentName)에게 작성한 게시글을 확인하시겠습니까?")
             .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
-                var intent = Intent(this@VisitAdminUserSelActivity, VisitAdminCalendarActivity::class.java)
+                var intent = Intent(this@VisitAdminUserSelActivity, VisitAdmintoParentListActivity::class.java)
                 intent.putExtra("parentId", parentId)
                 intent.putExtra("parentName", parentName)
                 startActivity(intent)
