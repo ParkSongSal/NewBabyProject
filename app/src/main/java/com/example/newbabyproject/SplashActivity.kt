@@ -18,6 +18,6 @@ class SplashActivity : AppCompatActivity() {
         handler.postDelayed({
             Common.intentCommon(this@SplashActivity, LoginActivity::class.java)
             finish()
-        }, 2000) // 2.5초후에 실행
+        }, 1200) // 2.5초후에 실행
     }
 }

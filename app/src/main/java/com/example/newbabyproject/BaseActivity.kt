@@ -2,12 +2,17 @@ package com.example.newbabyproject
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.newbabyproject.Retrofit2.*
+import com.example.newbabyproject.utils.Common
+import com.example.newbabyproject.utils.CustomProgressDialog
 import kotlinx.android.synthetic.main.activity_app_introduce.*
 import kotlinx.android.synthetic.main.activity_enter_introduce.*
 import kotlinx.android.synthetic.main.activity_out_introduce.*
@@ -35,6 +40,7 @@ abstract class BaseActivity : AppCompatActivity() {
     lateinit var mUserApi: userApi
     lateinit var mVisitApi: visitApi
 
+    lateinit var progressDialog : CustomProgressDialog
 
     lateinit var dlg: AlertDialog.Builder
 
@@ -44,6 +50,7 @@ abstract class BaseActivity : AppCompatActivity() {
     lateinit var setting : SharedPreferences
     lateinit var editor: SharedPreferences.Editor
 
+    val handler = Handler()
 
     fun init(context: Context) {
 
@@ -60,6 +67,8 @@ abstract class BaseActivity : AppCompatActivity() {
             android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth
         )
 
+        progressDialog = CustomProgressDialog(context)
+
         // SharedPreferences Init
         setting = getSharedPreferences("setting", MODE_PRIVATE)
         editor = setting.edit()
@@ -67,6 +76,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
 
     }
+
+
 
     /* 앱소개
     * 입원 안내문

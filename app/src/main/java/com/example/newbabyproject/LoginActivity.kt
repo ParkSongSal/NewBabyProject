@@ -1,23 +1,23 @@
 package com.example.newbabyproject
 
 import android.Manifest
-import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.newbabyproject.Retrofit2.*
 import com.example.newbabyproject.utils.Common
+import com.example.newbabyproject.utils.CustomProgressDialog
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class LoginActivity : BaseActivity() {
 
@@ -26,7 +26,6 @@ class LoginActivity : BaseActivity() {
 
     var userId = ""
     var userPassword = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -93,7 +92,13 @@ class LoginActivity : BaseActivity() {
             userPassword = setting.getString("PW", "").toString()
             idEditText.setText(userId)
             pwEditText.setText(userPassword)
-            Login(userId, userPassword)
+
+            progressDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            progressDialog.show()
+
+            handler.postDelayed({
+                Login(userId, userPassword)
+            }, 1000) // 2.5초후에 실행
 
             chk_auto.isChecked = true
 
@@ -109,7 +114,14 @@ class LoginActivity : BaseActivity() {
             R.id.loginBtn -> {
                 userId = idEditText.text.toString()
                 userPassword = pwEditText.text.toString()
-                Login(userId, userPassword)
+
+                progressDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                progressDialog.show()
+
+                handler.postDelayed({
+                    Login(userId, userPassword)
+                }, 1000) // 2.5초후에 실행
+
             }
 
             // 회원가입
@@ -126,8 +138,6 @@ class LoginActivity : BaseActivity() {
     }
 
     fun Login(userId: String, userPassword: String){
-
-        var lastedDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
 
          if("" == userId){
              Toast.makeText(this, "아이디를 입력해주세요", Toast.LENGTH_SHORT).show()
@@ -147,11 +157,14 @@ class LoginActivity : BaseActivity() {
                     editor.putString("loginId", userId)
                     editor.apply()
 
+                    progressDialog.dismiss()
+
                     //로그인 성공
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
 
-                    Toast.makeText(this@LoginActivity, "$userId 님 환영합니다!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "$userId 님 환영합니다!", Toast.LENGTH_SHORT)
+                        .show()
                 } else {  // 로그인 실패
                     Toast.makeText(this@LoginActivity, "입력하신 정보를 다시 확인바랍니다.", Toast.LENGTH_SHORT)
                         .show()
@@ -159,6 +172,8 @@ class LoginActivity : BaseActivity() {
             }
 
             override fun onFailure(call: retrofit2.Call<ResultModel>, t: Throwable) {
+
+                progressDialog.dismiss()
 
                 // 네트워크 문제
                 Toast.makeText(
