@@ -2,9 +2,11 @@ package com.example.newbabyproject
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.newbabyproject.Retrofit2.ResultModel
@@ -13,6 +15,7 @@ import com.example.newbabyproject.Retrofit2.boardApi
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.item_toolbar.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -26,9 +29,13 @@ class AppIntroduceModifyActivity : BaseActivity() {
 
     lateinit var call: Call<ResultModel>
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_introduce_modify)
+
+        toolbar.setTitleTextColor(getColor(R.color.whiteColor))
+
 
         // 초기화
         init(applicationContext)
@@ -44,19 +51,24 @@ class AppIntroduceModifyActivity : BaseActivity() {
 
         when (boardGubun) {
             "0" -> {
-                board_gubun.text = "앱 소개"
+                toolbar.title = "앱 소개 작성"
+                //board_gubun.text = "앱 소개"
                 intent = Intent(this@AppIntroduceModifyActivity, AppIntroduceActivity::class.java)
             }
             "1" -> {
-                board_gubun.text = "입원안내문"
+                toolbar.title = "입원안내문 작성"
+                //board_gubun.text = "입원안내문"
                 intent = Intent(this@AppIntroduceModifyActivity, EnterIntroduceActivity::class.java)
             }
             "2" -> {
-                board_gubun.text = "퇴원안내문"
+                toolbar.title = "퇴원안내문 작성"
+                //board_gubun.text = "퇴원안내문"
                 intent = Intent(this@AppIntroduceModifyActivity, OutIntroduceActivity::class.java)
             }
         }
 
+
+        setSupportActionBar(toolbar)
 
         setting = getSharedPreferences("setting", MODE_PRIVATE)
         editor = setting.edit()

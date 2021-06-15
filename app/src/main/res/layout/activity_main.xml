@@ -171,11 +171,13 @@
 
             <ImageView
                 android:id="@+id/intro_img"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:onClick="mOnClick"
-                android:src="@drawable/logo" />
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/visit_ico02" />
         </LinearLayout>
 
         <LinearLayout
@@ -201,11 +203,13 @@
 
             <ImageView
                 android:id="@+id/notice_img"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:onClick="mOnClick"
-                android:src="@drawable/logo" />
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/visit_ico03" />
         </LinearLayout>
     </LinearLayout>
 
@@ -239,11 +243,13 @@
 
             <ImageView
                 android:id="@+id/enter_img"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:onClick="mOnClick"
-                android:src="@drawable/logo" />
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/visit_ico04" />
         </LinearLayout>
 
         <LinearLayout
@@ -269,11 +275,13 @@
 
             <ImageView
                 android:id="@+id/leave_img"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:scaleType="fitCenter"
                 android:onClick="mOnClick"
-                android:src="@drawable/logo" />
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/visit_ico05" />
         </LinearLayout>
     </LinearLayout>
 
@@ -307,11 +315,13 @@
 
             <ImageView
                 android:id="@+id/visit_img"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:onClick="mOnClick"
-                android:src="@drawable/logo" />
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/visit_ico01" />
         </LinearLayout>
 
     </LinearLayout>
