@@ -30,11 +30,14 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
+        //actionBar?.title = "로그인"
+
         // Retrofit 서버연결
         init(this@LoginActivity)
 
-        val actionBar: ActionBar? = supportActionBar
-        actionBar?.title = "로그인"
+
 
         if (ActivityCompat.checkSelfPermission(
                 this,

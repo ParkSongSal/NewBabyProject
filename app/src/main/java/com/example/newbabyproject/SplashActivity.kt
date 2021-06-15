@@ -2,13 +2,20 @@ package com.example.newbabyproject
 
 import android.os.Bundle
 import android.os.Handler
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.example.newbabyproject.utils.Common
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        val actionBar = supportActionBar
+        actionBar?.hide()
+
+        init(this@SplashActivity)
+
 
         startLoading()
     }

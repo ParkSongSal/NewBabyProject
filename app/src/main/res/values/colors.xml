@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimary">#fff5d6</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#f9ce42</color>
 
@@ -34,6 +34,6 @@
     <color name="blackColor">#000000</color>
 
     <!--로딩화면 배경색-->
-    <color name="splash_bg">#eee</color>
+    <color name="splash_bg">#fffff7</color>
 
 </resources>
