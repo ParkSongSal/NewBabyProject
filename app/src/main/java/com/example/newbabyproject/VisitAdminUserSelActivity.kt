@@ -6,10 +6,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
 import com.example.newbabyproject.Visit.ResultVisit
-import com.example.newbabyproject.Visit.VisitAdminCalendarActivity
 import com.example.newbabyproject.Visit.VisitAdmintoParentListActivity
 import com.example.newbabyproject.Visit.VisitUserDataAdapter
 import kotlinx.android.synthetic.main.activity_notice_list.*
@@ -107,7 +105,6 @@ class VisitAdminUserSelActivity : BaseActivity() {
         super.onStop()
         EventBus.getDefault().unregister(this)
     }
-
 
     // 보낸이 : NoticeDataAdapter
     @SuppressLint("RestrictedApi")

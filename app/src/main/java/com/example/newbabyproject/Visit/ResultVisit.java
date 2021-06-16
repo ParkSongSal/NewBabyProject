@@ -1,6 +1,8 @@
 package com.example.newbabyproject.Visit;
 
-public class ResultVisit {
+import java.io.Serializable;
+
+public class ResultVisit implements Serializable {
 
     public String result;
 
@@ -198,5 +200,30 @@ public class ResultVisit {
 
     public void setInsertDate(String insertDate) {
         this.insertDate = insertDate;
+    }
+
+    @Override
+    public String toString() {
+        return "ResultVisit{" +
+                "result='" + result + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", babyName='" + babyName + '\'' +
+                ", babyNum='" + babyNum + '\'' +
+                ", babyRelation='" + babyRelation + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", parentName='" + parentName + '\'' +
+                ", visitNotice='" + visitNotice + '\'' +
+                ", babyWeight='" + babyWeight + '\'' +
+                ", babyLactation='" + babyLactation + '\'' +
+                ", babyRequireItem='" + babyRequireItem + '\'' +
+                ", babyEtc='" + babyEtc + '\'' +
+                ", boardConfirm='" + boardConfirm + '\'' +
+                ", writeDate='" + writeDate + '\'' +
+                ", replyCnt='" + replyCnt + '\'' +
+                ", path='" + path + '\'' +
+                ", insertDate='" + insertDate + '\'' +
+                '}';
     }
 }

@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import com.example.newbabyproject.Visit.VisitParentCalendarActivity
 import com.example.newbabyproject.utils.Common
 
 class MainActivity : BaseActivity() {
@@ -74,11 +74,7 @@ class MainActivity : BaseActivity() {
                 if("admin" == loginId){
                     Common.intentCommon(this@MainActivity, VisitAdminUserSelActivity::class.java)
                 }else{
-                    Toast.makeText(
-                        this@MainActivity,
-                        "관리자만 접근 가능합니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Common.intentCommon(this@MainActivity, VisitParentCalendarActivity::class.java)
                 }
 
             }

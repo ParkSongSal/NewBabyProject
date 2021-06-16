@@ -1,27 +1,22 @@
 package com.example.newbabyproject.Visit
 
 import android.content.Intent
-import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.annotation.RequiresApi
 import com.example.fastcampusandroid.Calendar.EventDecorator
 import com.example.fastcampusandroid.Calendar.SaturdayDecorator
 import com.example.fastcampusandroid.Calendar.SundayDecorator
 import com.example.newbabyproject.BaseActivity
-import com.example.newbabyproject.MainActivity
-import com.example.newbabyproject.Notice.NoticeDataAdapter
-import com.example.newbabyproject.Notice.ResultNotice
-import com.example.newbabyproject.NoticeInsertActivity
 import com.example.newbabyproject.R
-import com.example.newbabyproject.utils.Common
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.CalendarMode
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import kotlinx.android.synthetic.main.activity_notice_list.*
 import kotlinx.android.synthetic.main.activity_visit_admin_calendar.*
-import kotlinx.android.synthetic.main.activity_visit_admin_calendar.fab
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -29,29 +24,24 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class VisitAdminCalendarActivity : BaseActivity() {
+class VisitParentCalendarActivity : BaseActivity() {
 
     var parentName : String? = ""
     var parentId : String? = ""
     var writeDateAry = ArrayList<ResultVisit>()
+    var detailAry = ArrayList<ResultVisit>()
+
     val calendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visit_admin_calendar)
 
-        init(this@VisitAdminCalendarActivity)
+        init(this@VisitParentCalendarActivity)
 
-        if(intent != null){
-            parentName = intent.getStringExtra("parentName")
-            parentId = intent.getStringExtra("parentId")
-        }else{
-            Common.intentCommon(this@VisitAdminCalendarActivity, MainActivity::class.java)
-            Toast.makeText(applicationContext, "잘못된 경로입니다.", Toast.LENGTH_SHORT).show()
-            finish()
-        }
+        loginId = setting.getString("loginId", "").toString()
 
-        //getToParentBoard(parentId)
+        getToParentBoard(loginId)
 
 
         calendarView.state().edit()
@@ -72,7 +62,6 @@ class VisitAdminCalendarActivity : BaseActivity() {
 
 
 
-
         calendarView.setOnDateChangedListener(OnDateSelectedListener { widget, date, selected ->
             val Year = date.year
             val Month = date.month + 1
@@ -83,33 +72,34 @@ class VisitAdminCalendarActivity : BaseActivity() {
                 "$Year-$Month-$Day"
             }
             calendarView.clearSelection()
-
             for (i in writeDateAry.indices) {
-                if(shot_Day == writeDateAry[i].writeDate){
-                    parentNameTxt.text = "보호자명 : " + writeDateAry[i].parentName
+                if (shot_Day == writeDateAry[i].writeDate) {
+                    parentNameTxt.text = writeDateAry[i].parentName + " 보호자님께"
                     writeDateTxt.text = "작성일자 : " + writeDateAry[i].writeDate
                     visitNoticeTxt.text = "면회시 주의사항 : " + writeDateAry[i].visitNotice
+                    detailBtn.visibility = View.VISIBLE
+                    detailAry.add(writeDateAry[i])
                 }
             }
 
-
         })
 
-        fab.setOnClickListener {
-            intent = Intent(this@VisitAdminCalendarActivity, VisitAdminWriteActivity::class.java)
-            intent.putExtra("parentName", parentName)
-            intent.putExtra("parentId", parentId)
+        detailBtn.setOnClickListener{
+            val resultVisit : ResultVisit = detailAry[0]
+            intent.putExtra("resultVisit", resultVisit)
+            intent = Intent(this@VisitParentCalendarActivity, VisitUserDetailActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
-/*
-    fun getToParentBoard(parentId : String?){
+
+    fun getToParentBoard(parentId: String?){
 
         val parentIdPart = RequestBody.create(MultipartBody.FORM, parentId)
 
         val call: Call<List<ResultVisit>> = mVisitApi.toParentList(parentIdPart)
         call.enqueue(object : Callback<List<ResultVisit>> {
+            @RequiresApi(Build.VERSION_CODES.M)
             override fun onResponse(
                 call: Call<List<ResultVisit>>,
                 response: Response<List<ResultVisit>>
@@ -119,23 +109,39 @@ class VisitAdminCalendarActivity : BaseActivity() {
                 //정상 결과
                 val result: List<ResultVisit> = response.body()!!
                 for (i in result.indices) {
-                    val userId : String = result[i].userId
-                    val parentName : String = result[i].parentName
-                    val visitNotice : String = result[i].visitNotice
-                    val writeDate : String = result[i].writeDate
+                    val userId: String = result[i].userId
+                    val parentName: String = result[i].parentName
+                    val visitNotice: String = result[i].visitNotice
+                    val babyWeight = result[i].babyWeight
+                    val babyLactation = result[i].babyLactation
+                    val babyRequireItem = result[i].babyRequireItem
+                    val babyEtc = result[i].babyEtc
+                    val writeDate: String = result[i].writeDate
+                    val boardConfirm = result[i].boardConfirm
+                    //val path = result[i].path
+                    //val replyCnt = result[i].replyCnt
+                    val insertDate = result[i].insertDate
 
                     val getServerdata = ResultVisit(
-                       userId,
+                        userId,
                         parentName,
                         visitNotice,
-                        writeDate
+                        babyWeight,
+                        babyLactation,
+                        babyRequireItem,
+                        babyEtc,
+                        writeDate,
+                        boardConfirm,
+                        null,
+                        null,
+                        insertDate
                     )
 
                     writeDateAry.add(getServerdata)
                     //saveList.add(getServerdata)
 
                     for (i in writeDateAry.indices) {
-                        val time =  writeDateAry[i].writeDate.split("-".toRegex()).toTypedArray()
+                        val time = writeDateAry[i].writeDate.split("-".toRegex()).toTypedArray()
                         //val time: Array<String> = result[i].split(",".toRegex()).toTypedArray()
 
                         val year = time[0].toInt()
@@ -144,24 +150,32 @@ class VisitAdminCalendarActivity : BaseActivity() {
 
                         calendar.set(Calendar.YEAR, year)
 
-                        when(month){
-                            1 -> calendar.set(Calendar.MONTH,0)
-                            2 -> calendar.set(Calendar.MONTH,1)
-                            3 -> calendar.set(Calendar.MONTH,2)
-                            4 -> calendar.set(Calendar.MONTH,3)
-                            5 -> calendar.set(Calendar.MONTH,4)
-                            6 -> calendar.set(Calendar.MONTH,5)
-                            7 -> calendar.set(Calendar.MONTH,6)
-                            8 -> calendar.set(Calendar.MONTH,7)
-                            9 -> calendar.set(Calendar.MONTH,8)
-                            10 -> calendar.set(Calendar.MONTH,9)
-                            11 -> calendar.set(Calendar.MONTH,10)
-                            12 -> calendar.set(Calendar.MONTH,11)
-                            else -> Log.d("TAG","no Point!")
+                        when (month) {
+                            1 -> calendar.set(Calendar.MONTH, 0)
+                            2 -> calendar.set(Calendar.MONTH, 1)
+                            3 -> calendar.set(Calendar.MONTH, 2)
+                            4 -> calendar.set(Calendar.MONTH, 3)
+                            5 -> calendar.set(Calendar.MONTH, 4)
+                            6 -> calendar.set(Calendar.MONTH, 5)
+                            7 -> calendar.set(Calendar.MONTH, 6)
+                            8 -> calendar.set(Calendar.MONTH, 7)
+                            9 -> calendar.set(Calendar.MONTH, 8)
+                            10 -> calendar.set(Calendar.MONTH, 9)
+                            11 -> calendar.set(Calendar.MONTH, 10)
+                            12 -> calendar.set(Calendar.MONTH, 11)
+                            else -> Log.d("TAG", "no Point!")
                         }
                         calendar.set(Calendar.DATE, dayy)
 
-                        calendarView.addDecorator(EventDecorator(Color.RED, Collections.singleton(CalendarDay.from(calendar))))
+                        calendarView.addDecorator(
+                            EventDecorator(
+                                getColor(R.color.mainAccentColor2), Collections.singleton(
+                                    CalendarDay.from(
+                                        calendar
+                                    )
+                                )
+                            )
+                        )
                     }
                 }
             }
@@ -169,11 +183,11 @@ class VisitAdminCalendarActivity : BaseActivity() {
             override fun onFailure(call: Call<List<ResultVisit>>, t: Throwable) {
                 // 네트워크 문제
                 Toast.makeText(
-                    this@VisitAdminCalendarActivity,
+                    this@VisitParentCalendarActivity,
                     "데이터 접속 상태를 확인 후 다시 시도해주세요.",
                     Toast.LENGTH_LONG
                 ).show()
             }
         })
-    }*/
+    }
 }

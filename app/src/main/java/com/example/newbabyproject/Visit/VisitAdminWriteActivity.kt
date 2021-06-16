@@ -1,14 +1,12 @@
 package com.example.newbabyproject.Visit
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.example.newbabyproject.BaseActivity
 import com.example.newbabyproject.MainActivity
 import com.example.newbabyproject.R
-import com.example.newbabyproject.Retrofit2.ResultModel
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.*
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.contentTxt
@@ -95,7 +93,7 @@ class VisitAdminWriteActivity : BaseActivity() {
 
                 // 정상결과
                 if (response.body()!!.result == "success") {
-                    intent = Intent(this@VisitAdminWriteActivity, VisitAdminCalendarActivity::class.java)
+                    intent = Intent(this@VisitAdminWriteActivity, VisitParentCalendarActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivity(intent)
                     finish()

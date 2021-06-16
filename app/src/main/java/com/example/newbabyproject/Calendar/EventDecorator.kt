@@ -27,6 +27,6 @@ class EventDecorator : DayViewDecorator {
     }
 
     override fun decorate(view: DayViewFacade?) {
-        view?.addSpan(DotSpan(10F, color))
+        view?.addSpan(DotSpan(8F, color))
     }
 }

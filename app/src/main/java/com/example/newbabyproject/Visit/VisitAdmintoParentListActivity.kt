@@ -9,7 +9,6 @@ import com.example.newbabyproject.MainActivity
 import com.example.newbabyproject.R
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_visit_admin_calendar.*
-import kotlinx.android.synthetic.main.activity_visit_admin_calendar.fab
 import kotlinx.android.synthetic.main.activity_visit_adminto_parent_list.*
 import kotlinx.android.synthetic.main.item_to_parent.*
 import okhttp3.MultipartBody
