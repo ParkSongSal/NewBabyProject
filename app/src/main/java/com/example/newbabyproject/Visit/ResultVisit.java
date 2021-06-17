@@ -11,6 +11,8 @@ public class ResultVisit implements Serializable {
     public String userPhone;
     public String babyName;
     public String babyNum;
+    public String babyBirthDate;
+    public String babyBirthTime;
     public String babyRelation;
 
     private String parentId;
@@ -95,6 +97,22 @@ public class ResultVisit implements Serializable {
 
     public void setBabyNum(String babyNum) {
         this.babyNum = babyNum;
+    }
+
+    public String getBabyBirthDate() {
+        return babyBirthDate;
+    }
+
+    public void setBabyBirthDate(String babyBirthDate) {
+        this.babyBirthDate = babyBirthDate;
+    }
+
+    public String getBabyBirthTime() {
+        return babyBirthTime;
+    }
+
+    public void setBabyBirthTime(String babyBirthTime) {
+        this.babyBirthTime = babyBirthTime;
     }
 
     public String getBabyRelation() {

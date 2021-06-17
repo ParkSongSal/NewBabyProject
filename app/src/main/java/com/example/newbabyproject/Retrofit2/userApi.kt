@@ -1,9 +1,9 @@
 package com.example.newbabyproject.Retrofit2
 
+import com.example.newbabyproject.Visit.ResultVisit
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface userApi {
 
@@ -30,5 +30,11 @@ interface userApi {
                      @Query("babyRelation") babyRelation : String,
                      @Query("regDate") regDate : String,
                      @Query("userAuth") userAuth : String) : Call<ResultModel>
+
+
+    /* 메인 아기 정보 */
+    @Multipart
+    @POST("mainBabyInfo.php")
+    fun mainBabyInfo(@Part("loginId") loginId : RequestBody) : Call<List<ResultVisit>>
 
 }

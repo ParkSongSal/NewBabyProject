@@ -3,10 +3,22 @@ package com.example.newbabyproject
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.newbabyproject.Retrofit2.ResultIntroduce
+import com.example.newbabyproject.Visit.ResultVisit
 import com.example.newbabyproject.Visit.VisitParentCalendarActivity
 import com.example.newbabyproject.utils.Common
+import kotlinx.android.synthetic.main.activity_app_introduce.*
+import kotlinx.android.synthetic.main.activity_enter_introduce.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_out_introduce.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +29,7 @@ class MainActivity : BaseActivity() {
 
         loginId = setting.getString("loginId", "").toString()
 
+        getBabyInfo(loginId)
     }
 
     fun mOnClick(view: View) {
@@ -32,18 +45,18 @@ class MainActivity : BaseActivity() {
             /* 입원 안내문 소개  */
             R.id.enter_ll,
             R.id.enterTxt,
-            R.id.enter_img ->{
+            R.id.enter_img -> {
                 Common.intentCommon(this@MainActivity, EnterIntroduceActivity::class.java)
             }
 
             /* 퇴원 안내문 소개*/
             R.id.leave_ll,
             R.id.leave_txt,
-            R.id.leave_img ->{
+            R.id.leave_img -> {
                 Common.intentCommon(this@MainActivity, OutIntroduceActivity::class.java)
             }
 
-            R.id.logoutImg ->{
+            R.id.logoutImg -> {
                 dlg.setTitle("로그아웃 알림")
                     .setMessage("로그아웃 하시겠습니까?")
                     .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
@@ -64,16 +77,16 @@ class MainActivity : BaseActivity() {
             /* 공지사항 */
             R.id.notice_ll,
             R.id.notice_txt,
-            R.id.notice_img ->{
+            R.id.notice_img -> {
                 Common.intentCommon(this@MainActivity, NoticeListActivity::class.java)
             }
             /* 면회 */
             R.id.visit_ll,
             R.id.visitBtn,
-            R.id.visit_img ->{
-                if("admin" == loginId){
+            R.id.visit_img -> {
+                if ("admin" == loginId) {
                     Common.intentCommon(this@MainActivity, VisitAdminUserSelActivity::class.java)
-                }else{
+                } else {
                     Common.intentCommon(this@MainActivity, VisitParentCalendarActivity::class.java)
                 }
 
@@ -94,16 +107,48 @@ class MainActivity : BaseActivity() {
         startActivity(intent)
         finish()
     }
+
+
+    fun getBabyInfo(loginId: String) {
+        if(loginId == "admin"){
+            Login_txt.text = "메인"
+            babyNameTxt.text = "관리자님"
+            babyBirthDateTxt.text = "환영합니다."
+        }else{
+            val loginIdPart = RequestBody.create(MultipartBody.FORM, loginId)
+
+            mUserApi.mainBabyInfo(loginIdPart).enqueue(object :
+                Callback<List<ResultVisit>> {
+                override fun onResponse(
+                    call: Call<List<ResultVisit>>,
+                    response: Response<List<ResultVisit>>
+                ) {
+
+                    //정상 결과
+                    val result: List<ResultVisit>? = response.body()
+
+                    Log.d("TAG", "list : $result")
+                    for (i in result!!.indices) {
+                        babyNameTxt.text = "● " + result[i].babyName
+                        babyNumTxt.text = " " + result[i].babyNum
+                        babyBirthDateTxt.text = "● " + Common.dataSplitFormat(result[i].babyBirthDate,"date")
+                        babyBirthTimeTxt.text = Common.dataSplitFormat(result[i].babyBirthTime,"time")
+                    }
+                }
+
+                override fun onFailure(call: Call<List<ResultVisit>>, t: Throwable) {
+                    // 네트워크 문제
+                    Toast.makeText(
+                        coxt,
+                        "데이터 접속 상태를 확인 후 다시 시도해주세요.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+        }
+
+    }
 }
 
 
 
-
-           /* *//* 설정 *//*
-            R.id.settingImg,
-            R.id.setting_card,
-            R.id.settingBtn -> {
-                Common.intentCommon(this@MainActivity, SettingActivity::class.java)
-                finish()
-            }
-*/

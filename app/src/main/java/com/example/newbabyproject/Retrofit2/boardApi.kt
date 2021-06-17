@@ -73,4 +73,6 @@ interface boardApi {
     @Multipart
     @POST("notice_delete.php")
     fun NoticeDelete(@Part("seq") seq : RequestBody) : Call<ResultNotice>
+
+
 }

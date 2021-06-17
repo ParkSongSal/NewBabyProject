@@ -22,6 +22,23 @@ public class Common {
 
 
 
+    public static String dataSplitFormat(String data, String type){
+
+        String[] resultData;
+        String result = "";
+
+        if("date".equals(type)){
+            resultData = data.split("-");
+            result = resultData[0] + "년" + resultData[1] + "월" + resultData[2] + "일";
+        }else if("time".equals(type)){
+            resultData = data.split(":");
+            result = " " + resultData[0] + "시" + resultData[1] + "분 출생";
+        }
+
+
+        return result;
+    }
+
     //현재 시간
     public static String nowDate(String format){
         // 현재시간을 msec 으로 구한다.

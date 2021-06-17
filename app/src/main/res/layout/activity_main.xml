@@ -86,20 +86,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:paddingStart="40dp"
                     android:paddingLeft="40dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="● "
-                        android:textSize="8sp"/>
 
                     <TextView
-                        android:id="@+id/babyInfo1"
-                        android:layout_width="match_parent"
+                        android:id="@+id/babyNameTxt"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="류지민(Nb) 00786543"
+                        android:textSize="12sp"
+                        android:textColor="@color/mainTextBoldColor" />
+                    <TextView
+                        android:id="@+id/babyNumTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:textColor="@color/mainTextBoldColor" />
                 </LinearLayout>
@@ -109,21 +110,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:paddingStart="40dp"
                     android:paddingLeft="40dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="● "
-                        android:textSize="8sp"/>
 
                     <TextView
-                        android:id="@+id/babyInfo2"
-                        android:layout_width="match_parent"
+                        android:id="@+id/babyBirthDateTxt"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/babyInfo1"
-                        android:text="2021년 05월 05일 13시 21분 출생"
+                        android:textSize="12sp"
+                        android:textColor="@color/mainTextBoldColor" />
+                    <TextView
+                        android:id="@+id/babyBirthTimeTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:textColor="@color/mainTextBoldColor" />
                 </LinearLayout>
