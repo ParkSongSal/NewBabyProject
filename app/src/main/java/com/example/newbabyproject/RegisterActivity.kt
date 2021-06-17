@@ -4,18 +4,22 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.os.Build
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.util.Log
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.newbabyproject.Retrofit2.ResultModel
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.item_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 
 class RegisterActivity : BaseActivity() {
@@ -26,9 +30,14 @@ class RegisterActivity : BaseActivity() {
     private var dateCallbackMethod: DatePickerDialog.OnDateSetListener? = null
     private var timeCallbackMethod: TimePickerDialog.OnTimeSetListener? = null
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        toolbar.setTitleTextColor(getColor(R.color.whiteColor))
+        toolbar.title = "회원가입"
+        setSupportActionBar(toolbar)
 
         init(applicationContext)
 
@@ -161,6 +170,8 @@ class RegisterActivity : BaseActivity() {
         val userPhone = phoneEdit.text.toString()
         val babyName = babyNameEdit.text.toString()
         val babyNum = babyNumEdit.text.toString()
+        val babyBirthDate = babyBirthDate.text.toString()
+        val babyBirthTime = babyBirthTime.text.toString()
         val regDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
         var userAuth = "U"
         if ("admin" == userId) {
@@ -194,6 +205,8 @@ class RegisterActivity : BaseActivity() {
             userPhone,
             babyName,
             babyNum,
+            babyBirthDate,
+            babyBirthTime,
             babyRelation,
             regDate,
             userAuth
@@ -231,12 +244,64 @@ class RegisterActivity : BaseActivity() {
 
     fun InitializeListener() {
         dateCallbackMethod = OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+            val month = when (monthOfYear) {
+                1 -> "01"
+                2 -> "02"
+                3 -> "03"
+                4 -> "04"
+                5 -> "05"
+                6 -> "06"
+                7 -> "07"
+                8 -> "08"
+                9 -> "09"
+                else -> monthOfYear.toString()
+            }
+            val day = when (dayOfMonth) {
+                1 -> "01"
+                2 -> "02"
+                3 -> "03"
+                4 -> "04"
+                5 -> "05"
+                6 -> "06"
+                7 -> "07"
+                8 -> "08"
+                9 -> "09"
+                else -> dayOfMonth.toString()
+            }
+
             babyBirthDate.setText(
-                year.toString() + "년" + monthOfYear + "월" + dayOfMonth + "일"
+                "$year-$month-$day"
             )
         }
 
         timeCallbackMethod =
-            OnTimeSetListener { view, hourOfDay, minute -> babyBirthTime.setText(hourOfDay.toString() + "시" + minute + "분") }
+            OnTimeSetListener { view, hourOfDay, minute ->
+                val hour = when (hourOfDay) {
+                    1 -> "01"
+                    2 -> "02"
+                    3 -> "03"
+                    4 -> "04"
+                    5 -> "05"
+                    6 -> "06"
+                    7 -> "07"
+                    8 -> "08"
+                    9 -> "09"
+                    else -> hourOfDay.toString()
+                }
+                val min = when (minute) {
+                    1 -> "01"
+                    2 -> "02"
+                    3 -> "03"
+                    4 -> "04"
+                    5 -> "05"
+                    6 -> "06"
+                    7 -> "07"
+                    8 -> "08"
+                    9 -> "09"
+                    else -> minute.toString()
+                }
+                babyBirthTime.setText("$hour:$min")
+            }
     }
 }

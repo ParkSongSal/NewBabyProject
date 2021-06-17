@@ -1,283 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainColor"
+    android:orientation="vertical"
     tools:context=".RegisterActivity">
+
+    <include
+        android:id="@+id/toolbarTab"
+        layout="@layout/item_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/register_marginLeft"
-        android:layout_marginTop="@dimen/register_marginTop"
-        android:layout_marginRight="@dimen/register_marginRight"
-        android:layout_marginBottom="@dimen/register_marginBottom"
-        android:orientation="vertical">
+        android:layout_margin="20dp"
+        android:background="@drawable/border_edit"
+        android:orientation="vertical"
+        android:padding="15dp">
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="@color/mainColor"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="10dp"
-            tools:ignore="MissingConstraints">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userIdEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="아이디를 입력해주세요"
+                    android:imeOptions="actionNext"
+                    android:textColorHint="@color/mainTextColor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/valiBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ripple_ok_btn"
+                android:onClick="onClick"
+                android:text="중복확인"
+                android:textColor="@color/mainTextColor" />
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEdit"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:hint="패스워드를 입력해주세요"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password2Edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="패스워드를 확인해주세요"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="보호자 이름을 입력해주세요"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="연락처를 입력해주세요"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:maxLength="13" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/babyNameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="아기 이름을 입력해주세요"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/babyNumEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="아기 등록번호를 입력해주세요"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="13" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="※병원에서 안내받은 등록번호를 입력바랍니다"
+            android:textColor="@color/blackColor"
+            android:textSize="11sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/babyBirthDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableRight="@drawable/ic_baseline_date_range_24"
+                android:imeOptions="actionNext"
+                android:hint="출생일자" />
+
+            <EditText
+                android:id="@+id/babyBirthTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableRight="@drawable/ic_baseline_access_time_24"
+                android:imeOptions="actionDone"
+                android:hint="출생시간" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingLeft="4dp"
+                android:text="아기와의 관계"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/babyRelationRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/dadRadio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/register_main_txt_mt"
-                    android:text="회원가입"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="35sp"
-                    android:textStyle="bold" />
+                    android:checked="true"
+                    android:text="부"
+                    android:textColor="@color/mainTextColor" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-
-                        android:layout_weight="1">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/userIdEdit"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="아이디를 입력해주세요"
-                            android:textColorHint="@color/mainTextColor" />
-
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <Button
-                        android:id="@+id/valiBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/ripple_ok_btn"
-                        android:onClick="onClick"
-                        android:text="중복확인"
-                        android:textColor="@color/mainTextColor"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    app:passwordToggleEnabled="true">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/passwordEdit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="패스워드를 입력해주세요"
-                        android:inputType="textPassword"
-                        android:textSize="20sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    app:passwordToggleEnabled="true">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/password2Edit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="패스워드를 확인해주세요"
-                        android:inputType="textPassword"
-                        android:textSize="20sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <EditText
-                    android:id="@+id/nameEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:hint="보호자 이름을 입력해주세요"
-                    android:inputType="text"
-                    android:textSize="20sp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/phoneEdit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="연락처를 입력해주세요"
-                        android:inputType="phone"
-                        android:maxLength="13"
-                        android:textSize="20sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <EditText
-                    android:id="@+id/babyNameEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:hint="아기 이름을 입력해주세요"
-                    android:inputType="text"
-                    android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/babyNumEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:hint="아기 등록번호를 입력해주세요"
-                    android:inputType="number"
-                    android:maxLength="13"
-                    android:textSize="20sp" />
-
-                <TextView
+                <RadioButton
+                    android:id="@+id/momRadio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="※병원에서 안내받은 등록번호를 입력바랍니다"
-                    android:textColor="@color/blackColor" />
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="모"
+                    android:textColor="@color/mainTextColor" />
 
+            </RadioGroup>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+        </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/babyBirthDate"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableRight="@drawable/ic_baseline_date_range_24"
-                        android:hint="출생일자"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/babyBirthTime"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableRight="@drawable/ic_baseline_access_time_24"
-                        android:hint="출생시간"/>
-                </LinearLayout>
+            <Button
+                android:id="@+id/registerBtn"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ripple_ok_btn"
+                android:onClick="onClick"
+                android:text="가입하기"
+                android:textColor="@color/mainTextColor" />
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:paddingLeft="4dp"
-                        android:text="아기와의 관계"
-                        android:textColor="@color/mainTextColor"
-                        android:textSize="18sp" />
-
-                    <RadioGroup
-                        android:id="@+id/babyRelationRadioGroup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/dadRadio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="부" />
-
-                        <RadioButton
-                            android:id="@+id/momRadio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="모" />
-
-                    </RadioGroup>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/registerBtn"
-                        android:layout_width="120dp"
-                        android:layout_height="50dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/ripple_ok_btn"
-                        android:onClick="onClick"
-                        android:text="가입하기"
-                        android:textColor="@color/mainTextColor"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/cancelBtn"
-                        android:layout_width="120dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/ripple_cancel_btn"
-                        android:onClick="onClick"
-                        android:text="취소하기"
-                        android:textColor="@color/whiteColor"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+            <Button
+                android:id="@+id/cancelBtn"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_cancel_btn"
+                android:onClick="onClick"
+                android:text="취소하기"
+                android:textColor="@color/whiteColor" />
+        </LinearLayout>
 
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
