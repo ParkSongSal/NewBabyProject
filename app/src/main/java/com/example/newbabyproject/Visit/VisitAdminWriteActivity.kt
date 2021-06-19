@@ -1,17 +1,21 @@
 package com.example.newbabyproject.Visit
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.newbabyproject.BaseActivity
 import com.example.newbabyproject.MainActivity
 import com.example.newbabyproject.R
+import com.example.newbabyproject.VisitAdminUserSelActivity
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.*
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.contentTxt
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.insertBtn
 import kotlinx.android.synthetic.main.activity_visit_admin_write.*
+import kotlinx.android.synthetic.main.item_toolbar.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -25,10 +29,15 @@ class VisitAdminWriteActivity : BaseActivity() {
     var parentName = ""
     var parentId = ""
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visit_admin_write)
 
+
+        toolbar.setTitleTextColor(getColor(R.color.whiteColor))
+        toolbar.title = "면회소식 등록"
+        setSupportActionBar(toolbar)
 
         init(this@VisitAdminWriteActivity)
 
@@ -93,7 +102,7 @@ class VisitAdminWriteActivity : BaseActivity() {
 
                 // 정상결과
                 if (response.body()!!.result == "success") {
-                    intent = Intent(this@VisitAdminWriteActivity, VisitAdmintoParentListActivity::class.java)
+                    intent = Intent(this@VisitAdminWriteActivity, VisitAdminUserSelActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivity(intent)
                     finish()

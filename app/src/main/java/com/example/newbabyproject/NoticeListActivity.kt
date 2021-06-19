@@ -2,17 +2,21 @@ package com.example.newbabyproject
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.SearchView
 import com.example.newbabyproject.Notice.NoticeDataAdapter
 import com.example.newbabyproject.Notice.NoticeDetailActivity
 import com.example.newbabyproject.Notice.ResultNotice
 import kotlinx.android.synthetic.main.activity_app_introduce.*
 import kotlinx.android.synthetic.main.activity_notice_list.*
+import kotlinx.android.synthetic.main.item_toolbar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import retrofit2.Call
@@ -26,10 +30,15 @@ class NoticeListActivity : BaseActivity() {
     private var mAdapter: NoticeDataAdapter? = null
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notice_list)
+
+        toolbar.setTitleTextColor(getColor(R.color.whiteColor))
+        toolbar.title = "공지사항"
+        setSupportActionBar(toolbar)
 
         init(this@NoticeListActivity)
 
@@ -49,17 +58,21 @@ class NoticeListActivity : BaseActivity() {
 
         getServerData()
 
-        EditTextFilter.addTextChangedListener (object: TextWatcher {
+        EditTextFilter.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 //Do Nothing
             }
+
             override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 mAdapter?.filter?.filter(charSequence)
             }
+
             override fun afterTextChanged(charSequence: Editable?) {
                 //Do Nothing
             }
         })
+
+
     }
 
 
@@ -137,4 +150,6 @@ class NoticeListActivity : BaseActivity() {
         startActivity(intent)
         finish()
     }
+
+
 }

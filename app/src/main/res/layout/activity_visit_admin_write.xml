@@ -6,69 +6,79 @@
     android:layout_height="match_parent"
     tools:context=".Visit.VisitAdminWriteActivity">
 
+
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:background="@drawable/border_edit"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="홍길동 보호자님에게"
-            android:textColor="@color/mainTextColor"
-            android:textSize="16sp" />
-
-
-        <EditText
-            android:id="@+id/contentTxt"
+        <include
+            android:id="@+id/toolbarTab"
+            layout="@layout/item_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="10dp"
-            android:gravity="top"
-            android:hint="면회시 주의사항을 입력해주세요" />
+            android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/babyWeightTxt"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="아기 체중을 입력해주세요" />
+            android:layout_height="0dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/border_edit"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <EditText
-            android:id="@+id/babyLactationTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="수유량을 입력해주세요" />
 
-        <EditText
-            android:id="@+id/babyRequireItemTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="필요물품을 입력해주세요" />
+            <EditText
+                android:id="@+id/contentTxt"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:gravity="top"
+                android:hint="면회시 주의사항을 입력해주세요" />
 
-        <EditText
-            android:id="@+id/babyEtcTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="기타" />
+            <EditText
+                android:id="@+id/babyWeightTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="아기 체중을 입력해주세요" />
+
+            <EditText
+                android:id="@+id/babyLactationTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="수유량을 입력해주세요" />
+
+            <EditText
+                android:id="@+id/babyRequireItemTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="필요물품을 입력해주세요" />
+
+            <EditText
+                android:id="@+id/babyEtcTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="기타" />
+
+        </LinearLayout>
+
+
         <Button
             android:id="@+id/insertBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ripple_ok_btn"
-            android:layout_marginTop="10dp"
-            android:text="등록"
-            android:textColor="@color/mainTextColor"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/ripple_ok_btn"
+            android:gravity="center"
+            android:text="등록"
+            android:textColor="@color/whiteColor"
+            android:textSize="20sp" />
     </LinearLayout>
 
 
