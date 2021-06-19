@@ -83,7 +83,7 @@ open class VisitUserDataAdapter     //this.saveList = saveList;
                 } else {
                     val filteredList : MutableList<ResultVisit> = arrayListOf()
                     for (item in filterList) {
-                        if(item.userName.contains(charString.toLowerCase())) {
+                        if(item.userName?.contains(charString.toLowerCase()) == true) {
                             filteredList.add(item)
                         }
                     }

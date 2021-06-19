@@ -64,12 +64,12 @@ class VisitAdminUserSelActivity : BaseActivity() {
                 //정상 결과
                 val result: List<ResultVisit> = response.body()!!
                 for (i in result.indices) {
-                    val USER_ID: String = result[i].userId
-                    val USER_NAME: String = result[i].userName
-                    val USER_PHONE: String = result[i].userPhone
-                    val BABY_NAME: String = result[i].babyName
-                    val BABY_NUM: String = result[i].babyNum
-                    val BABY_RELATION: String = result[i].babyRelation
+                    val USER_ID: String? = result[i].userId
+                    val USER_NAME: String? = result[i].userName
+                    val USER_PHONE: String? = result[i].userPhone
+                    val BABY_NAME: String? = result[i].babyName
+                    val BABY_NUM: String? = result[i].babyNum
+                    val BABY_RELATION: String? = result[i].babyRelation
                     val getServerdata = ResultVisit(
                         USER_ID,
                         USER_NAME,

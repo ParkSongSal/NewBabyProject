@@ -73,9 +73,9 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                 //정상 결과
                 val result: List<ResultVisit> = response.body()!!
                 for (i in result.indices) {
-                    val userId: String = result[i].userId
-                    val parentName: String = result[i].parentName
-                    val visitNotice: String = result[i].visitNotice
+                    val userId: String? = result[i].userId
+                    val parentName: String? = result[i].parentName
+                    val visitNotice: String? = result[i].visitNotice
                     val babyWeight = result[i].babyWeight
                     val babyLactation = result[i].babyLactation
                     val babyRequireItem = result[i].babyRequireItem
@@ -85,6 +85,7 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                     //val path = result[i].path
                     //val replyCnt = result[i].replyCnt
                     val insertDate = result[i].insertDate
+                    val babyName = result[i].babyName
 
                     val getServerdata = ResultVisit(
                         userId,
@@ -98,7 +99,8 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                         boardConfirm,
                         null,
                         null,
-                        insertDate
+                        insertDate,
+                        babyName
                     )
                     boardList.add(getServerdata)
                     mAdapter = AdminToParentDataAdapter(applicationContext, boardList)

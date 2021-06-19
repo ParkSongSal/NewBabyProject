@@ -22,6 +22,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 import java.util.*
 
 class VisitParentCalendarActivity : BaseActivity() {
@@ -86,8 +87,9 @@ class VisitParentCalendarActivity : BaseActivity() {
 
         detailBtn.setOnClickListener{
             val resultVisit : ResultVisit = detailAry[0]
-            intent.putExtra("resultVisit", resultVisit)
+
             intent = Intent(this@VisitParentCalendarActivity, VisitUserDetailActivity::class.java)
+            intent.putExtra("resultVisit", resultVisit as Serializable)
             startActivity(intent)
             finish()
         }
@@ -109,9 +111,9 @@ class VisitParentCalendarActivity : BaseActivity() {
                 //정상 결과
                 val result: List<ResultVisit> = response.body()!!
                 for (i in result.indices) {
-                    val userId: String = result[i].userId
-                    val parentName: String = result[i].parentName
-                    val visitNotice: String = result[i].visitNotice
+                    val userId: String? = result[i].userId
+                    val parentName: String? = result[i].parentName
+                    val visitNotice: String? = result[i].visitNotice
                     val babyWeight = result[i].babyWeight
                     val babyLactation = result[i].babyLactation
                     val babyRequireItem = result[i].babyRequireItem
@@ -121,6 +123,7 @@ class VisitParentCalendarActivity : BaseActivity() {
                     //val path = result[i].path
                     //val replyCnt = result[i].replyCnt
                     val insertDate = result[i].insertDate
+                    val babyName = result[i].babyName
 
                     val getServerdata = ResultVisit(
                         userId,
@@ -134,7 +137,8 @@ class VisitParentCalendarActivity : BaseActivity() {
                         boardConfirm,
                         null,
                         null,
-                        insertDate
+                        insertDate,
+                        babyName
                     )
 
                     writeDateAry.add(getServerdata)

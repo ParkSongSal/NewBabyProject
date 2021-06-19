@@ -27,13 +27,24 @@ public class Common {
         String[] resultData;
         String result = "";
 
-        if("date".equals(type)){
-            resultData = data.split("-");
-            result = resultData[0] + "년" + resultData[1] + "월" + resultData[2] + "일";
-        }else if("time".equals(type)){
-            resultData = data.split(":");
-            result = " " + resultData[0] + "시" + resultData[1] + "분 출생";
+        if(data != null){
+            if(!data.equals("")){
+                if("date".equals(type)){
+                    resultData = data.split("-");
+                    result = resultData[0] + "년" + resultData[1] + "월" + resultData[2] + "일";
+                }else if("time".equals(type)){
+                    resultData = data.split(":");
+                    result = " " + resultData[0] + "시" + resultData[1] + "분 출생";
+                }
+            }else{
+                if("date".equals(type)){
+                    result = "출생일자 미등록";
+                }
+            }
+        }else{
+            result = "미등록";
         }
+
 
 
         return result;

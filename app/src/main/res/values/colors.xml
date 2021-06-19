@@ -27,6 +27,9 @@
     <!--노란색2-->
     <color name="mainAccentColor2">#ebd58d</color>
 
+    <!--강조노란색-->
+    <color name="mainAccentColor3">#E49828</color>
+
     <!--흰색-->
     <color name="whiteColor">#ffffff</color>
 

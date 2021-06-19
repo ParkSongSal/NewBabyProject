@@ -1,227 +1,77 @@
-package com.example.newbabyproject.Visit;
+package com.example.newbabyproject.Visit
 
-import java.io.Serializable;
+import java.io.Serializable
 
-public class ResultVisit implements Serializable {
+class ResultVisit : Serializable {
+    var result: String? = null
+    var userId: String? = null
+    var userName: String? = null
+    var userPhone: String? = null
+    var babyName: String? = null
+    var babyNum: String? = null
+    var babyBirthDate: String? = null
+    var babyBirthTime: String? = null
+    var babyRelation: String? = null
+    var parentId: String? = null
+    var parentName: String? = null
+    var visitNotice: String? = null
+    var babyWeight: String? = null
+    var babyLactation: String? = null
+    var babyRequireItem: String? = null
+    var babyEtc: String? = null
+    var boardConfirm: String? = null
+    var writeDate: String = ""
+    var replyCnt: String? = null
+    var path: String? = null
+    var insertDate: String? = null
 
-    public String result;
-
-    public String userId;
-    public String userName;
-    public String userPhone;
-    public String babyName;
-    public String babyNum;
-    public String babyBirthDate;
-    public String babyBirthTime;
-    public String babyRelation;
-
-    private String parentId;
-    private String parentName;
-    private String visitNotice;
-    private String babyWeight;
-    private String babyLactation;
-    private String babyRequireItem;
-    private String babyEtc;
-    private String boardConfirm;
-    private String writeDate;
-    private String replyCnt;
-    private String path;
-    private String insertDate;
-    public ResultVisit(String userId, String userName, String userPhone, String babyName, String babyNum, String babyRelation) {
-        this.userId = userId;
-        this.userName = userName;
-        this.userPhone = userPhone;
-        this.babyName = babyName;
-        this.babyNum = babyNum;
-        this.babyRelation = babyRelation;
+    constructor(
+        userId: String?,
+        userName: String?,
+        userPhone: String?,
+        babyName: String?,
+        babyNum: String?,
+        babyRelation: String?
+    ) {
+        this.userId = userId
+        this.userName = userName
+        this.userPhone = userPhone
+        this.babyName = babyName
+        this.babyNum = babyNum
+        this.babyRelation = babyRelation
     }
 
-    public ResultVisit(String parentId, String parentName, String visitNotice, String babyWeight, String babyLactation, String babyRequireItem, String babyEtc,  String writeDate, String boardConfirm, String path, String replyCnt, String insertDate) {
-        this.parentId = parentId;
-        this.parentName = parentName;
-        this.visitNotice = visitNotice;
-        this.babyWeight = babyWeight;
-        this.babyLactation = babyLactation;
-        this.babyRequireItem = babyRequireItem;
-        this.babyEtc = babyEtc;
-        this.writeDate = writeDate;
-        this.boardConfirm = boardConfirm;
+    constructor(
+        parentId: String?,
+        parentName: String?,
+        visitNotice: String?,
+        babyWeight: String?,
+        babyLactation: String?,
+        babyRequireItem: String?,
+        babyEtc: String?,
+        writeDate: String,
+        boardConfirm: String?,
+        path: String?,
+        replyCnt: String?,
+        insertDate: String?,
+        babyName : String?
+    ) {
+        this.parentId = parentId
+        this.parentName = parentName
+        this.visitNotice = visitNotice
+        this.babyWeight = babyWeight
+        this.babyLactation = babyLactation
+        this.babyRequireItem = babyRequireItem
+        this.babyEtc = babyEtc
+        this.writeDate = writeDate
+        this.boardConfirm = boardConfirm
         //this.path = path;
         //this.replyCnt = replyCnt;
-        this.insertDate = insertDate;
+        this.insertDate = insertDate
+        this.babyName = babyName
     }
 
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserPhone() {
-        return userPhone;
-    }
-
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
-    }
-
-    public String getBabyName() {
-        return babyName;
-    }
-
-    public void setBabyName(String babyName) {
-        this.babyName = babyName;
-    }
-
-    public String getBabyNum() {
-        return babyNum;
-    }
-
-    public void setBabyNum(String babyNum) {
-        this.babyNum = babyNum;
-    }
-
-    public String getBabyBirthDate() {
-        return babyBirthDate;
-    }
-
-    public void setBabyBirthDate(String babyBirthDate) {
-        this.babyBirthDate = babyBirthDate;
-    }
-
-    public String getBabyBirthTime() {
-        return babyBirthTime;
-    }
-
-    public void setBabyBirthTime(String babyBirthTime) {
-        this.babyBirthTime = babyBirthTime;
-    }
-
-    public String getBabyRelation() {
-        return babyRelation;
-    }
-
-    public void setBabyRelation(String babyRelation) {
-        this.babyRelation = babyRelation;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
-
-    public String getWriteDate() {
-        return writeDate;
-    }
-
-    public void setWriteDate(String writeDate) {
-        this.writeDate = writeDate;
-    }
-
-    public String getVisitNotice() {
-        return visitNotice;
-    }
-
-    public void setVisitNotice(String visitNotice) {
-        this.visitNotice = visitNotice;
-    }
-
-
-    public String getBabyWeight() {
-        return babyWeight;
-    }
-
-    public void setBabyWeight(String babyWeight) {
-        this.babyWeight = babyWeight;
-    }
-
-    public String getBabyLactation() {
-        return babyLactation;
-    }
-
-    public void setBabyLactation(String babyLactation) {
-        this.babyLactation = babyLactation;
-    }
-
-    public String getBabyRequireItem() {
-        return babyRequireItem;
-    }
-
-    public void setBabyRequireItem(String babyRequireItem) {
-        this.babyRequireItem = babyRequireItem;
-    }
-
-    public String getBabyEtc() {
-        return babyEtc;
-    }
-
-    public void setBabyEtc(String babyEtc) {
-        this.babyEtc = babyEtc;
-    }
-
-    public String getBoardConfirm() {
-        return boardConfirm;
-    }
-
-    public void setBoardConfirm(String boardConfirm) {
-        this.boardConfirm = boardConfirm;
-    }
-
-    public String getReplyCnt() {
-        return replyCnt;
-    }
-
-    public void setReplyCnt(String replyCnt) {
-        this.replyCnt = replyCnt;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getInsertDate() {
-        return insertDate;
-    }
-
-    public void setInsertDate(String insertDate) {
-        this.insertDate = insertDate;
-    }
-
-    @Override
-    public String toString() {
+    override fun toString(): String {
         return "ResultVisit{" +
                 "result='" + result + '\'' +
                 ", userId='" + userId + '\'' +
@@ -242,6 +92,6 @@ public class ResultVisit implements Serializable {
                 ", replyCnt='" + replyCnt + '\'' +
                 ", path='" + path + '\'' +
                 ", insertDate='" + insertDate + '\'' +
-                '}';
+                '}'
     }
 }
