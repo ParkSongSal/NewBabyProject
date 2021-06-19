@@ -102,8 +102,9 @@ class VisitAdminWriteActivity : BaseActivity() {
 
                 // 정상결과
                 if (response.body()!!.result == "success") {
-                    intent = Intent(this@VisitAdminWriteActivity, VisitAdminUserSelActivity::class.java)
+                    intent = Intent(this@VisitAdminWriteActivity, VisitAdmintoParentListActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    intent.putExtra("parentId", parentId)
                     startActivity(intent)
                     finish()
                     Toast.makeText(
