@@ -1,9 +1,11 @@
 package com.example.newbabyproject.Visit
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.newbabyproject.BaseActivity
 import com.example.newbabyproject.MainActivity
 import com.example.newbabyproject.R
@@ -11,6 +13,7 @@ import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_visit_admin_calendar.*
 import kotlinx.android.synthetic.main.activity_visit_adminto_parent_list.*
 import kotlinx.android.synthetic.main.item_to_parent.*
+import kotlinx.android.synthetic.main.item_toolbar.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -28,21 +31,25 @@ class VisitAdmintoParentListActivity : BaseActivity() {
     private var mAdapter: AdminToParentDataAdapter? = null
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visit_adminto_parent_list)
+
+        toolbar.setTitleTextColor(getColor(R.color.whiteColor))
 
         init(this@VisitAdmintoParentListActivity)
 
         if (intent != null) {
             parentName = intent.getStringExtra("parentName")
             parentId = intent.getStringExtra("parentId")
+            toolbar.title = "$parentName 보호자님"
         } else {
             Common.intentCommon(this@VisitAdmintoParentListActivity, MainActivity::class.java)
             Toast.makeText(applicationContext, "잘못된 경로입니다.", Toast.LENGTH_SHORT).show()
             finish()
         }
-
+        setSupportActionBar(toolbar)
 
         getToParentBoard(parentId)
 

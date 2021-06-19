@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.newbabyproject.BaseActivity
 import com.example.newbabyproject.R
+import com.example.newbabyproject.utils.Common.dataSplitFormat
 import kotlinx.android.synthetic.main.activity_visit_user_detail.*
 import kotlinx.android.synthetic.main.item_toolbar.*
 import java.lang.Exception
@@ -37,7 +38,7 @@ class VisitUserDetailActivity : BaseActivity() {
 
                 babyNameTxt.text = resultVisit.babyName + "아기 면회소식"
                 writeNameTxt.text = "관리자"
-                writeDateTxt.text = resultVisit.writeDate
+                writeDateTxt.text = dataSplitFormat(resultVisit.writeDate,"date")
                 visitNoticeTxt.text = resultVisit.visitNotice
                 babyWeightTxt.text = resultVisit.babyWeight
                 babyLactationTxt.text = resultVisit.babyLactation

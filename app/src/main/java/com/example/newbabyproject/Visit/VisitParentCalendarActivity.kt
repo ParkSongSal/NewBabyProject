@@ -17,6 +17,7 @@ import com.prolificinteractive.materialcalendarview.CalendarMode
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import kotlinx.android.synthetic.main.activity_notice_list.*
 import kotlinx.android.synthetic.main.activity_visit_admin_calendar.*
+import kotlinx.android.synthetic.main.item_toolbar.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -34,9 +35,14 @@ class VisitParentCalendarActivity : BaseActivity() {
 
     val calendar = Calendar.getInstance()
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visit_admin_calendar)
+
+        toolbar.setTitleTextColor(getColor(R.color.whiteColor))
+        toolbar.title = "면회소식"
+        setSupportActionBar(toolbar)
 
         init(this@VisitParentCalendarActivity)
 
