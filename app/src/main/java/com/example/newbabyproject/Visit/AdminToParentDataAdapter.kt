@@ -60,25 +60,25 @@ open class AdminToParentDataAdapter(
 
         //val path: String = mData[position].path
         val path = ""
-            Glide.with(context)
+        Glide.with(context)
             .load(R.drawable.logo)
             .override(600, 300)
             .fitCenter()
             .into(viewHolder.img_view)
-       /* if (path != "") {
-            Glide.with(context)
-                .load(path)
-                .override(600, 300)
-                .fitCenter()
-                .into(viewHolder.img_view)
-        } else {
-            Glide.with(context)
-                .load(R.drawable.logo)
-                .override(600, 300)
-                .fitCenter()
-                .into(viewHolder.img_view)
-        }
-*/
+        /* if (path != "") {
+             Glide.with(context)
+                 .load(path)
+                 .override(600, 300)
+                 .fitCenter()
+                 .into(viewHolder.img_view)
+         } else {
+             Glide.with(context)
+                 .load(R.drawable.logo)
+                 .override(600, 300)
+                 .fitCenter()
+                 .into(viewHolder.img_view)
+         }
+ */
 
         viewHolder.itemView.setOnClickListener { // MainActivity에 onItemClick이 받음
             EventBus.getDefault().post(ItemClickEvent(position))

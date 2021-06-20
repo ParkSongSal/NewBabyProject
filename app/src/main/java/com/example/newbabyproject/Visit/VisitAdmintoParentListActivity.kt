@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.newbabyproject.BaseActivity
@@ -76,43 +77,56 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                 response: Response<List<ResultVisit>>
             ) {
 
-                Log.d("TAG", "response ${response.body()}")
+
+
                 //정상 결과
                 val result: List<ResultVisit> = response.body()!!
-                for (i in result.indices) {
-                    val userId: String? = result[i].userId
-                    val parentName: String? = result[i].parentName
-                    val visitNotice: String? = result[i].visitNotice
-                    val babyWeight = result[i].babyWeight
-                    val babyLactation = result[i].babyLactation
-                    val babyRequireItem = result[i].babyRequireItem
-                    val babyEtc = result[i].babyEtc
-                    val writeDate: String = result[i].writeDate
-                    val boardConfirm = result[i].boardConfirm
-                    //val path = result[i].path
-                    //val replyCnt = result[i].replyCnt
-                    val insertDate = result[i].insertDate
-                    val babyName = result[i].babyName
+                Log.d("TAG", "response ${response.body()}")
+                Log.d("TAG", "response " + result.size)
+                if(result.isNotEmpty()){
+                    for (i in result.indices) {
+                        val userId: String? = result[i].userId
+                        val parentName: String? = result[i].parentName
+                        val visitNotice: String? = result[i].visitNotice
+                        val babyWeight = result[i].babyWeight
+                        val babyLactation = result[i].babyLactation
+                        val babyRequireItem = result[i].babyRequireItem
+                        val babyEtc = result[i].babyEtc
+                        val writeDate: String = result[i].writeDate
+                        val boardConfirm = result[i].boardConfirm
+                        //val path = result[i].path
+                        //val replyCnt = result[i].replyCnt
+                        val insertDate = result[i].insertDate
+                        val babyName = result[i].babyName
 
-                    val getServerdata = ResultVisit(
-                        userId,
-                        parentName,
-                        visitNotice,
-                        babyWeight,
-                        babyLactation,
-                        babyRequireItem,
-                        babyEtc,
-                        writeDate,
-                        boardConfirm,
-                        null,
-                        null,
-                        insertDate,
-                        babyName
-                    )
-                    boardList.add(getServerdata)
-                    mAdapter = AdminToParentDataAdapter(applicationContext, boardList)
-                    recycle_view.adapter = mAdapter
+                        val getServerdata = ResultVisit(
+                            userId,
+                            parentName,
+                            visitNotice,
+                            babyWeight,
+                            babyLactation,
+                            babyRequireItem,
+                            babyEtc,
+                            writeDate,
+                            boardConfirm,
+                            null,
+                            null,
+                            insertDate,
+                            babyName
+                        )
+                        boardList.add(getServerdata)
+                        Log.d("TAG", "boardList ${boardList.toString()}")
+
+                        mAdapter = AdminToParentDataAdapter(applicationContext, boardList)
+                        recycle_view.adapter = mAdapter
+                    }
+
+                }else{
+                    recycle_view.visibility = View.GONE
+                    noDataLl.visibility = View.VISIBLE
+
                 }
+
             }
 
             override fun onFailure(call: Call<List<ResultVisit>>, t: Throwable) {

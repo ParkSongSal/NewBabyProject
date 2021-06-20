@@ -28,7 +28,42 @@
             android:orientation="vertical"
             android:padding="5dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="gone"
             app:spanCount="1" />
+
+        <LinearLayout
+            android:id="@+id/noDataLl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:background="@color/splash_bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:id="@+id/noDataTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="작성된 게시물이 없습니다."
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/noDataTxt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="면회소식을 남겨보세요."
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 
