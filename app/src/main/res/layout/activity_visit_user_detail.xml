@@ -253,6 +253,36 @@
                 app:spanCount="1" />
 
         </ScrollView>
+        <LinearLayout
+            android:id="@+id/noDataLl"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/border_edit"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:id="@+id/noDataTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="작성된 댓글이 없습니다."
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/noDataTxt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="댓글을 남겨보세요."
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/reply_ll"
