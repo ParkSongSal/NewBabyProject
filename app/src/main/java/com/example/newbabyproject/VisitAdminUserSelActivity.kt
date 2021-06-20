@@ -3,16 +3,19 @@ package com.example.newbabyproject
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.newbabyproject.Visit.ResultVisit
 import com.example.newbabyproject.Visit.VisitAdmintoParentListActivity
 import com.example.newbabyproject.Visit.VisitUserDataAdapter
 import kotlinx.android.synthetic.main.activity_notice_list.*
 import kotlinx.android.synthetic.main.activity_notice_list.recycle_view
 import kotlinx.android.synthetic.main.activity_visit_admin_user_sel.*
+import kotlinx.android.synthetic.main.item_toolbar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import retrofit2.Call
@@ -26,9 +29,14 @@ class VisitAdminUserSelActivity : BaseActivity() {
 
     private var mAdapter: VisitUserDataAdapter? = null
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visit_admin_user_sel)
+
+        toolbar.setTitleTextColor(getColor(R.color.whiteColor))
+        toolbar.title = "보호자 선택"
+        setSupportActionBar(toolbar)
 
         init(this@VisitAdminUserSelActivity)
 

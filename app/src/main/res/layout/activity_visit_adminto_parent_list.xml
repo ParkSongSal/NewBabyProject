@@ -28,7 +28,6 @@
             android:orientation="vertical"
             android:padding="5dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:visibility="gone"
             app:spanCount="1" />
 
         <LinearLayout
@@ -39,7 +38,7 @@
             android:background="@color/splash_bg"
             android:gravity="center"
             android:orientation="vertical"
-            >
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="100dp"
