@@ -1,19 +1,22 @@
 package com.example.newbabyproject.Visit
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import android.view.ViewGroup
+import android.widget.*
 import androidx.annotation.RequiresApi
 import com.example.newbabyproject.BaseActivity
 import com.example.newbabyproject.MainActivity
 import com.example.newbabyproject.R
-import com.example.newbabyproject.VisitAdminUserSelActivity
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.*
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.contentTxt
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.insertBtn
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_visit_admin_write.*
 import kotlinx.android.synthetic.main.item_toolbar.*
 import okhttp3.MultipartBody
@@ -22,6 +25,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class VisitAdminWriteActivity : BaseActivity() {
 
     lateinit var call: Call<ResultVisit>
@@ -29,6 +33,7 @@ class VisitAdminWriteActivity : BaseActivity() {
     var parentName = ""
     var parentId = ""
 
+    var saveGubun = 0
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +46,7 @@ class VisitAdminWriteActivity : BaseActivity() {
 
         init(this@VisitAdminWriteActivity)
 
+
         if(intent != null){
             parentName = intent.getStringExtra("parentName")
             parentId = intent.getStringExtra("parentId")
@@ -52,13 +58,96 @@ class VisitAdminWriteActivity : BaseActivity() {
 
         loginId = setting.getString("loginId", "").toString()
 
+        val items = resources.getStringArray(R.array.saveWay)
+        val myAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
+        saveSpinner.adapter = myAdapter
+
+        saveSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+
+                var dp =  resources.displayMetrics.density
+                var layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    (130 * dp).toInt()
+                )
+                //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
+                when (position) {
+                    0 -> {
+                        saveGubun = 0
+                        contentScroll.layoutParams = layoutParams
+                        reservLl.visibility = View.GONE
+                    }
+                    1 -> {
+                        saveGubun = 1
+                        contentScroll.layoutParams = layoutParams
+                        reservLl.visibility = View.GONE
+                    }
+                    2 -> {
+                        saveGubun = 2
+                        layoutParams = LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            (100 * dp).toInt()
+                        )
+                        contentScroll.layoutParams = layoutParams
+                        reservLl.visibility = View.VISIBLE
+                    }
+                    //...
+                    else -> {
+                        0
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+
         insertBtn.setOnClickListener(View.OnClickListener {
-            adminWriteAct()
+            adminWriteAct(saveGubun)
         })
+
+        this.InitializeListener()
+
+        saveReserveDate.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    //  .. 포커스시
+                    val dialog = DatePickerDialog(this, dateCallbackMethod, 2021, 6, 10)
+
+                    dialog.show()
+                } else {
+                    //  .. 포커스 뺏겼을 때
+                }
+            }
+
+        saveReserveTime.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    //  .. 포커스시
+                    val dialog = TimePickerDialog(
+                        this,
+                        android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                        timeCallbackMethod,
+                        8,
+                        10,
+                        false
+                    )
+
+                    dialog.show()
+                } else {
+                    //  .. 포커스 뺏겼을 때
+                }
+            }
+
+
 
     }
 
-    private fun adminWriteAct() {
+    private fun adminWriteAct(saveGubun: Int) {
 
 
         val visitNotice = contentTxt.text.toString()
@@ -102,7 +191,10 @@ class VisitAdminWriteActivity : BaseActivity() {
 
                 // 정상결과
                 if (response.body()!!.result == "success") {
-                    intent = Intent(this@VisitAdminWriteActivity, VisitAdmintoParentListActivity::class.java)
+                    intent = Intent(
+                        this@VisitAdminWriteActivity,
+                        VisitAdmintoParentListActivity::class.java
+                    )
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     intent.putExtra("parentId", parentId)
                     startActivity(intent)
@@ -130,4 +222,70 @@ class VisitAdminWriteActivity : BaseActivity() {
             }
         })
     }
+
+
+    fun InitializeListener() {
+        dateCallbackMethod =
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+                val month = when (monthOfYear) {
+                    1 -> "01"
+                    2 -> "02"
+                    3 -> "03"
+                    4 -> "04"
+                    5 -> "05"
+                    6 -> "06"
+                    7 -> "07"
+                    8 -> "08"
+                    9 -> "09"
+                    else -> monthOfYear.toString()
+                }
+                val day = when (dayOfMonth) {
+                    1 -> "01"
+                    2 -> "02"
+                    3 -> "03"
+                    4 -> "04"
+                    5 -> "05"
+                    6 -> "06"
+                    7 -> "07"
+                    8 -> "08"
+                    9 -> "09"
+                    else -> dayOfMonth.toString()
+                }
+
+                saveReserveDate.setText(
+                    "$year-$month-$day"
+                )
+            }
+
+        timeCallbackMethod =
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                val hour = when (hourOfDay) {
+                    1 -> "01"
+                    2 -> "02"
+                    3 -> "03"
+                    4 -> "04"
+                    5 -> "05"
+                    6 -> "06"
+                    7 -> "07"
+                    8 -> "08"
+                    9 -> "09"
+                    else -> hourOfDay.toString()
+                }
+                val min = when (minute) {
+                    1 -> "01"
+                    2 -> "02"
+                    3 -> "03"
+                    4 -> "04"
+                    5 -> "05"
+                    6 -> "06"
+                    7 -> "07"
+                    8 -> "08"
+                    9 -> "09"
+                    else -> minute.toString()
+                }
+                saveReserveTime.setText("$hour:$min")
+            }
+    }
+
 }

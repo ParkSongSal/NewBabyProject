@@ -1,5 +1,7 @@
 package com.example.newbabyproject
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -51,6 +53,9 @@ abstract class BaseActivity : AppCompatActivity() {
     lateinit var editor: SharedPreferences.Editor
 
     val handler = Handler()
+
+    var dateCallbackMethod: DatePickerDialog.OnDateSetListener? = null
+    var timeCallbackMethod: TimePickerDialog.OnTimeSetListener? = null
 
     fun init(context: Context) {
 

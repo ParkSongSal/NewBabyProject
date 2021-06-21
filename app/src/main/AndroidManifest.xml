@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Visit.VisitUserDetailActivity"></activity>
         <activity android:name=".Visit.VisitAdmintoParentListActivity" />
-        <activity android:name=".Visit.VisitAdminWriteActivity" />
+        <activity android:name=".Visit.VisitAdminWriteActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".Visit.VisitParentCalendarActivity" />
         <activity android:name=".VisitAdminUserSelActivity" />
         <activity android:name=".Notice.NoticeUpdateActivity" />

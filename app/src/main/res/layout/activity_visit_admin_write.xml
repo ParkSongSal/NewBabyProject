@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,56 +28,168 @@
             android:padding="10dp">
 
 
-            <EditText
-                android:id="@+id/contentTxt"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="면회시 주의사항" />
+
+            <ScrollView
+                android:id="@+id/contentScroll"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="160dp"
+                android:fillViewport="true"
+                android:background="@drawable/border_edit">
+
+                <EditText
+                    android:id="@+id/contentTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:padding="6dp" />
+            </ScrollView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:gravity="top"
-                android:hint="면회시 주의사항을 입력해주세요" />
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="아기 체중" />
 
             <EditText
                 android:id="@+id/babyWeightTxt"
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit"
+                android:hint="ex) 2.4kg"
+                android:padding="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="아기 체중을 입력해주세요" />
-
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="수유량" />
             <EditText
                 android:id="@+id/babyLactationTxt"
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit"
+                android:padding="6dp"
+                android:hint="ex) 0.5L" />
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="수유량을 입력해주세요" />
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="필요물품" />
 
             <EditText
                 android:id="@+id/babyRequireItemTxt"
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit"
+                android:hint="필요물품을 입력해주세요"
+                android:padding="6dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="필요물품을 입력해주세요" />
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="기타" />
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:fillViewport="true"
+                android:background="@drawable/border_edit">
             <EditText
                 android:id="@+id/babyEtcTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="기타" />
+                android:background="@android:color/transparent"
+                android:gravity="top"
+                android:padding="6dp" />
 
+            </ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="저장방법" />
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/saveSpinner"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:spinnerMode="dialog" />
+
+            <LinearLayout
+                android:id="@+id/reservLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingLeft="5dp"
+                    android:text="예약일시" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/border_edit"
+                    android:padding="6dp"
+                    android:weightSum="2">
+
+                    <EditText
+                        android:id="@+id/saveReserveDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableRight="@drawable/ic_baseline_date_range_24"
+                        android:imeOptions="actionNext"
+                        android:hint="예약날짜" />
+
+                    <EditText
+                        android:id="@+id/saveReserveTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableRight="@drawable/ic_baseline_access_time_24"
+                        android:imeOptions="actionDone"
+                        android:hint="예약시간" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
 
-        <Button
-            android:id="@+id/insertBtn"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/ripple_ok_btn"
-            android:gravity="center"
-            android:text="등록"
-            android:textColor="@color/whiteColor"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/insertBtn"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_ok_btn"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text="등록"
+                android:textColor="@color/whiteColor"
+                android:textSize="20sp" />
     </LinearLayout>
 
 

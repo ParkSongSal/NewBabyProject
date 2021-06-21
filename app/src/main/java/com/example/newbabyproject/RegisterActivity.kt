@@ -27,8 +27,7 @@ class RegisterActivity : BaseActivity() {
     private var passwordOk = true
     private var babyRelation = "D"
 
-    private var dateCallbackMethod: DatePickerDialog.OnDateSetListener? = null
-    private var timeCallbackMethod: TimePickerDialog.OnTimeSetListener? = null
+
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
