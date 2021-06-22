@@ -250,7 +250,7 @@ class VisitAdminWriteActivity : BaseActivity() {
         dateCallbackMethod =
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                val month = when (monthOfYear) {
+                val month = when (monthOfYear+1) {
                     1 -> "01"
                     2 -> "02"
                     3 -> "03"
