@@ -38,6 +38,11 @@ interface visitApi {
 
     /* 관리자To보호자 게시글 리스트 */
     @Multipart
-    @POST("to_parent_board_List.php")
-    fun toParentList(@Part("parentId") parentId : RequestBody) : Call<List<ResultVisit>>
+    @POST("admin_to_parent_board_List.php")
+    fun toParentListAdmin(@Part("parentId") parentId : RequestBody) : Call<List<ResultVisit>>
+
+    /* 관리자To보호자 게시글 리스트 */
+    @Multipart
+    @POST("user_to_parent_board_List.php")
+    fun toParentListUser(@Part("parentId") parentId : RequestBody) : Call<List<ResultVisit>>
 }

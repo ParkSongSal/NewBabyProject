@@ -70,7 +70,7 @@ class VisitAdmintoParentListActivity : BaseActivity() {
 
         val parentIdPart = RequestBody.create(MultipartBody.FORM, parentId)
 
-        val call: Call<List<ResultVisit>> = mVisitApi.toParentList(parentIdPart)
+        val call: Call<List<ResultVisit>> = mVisitApi.toParentListAdmin(parentIdPart)
         call.enqueue(object : Callback<List<ResultVisit>> {
             override fun onResponse(
                 call: Call<List<ResultVisit>>,

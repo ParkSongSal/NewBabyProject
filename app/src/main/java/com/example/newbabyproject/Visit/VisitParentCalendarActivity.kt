@@ -105,7 +105,7 @@ class VisitParentCalendarActivity : BaseActivity() {
 
         val parentIdPart = RequestBody.create(MultipartBody.FORM, parentId)
 
-        val call: Call<List<ResultVisit>> = mVisitApi.toParentList(parentIdPart)
+        val call: Call<List<ResultVisit>> = mVisitApi.toParentListUser(parentIdPart)
         call.enqueue(object : Callback<List<ResultVisit>> {
             @RequiresApi(Build.VERSION_CODES.M)
             override fun onResponse(
