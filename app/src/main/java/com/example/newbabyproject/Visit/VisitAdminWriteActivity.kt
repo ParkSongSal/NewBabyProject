@@ -154,17 +154,26 @@ class VisitAdminWriteActivity : BaseActivity() {
 
         val reserveDate: String
         var reserveDatePart : RequestBody? = null
+
+        var writeDate = Common.nowDate("yyyy-MM-dd")
         when (saveGubun) {
             1 -> {     //임시저장
                 tempYn = "Y"
                 tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
             }
-            2 -> {
+            2 -> {      // 예약저장
+                tempYn = "N"
+                tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
+
                 reserveDate = saveReserveDate.text.toString() +" " + saveReserveTime.text.toString()
+                writeDate = saveReserveDate.text.toString()
                 reserveDatePart = RequestBody.create(MultipartBody.FORM, reserveDate)
             }
             else -> {
-                reserveDate = Common.nowDate("yyyy-MM-dd Hh:mm:ss")
+                tempYn = "N"
+                tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
+
+                reserveDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
                 reserveDatePart = RequestBody.create(MultipartBody.FORM, reserveDate)
             }
         }
@@ -175,7 +184,7 @@ class VisitAdminWriteActivity : BaseActivity() {
         val babyLactation = babyLactationTxt.text.toString()
         val babyRequireItem = babyRequireItemTxt.text.toString()
         val babyEtc = babyEtcTxt.text.toString()
-        val writeDate = Common.nowDate("yyyy-MM-dd")
+
         val date = Common.nowDate("yyyy-MM-dd HH:mm:ss")
 
         val parentIdPart = RequestBody.create(MultipartBody.FORM, parentId)
