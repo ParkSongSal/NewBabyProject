@@ -52,6 +52,13 @@ open class AdminToParentDataAdapter(
             viewHolder.boardConfirm.setCompoundDrawables(boardConfirmImgN,null,null,null)
         }
 
+        val tempYn = mData[position].tempYn
+        if(tempYn == "Y"){
+            viewHolder.tempTxt.visibility = View.VISIBLE
+        }else{
+            viewHolder.tempTxt.visibility = View.GONE
+        }
+
         /*if ("0" == mData[position].replyCnt) {
             viewHolder.replyCnt.text = ""
         } else {
@@ -93,6 +100,7 @@ open class AdminToParentDataAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var img_view: RoundedImageView
 
+        var tempTxt : TextView
         var contentTxt: TextView
         var user_txt: TextView
         var date_txt: TextView
@@ -101,12 +109,15 @@ open class AdminToParentDataAdapter(
         init {
             // 레이아웃 들고 오기
             val img_view = itemView.findViewById<RoundedImageView>(R.id.image_view)
+
+            val tempTxt = itemView.findViewById<TextView>(R.id.tempTxt)
             val contentTxt = itemView.findViewById<TextView>(R.id.contentTxt)
             val user_txt = itemView.findViewById<TextView>(R.id.userTxt)
             val date_txt = itemView.findViewById<TextView>(R.id.dateTxt)
             val reply_txt = itemView.findViewById<TextView>(R.id.replyCnt)
             val boardConfirm = itemView.findViewById<TextView>(R.id.boardConfirm)
             this.img_view = img_view
+            this.tempTxt = tempTxt
             this.contentTxt = contentTxt
             this.user_txt = user_txt
             this.date_txt = date_txt

@@ -96,9 +96,10 @@ class VisitAdminWriteActivity : BaseActivity() {
                         contentScroll.layoutParams = layoutParams
                         reservLl.visibility = View.VISIBLE
                     }
-                    //...
                     else -> {
-                        0
+                        saveGubun = 0
+                        contentScroll.layoutParams = layoutParams
+                        reservLl.visibility = View.GONE
                     }
                 }
             }
@@ -148,6 +149,25 @@ class VisitAdminWriteActivity : BaseActivity() {
     }
 
     private fun adminWriteAct(saveGubun: Int) {
+        var tempYn: String = "N"
+        var tempYnPart : RequestBody? = null
+
+        val reserveDate: String
+        var reserveDatePart : RequestBody? = null
+        when (saveGubun) {
+            1 -> {     //임시저장
+                tempYn = "Y"
+                tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
+            }
+            2 -> {
+                reserveDate = saveReserveDate.text.toString() +" " + saveReserveTime.text.toString()
+                reserveDatePart = RequestBody.create(MultipartBody.FORM, reserveDate)
+            }
+            else -> {
+                reserveDate = Common.nowDate("yyyy-MM-dd Hh:mm:ss")
+                reserveDatePart = RequestBody.create(MultipartBody.FORM, reserveDate)
+            }
+        }
 
 
         val visitNotice = contentTxt.text.toString()
@@ -180,6 +200,8 @@ class VisitAdminWriteActivity : BaseActivity() {
             babyRequireItemPart,
             babyEtcPart,
             writeDatePart,
+            tempYnPart,
+            reserveDatePart,
             insertIdPart,
             insertDatePart,
             updateIdPart,

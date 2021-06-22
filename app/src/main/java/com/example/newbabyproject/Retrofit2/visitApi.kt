@@ -27,6 +27,8 @@ interface visitApi {
                        @Part("babyRequireItem") babyRequireItem : RequestBody,
                        @Part("babyEtc") babyEtc : RequestBody,
                        @Part("writeDate") writeDate : RequestBody,
+                       @Part("tempYn") tempYn : RequestBody?,
+                       @Part("reserveDate") reserveDate : RequestBody?,
                        @Part("insertId") insertId : RequestBody,
                        @Part("insertDate") insertDate : RequestBody,
                        @Part("updateId") updateId : RequestBody,

@@ -126,6 +126,8 @@ class VisitParentCalendarActivity : BaseActivity() {
                     val babyEtc = result[i].babyEtc
                     val writeDate: String = result[i].writeDate
                     val boardConfirm = result[i].boardConfirm
+                    val tempYn = result[i].tempYn
+                    val reserveDate = result[i].reserveDate
                     //val path = result[i].path
                     //val replyCnt = result[i].replyCnt
                     val insertDate = result[i].insertDate
@@ -141,6 +143,8 @@ class VisitParentCalendarActivity : BaseActivity() {
                         babyEtc,
                         writeDate,
                         boardConfirm,
+                        tempYn,
+                        reserveDate,
                         null,
                         null,
                         insertDate,

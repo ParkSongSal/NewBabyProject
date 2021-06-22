@@ -21,6 +21,8 @@ class ResultVisit : Serializable {
     var babyEtc: String? = null
     var boardConfirm: String? = null
     var writeDate: String = ""
+    var tempYn : String? = ""
+    var reserveDate : String? = ""
     var replyCnt: String? = null
     var path: String? = null
     var insertDate: String? = null
@@ -51,6 +53,8 @@ class ResultVisit : Serializable {
         babyEtc: String?,
         writeDate: String,
         boardConfirm: String?,
+        tempYn : String?,
+        reserveDate : String?,
         path: String?,
         replyCnt: String?,
         insertDate: String?,
@@ -65,6 +69,8 @@ class ResultVisit : Serializable {
         this.babyEtc = babyEtc
         this.writeDate = writeDate
         this.boardConfirm = boardConfirm
+        this.tempYn = tempYn
+        this.reserveDate = reserveDate
         //this.path = path;
         //this.replyCnt = replyCnt;
         this.insertDate = insertDate
