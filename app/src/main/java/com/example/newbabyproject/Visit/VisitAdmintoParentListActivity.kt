@@ -85,6 +85,7 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                 Log.d("TAG", "response " + result.size)
                 if(result.isNotEmpty()){
                     for (i in result.indices) {
+                        val seq : Int = result[i].seq
                         val userId: String? = result[i].userId
                         val parentName: String? = result[i].parentName
                         val visitNotice: String? = result[i].visitNotice
@@ -102,6 +103,7 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                         val babyName = result[i].babyName
 
                         val getServerdata = ResultVisit(
+                            seq,
                             userId,
                             parentName,
                             visitNotice,

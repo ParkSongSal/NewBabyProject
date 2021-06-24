@@ -45,4 +45,13 @@ interface visitApi {
     @Multipart
     @POST("user_to_parent_board_List.php")
     fun toParentListUser(@Part("parentId") parentId : RequestBody) : Call<List<ResultVisit>>
+
+    /* 관리자가 작성한 글을 보호자가 게시글 확인시 확인표시 Update*/
+    @Multipart
+    @POST("to_parent_board_confirm_update.php")
+    fun to_parent_board_confirm_update(@Part("seq") seq : RequestBody,
+                                       @Part("parentId") parentId : RequestBody,
+                                       @Part("boardConfirm") boardConfirm : RequestBody,
+                                       @Part("boardConfirmDate") boardConfirmDate : RequestBody
+    ) : Call<ResultVisit>
 }

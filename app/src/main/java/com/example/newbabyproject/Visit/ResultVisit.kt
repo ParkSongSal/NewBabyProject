@@ -3,6 +3,8 @@ package com.example.newbabyproject.Visit
 import java.io.Serializable
 
 class ResultVisit : Serializable {
+
+    var seq : Int = 0
     var result: String? = null
     var userId: String? = null
     var userName: String? = null
@@ -44,6 +46,7 @@ class ResultVisit : Serializable {
     }
 
     constructor(
+        seq : Int,
         parentId: String?,
         parentName: String?,
         visitNotice: String?,
@@ -60,6 +63,7 @@ class ResultVisit : Serializable {
         insertDate: String?,
         babyName : String?
     ) {
+        this.seq = seq
         this.parentId = parentId
         this.parentName = parentName
         this.visitNotice = visitNotice
@@ -80,6 +84,7 @@ class ResultVisit : Serializable {
     override fun toString(): String {
         return "ResultVisit{" +
                 "result='" + result + '\'' +
+                ", seq = '" + seq + '\'' +
                 ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userPhone='" + userPhone + '\'' +
