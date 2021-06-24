@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import kotlinx.android.synthetic.main.activity_app_introduce.*
+import kotlinx.android.synthetic.main.activity_app_introduce.modifyBtn
+import kotlinx.android.synthetic.main.activity_enter_introduce.*
 import kotlinx.android.synthetic.main.item_toolbar.*
 
 class EnterIntroduceActivity : BaseActivity() {
@@ -39,6 +41,9 @@ class EnterIntroduceActivity : BaseActivity() {
                 var intent = Intent(this@EnterIntroduceActivity, AppIntroduceModifyActivity::class.java)
                 intent.putExtra("boardGubun", "1")
                 intent.putExtra("actGubun", actGubun)
+                if(actGubun == "update"){
+                    intent.putExtra("content",enterIntroTxt.text)
+                }
                 startActivity(intent)
                 finish()
             }

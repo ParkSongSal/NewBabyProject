@@ -13,6 +13,7 @@ import com.example.newbabyproject.Retrofit2.ResultModel
 import com.example.newbabyproject.Retrofit2.RetrofitClient
 import com.example.newbabyproject.Retrofit2.boardApi
 import com.example.newbabyproject.utils.Common
+import kotlinx.android.synthetic.main.activity_app_introduce.*
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.item_toolbar.*
@@ -43,6 +44,12 @@ class AppIntroduceModifyActivity : BaseActivity() {
         if (intent != null) {
             boardGubun = intent.getStringExtra("boardGubun")
             actGubun = intent.getStringExtra("actGubun")
+            if(actGubun == "update"){
+                introContent = intent.getStringExtra("content")
+                contentTxt.setText(introContent.toString())
+            }else{
+                introContent = ""
+            }
         } else {
             Common.intentCommon(this@AppIntroduceModifyActivity, MainActivity::class.java)
             Toast.makeText(applicationContext, "잘못된 경로입니다.", Toast.LENGTH_SHORT).show()

@@ -59,8 +59,13 @@ class AppIntroduceActivity : BaseActivity() {
                 if (validate) {
                     val intent =
                         Intent(this@AppIntroduceActivity, AppIntroduceModifyActivity::class.java)
+
+
                     intent.putExtra("boardGubun", "0")
                     intent.putExtra("actGubun", actGubun)
+                    if(actGubun == "update"){
+                        intent.putExtra("content",appIntroTxt.text)
+                    }
                     startActivity(intent)
                     finish()
                 } else {
