@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Visit.VisitAdminWriteActivity">
 
 
@@ -39,9 +40,9 @@
             <ScrollView
                 android:id="@+id/contentScroll"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:fillViewport="true"
-                android:background="@drawable/border_edit">
+                android:layout_height="80dp"
+                android:background="@drawable/border_edit"
+                android:fillViewport="true">
 
                 <EditText
                     android:id="@+id/contentTxt"
@@ -76,13 +77,14 @@
                 android:paddingStart="5dp"
                 android:paddingLeft="5dp"
                 android:text="수유량" />
+
             <EditText
                 android:id="@+id/babyLactationTxt"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/border_edit"
-                android:padding="6dp"
-                android:hint="ex) 0.5L" />
+                android:hint="ex) 0.5L"
+                android:padding="6dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,7 +100,8 @@
                 android:layout_height="50dp"
                 android:background="@drawable/border_edit"
                 android:hint="필요물품을 입력해주세요"
-                android:padding="6dp"/>
+                android:padding="6dp" />
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,22 +109,45 @@
                 android:layout_marginTop="10dp"
                 android:paddingStart="5dp"
                 android:paddingLeft="5dp"
+                android:visibility="gone"
                 android:text="기타" />
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:fillViewport="true"
-                android:background="@drawable/border_edit">
-            <EditText
-                android:id="@+id/babyEtcTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:gravity="top"
-                android:padding="6dp" />
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit"
+                android:visibility="gone"
+                android:fillViewport="true">
+
+                <EditText
+                    android:id="@+id/babyEtcTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:padding="6dp" />
 
             </ScrollView>
+
+            <TextView
+                android:id="@+id/insert_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                android:layout_marginTop="10dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="사진을 선택해주세요." />
+
+                <com.github.siyamed.shapeimageview.RoundedImageView
+                    android:id="@+id/imageView"
+                    android:src="@drawable/logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="center"
+                    app:siRadius="6dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -129,6 +155,7 @@
                 android:paddingStart="5dp"
                 android:paddingLeft="5dp"
                 android:text="저장방법" />
+
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/saveSpinner"
                 android:layout_width="150dp"
@@ -140,7 +167,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
                 >
 
                 <TextView
@@ -150,11 +176,12 @@
                     android:paddingStart="5dp"
                     android:paddingLeft="5dp"
                     android:text="예약일시" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@drawable/border_edit"
+                    android:orientation="horizontal"
                     android:padding="6dp"
                     android:weightSum="2">
 
@@ -164,8 +191,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableRight="@drawable/ic_baseline_date_range_24"
-                        android:imeOptions="actionNext"
-                        android:hint="예약날짜" />
+                        android:hint="예약날짜"
+                        android:imeOptions="actionNext" />
 
                     <EditText
                         android:id="@+id/saveReserveTime"
@@ -173,23 +200,24 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableRight="@drawable/ic_baseline_access_time_24"
-                        android:imeOptions="actionDone"
-                        android:hint="예약시간" />
+                        android:hint="예약시간"
+                        android:imeOptions="actionDone" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
 
-            <Button
-                android:id="@+id/insertBtn"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:background="@drawable/ripple_ok_btn"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:text="등록"
-                android:textColor="@color/whiteColor"
-                android:textSize="20sp" />
+        <Button
+            android:id="@+id/insertBtn"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/ripple_ok_btn"
+            android:text="등록"
+            android:textColor="@color/whiteColor"
+            android:visibility="gone"
+            android:textSize="20sp" />
     </LinearLayout>
 
 

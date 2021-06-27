@@ -3,15 +3,18 @@ package com.example.newbabyproject.Visit
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
-import com.example.newbabyproject.BaseActivity
-import com.example.newbabyproject.MainActivity
-import com.example.newbabyproject.R
+import com.example.newbabyproject.*
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.*
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.contentTxt
@@ -24,6 +27,8 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
+import java.util.*
 
 
 class VisitAdminWriteActivity : BaseActivity() {
@@ -34,6 +39,11 @@ class VisitAdminWriteActivity : BaseActivity() {
     var parentId = ""
 
     var saveGubun = 0
+
+    private var bitmap: Bitmap? = null
+    private var path: Uri? = null
+
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +83,7 @@ class VisitAdminWriteActivity : BaseActivity() {
                 var dp =  resources.displayMetrics.density
                 var layoutParams = LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    (130 * dp).toInt()
+                    (80 * dp).toInt()
                 )
                 //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
                 when (position) {
@@ -91,7 +101,7 @@ class VisitAdminWriteActivity : BaseActivity() {
                         saveGubun = 2
                         layoutParams = LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT,
-                            (100 * dp).toInt()
+                            (60 * dp).toInt()
                         )
                         contentScroll.layoutParams = layoutParams
                         reservLl.visibility = View.VISIBLE
@@ -148,6 +158,21 @@ class VisitAdminWriteActivity : BaseActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.save_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.saveBtn -> {
+                adminWriteAct(saveGubun)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun adminWriteAct(saveGubun: Int) {
         var tempYn: String = "N"
         var tempYnPart : RequestBody? = null
@@ -165,7 +190,8 @@ class VisitAdminWriteActivity : BaseActivity() {
                 tempYn = "N"
                 tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
 
-                reserveDate = saveReserveDate.text.toString() +" " + saveReserveTime.text.toString()
+                reserveDate =
+                    saveReserveDate.text.toString() + " " + saveReserveTime.text.toString()
                 writeDate = saveReserveDate.text.toString()
                 reserveDatePart = RequestBody.create(MultipartBody.FORM, reserveDate)
             }
@@ -319,4 +345,39 @@ class VisitAdminWriteActivity : BaseActivity() {
             }
     }
 
+    fun onClick(view: View) {
+        when (view.id) {
+            /* 앱 소개 */
+            R.id.insert_img,
+            R.id.imageView -> {
+                selectImage()
+            }
+
+        }
+    }
+    private fun selectImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        //startActivityIfNeeded(intent, IMG_REQUEST)
+        startActivityForResult(
+            intent,
+            IMG_REQUEST
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null) {
+            path = data.data
+
+            //uploadImage(path);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, path)
+                imageView.setImageBitmap(bitmap)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
 }
