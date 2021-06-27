@@ -40,16 +40,11 @@ open class AdminToParentDataAdapter(
         viewHolder.date_txt.text = mData[position].writeDate
         viewHolder.contentTxt.text = mData[position].visitNotice
 
-        var boardConfirm = mData[position].boardConfirm
-
-        val boardConfirmImgY = context.resources.getDrawable(R.drawable.ic_baseline_visibility_24)
-        boardConfirmImgY.setBounds(0,0,60,60)
-        val boardConfirmImgN = context.resources.getDrawable(R.drawable.ic_baseline_visibility_off_24)
-        boardConfirmImgN.setBounds(0,0,60,60)
+        val boardConfirm = mData[position].boardConfirm
         if(boardConfirm == "Y"){
-            viewHolder.boardConfirm.setCompoundDrawables(boardConfirmImgY,null,null,null)
+            viewHolder.boardConfirm.text = "확인"
         }else{
-            viewHolder.boardConfirm.setCompoundDrawables(boardConfirmImgN,null,null,null)
+            viewHolder.boardConfirm.text = "미확인"
         }
 
         val tempYn = mData[position].tempYn

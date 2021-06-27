@@ -106,8 +106,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
-                    android:drawableStart="@drawable/ic_baseline_visibility_off_24"
-                    android:drawableLeft="@drawable/ic_baseline_visibility_off_24"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
