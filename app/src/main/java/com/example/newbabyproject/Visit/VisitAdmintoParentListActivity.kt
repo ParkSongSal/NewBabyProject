@@ -1,5 +1,6 @@
 package com.example.newbabyproject.Visit
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -9,6 +10,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.newbabyproject.BaseActivity
 import com.example.newbabyproject.MainActivity
+import com.example.newbabyproject.Notice.NoticeDataAdapter
+import com.example.newbabyproject.Notice.NoticeDetailActivity
 import com.example.newbabyproject.R
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_visit_admin_calendar.*
@@ -17,9 +20,12 @@ import kotlinx.android.synthetic.main.item_to_parent.*
 import kotlinx.android.synthetic.main.item_toolbar.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 import java.util.*
 
 class VisitAdmintoParentListActivity : BaseActivity() {
@@ -65,6 +71,32 @@ class VisitAdmintoParentListActivity : BaseActivity() {
 
 
     }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+
+    // 보낸이 : NoticeDataAdapter
+    @SuppressLint("RestrictedApi")
+    @Subscribe
+    fun onItemClick(event: AdminToParentDataAdapter.ItemClickEvent) {
+
+        val resultVisit : ResultVisit = boardList[event.position]
+
+        val intent = Intent(applicationContext, VisitAdminToParentDetailActivity::class.java)
+        intent.putExtra("resultVisit", resultVisit as Serializable)
+
+        startActivity(intent)
+        finish()
+    }
+
 
     fun getToParentBoard(parentId: String?) {
 
