@@ -2,20 +2,23 @@ package com.example.newbabyproject.Visit
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
+import com.bumptech.glide.Glide
 import com.example.newbabyproject.*
 import com.example.newbabyproject.utils.Common
+import com.github.siyamed.shapeimageview.RoundedImageView
+import com.opensooq.supernova.gligar.GligarPicker
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.*
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.contentTxt
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.insertBtn
@@ -27,11 +30,15 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 import java.io.IOException
 import java.util.*
 
 
 class VisitAdminWriteActivity : BaseActivity() {
+
+    private val PICKER_REQUEST_CODE = 101
+
 
     lateinit var call: Call<ResultVisit>
 
@@ -43,6 +50,10 @@ class VisitAdminWriteActivity : BaseActivity() {
     private var bitmap: Bitmap? = null
     private var path: Uri? = null
 
+    private var pathsList = emptyArray<String>()
+    private var uriList : MutableList<String> = mutableListOf()
+    private var uriList2 : MutableList<Uri> = mutableListOf()
+    var count = 0
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -348,36 +359,93 @@ class VisitAdminWriteActivity : BaseActivity() {
     fun onClick(view: View) {
         when (view.id) {
             /* 앱 소개 */
-            R.id.insert_img,
-            R.id.imageView -> {
+            R.id.imgRL,
+            R.id.cameraIcon,
+            R.id.imageTxtCount-> {
                 selectImage()
             }
 
         }
     }
+
+
     private fun selectImage() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        //startActivityIfNeeded(intent, IMG_REQUEST)
-        startActivityForResult(
-            intent,
-            IMG_REQUEST
-        )
+        if (pathsList.isNotEmpty()) {
+            Toast.makeText(this@VisitAdminWriteActivity, "현재 이미지 개수 $count", Toast.LENGTH_SHORT).show()
+            if (count == 3) {
+                Toast.makeText(this@VisitAdminWriteActivity, "이미지는 최대 3장까지 선택가능합니다.", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                GligarPicker()
+                    .requestCode(PICKER_REQUEST_CODE)
+                    .limit(3 - count) // 최대 이미지 수
+                    .withActivity(this@VisitAdminWriteActivity) //Activity
+                    //.withFragment -> Fragment
+                    // .disableCamera(false) -> 카메라 캡처를 사용할지
+                    // .cameraDirect(true) -> 바로 카메라를 실행할지
+                    .show()
+            }
+        } else {
+            GligarPicker()
+                .requestCode(PICKER_REQUEST_CODE)
+                .limit(3) // 최대 이미지 수
+                .withActivity(this@VisitAdminWriteActivity) //Activity
+                //.withFragment -> Fragment
+                // .disableCamera(false) -> 카메라 캡처를 사용할지
+                // .cameraDirect(true) -> 바로 카메라를 실행할지
+                .show()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null) {
-            path = data.data
-
-            //uploadImage(path);
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, path)
-                imageView.setImageBitmap(bitmap)
-            } catch (e: IOException) {
-                e.printStackTrace()
+        if(requestCode == PICKER_REQUEST_CODE && resultCode == RESULT_OK && data != null){
+            pathsList = data.extras?.getStringArray(GligarPicker.IMAGES_RESULT) as Array<String> // return list of selected images paths.
+            for (i in pathsList.indices) {
+                val uri : Uri = Uri.parse(pathsList[i])
+                uriList.add(pathsList[i])
+                uriList2.add(Uri.fromFile(File(pathsList[i])))
+                Log.d("TAG", "uriList2 : $uriList2")
+                count++
+                setImage(pathsList[i])
             }
         }
     }
+
+    // 파일 경로를 받아와 Bitmap 으로 변환후 ImageView 적용
+    fun setImage(imagePath: String) {
+        val imgFile = File(imagePath)
+        if (imgFile.exists()) {
+            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+            val inflater =
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val statLayoutItem = inflater.inflate(R.layout.addimage, null) as LinearLayout
+            val addImg: RoundedImageView = statLayoutItem.findViewById(R.id.addImage)
+            val delImg =
+                statLayoutItem.findViewById<ImageView>(R.id.delImage)
+            delImg.setOnClickListener {
+
+                if (uriList.contains(imagePath)) {
+                    uriList.remove(imagePath)
+                    count--
+                    imageLinear.removeView(statLayoutItem)
+                    imageTxtCount.text = "$count/3"
+
+                }
+                Toast.makeText(
+                    this@VisitAdminWriteActivity,
+                    "ImageView $imagePath",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            Glide.with(applicationContext)
+                .load(myBitmap)
+                .override(300, 300)
+                .fitCenter()
+                .into(addImg)
+            imageLinear.addView(statLayoutItem)
+            imageTxtCount.text = "$count/3"
+        }
+    }
+
 }
