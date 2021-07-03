@@ -91,6 +91,14 @@ class VisitAdmintoParentListActivity : BaseActivity() {
         val resultVisit : ResultVisit = boardList[event.position]
 
         val intent = Intent(applicationContext, VisitAdminToParentDetailActivity::class.java)
+
+        var list =  ArrayList<String>()
+
+        list.add(boardList[event.position].path1.toString())
+        list.add(boardList[event.position].path2.toString())
+        list.add(boardList[event.position].path3.toString())
+        intent.putExtra("pathList", list)
+
         intent.putExtra("resultVisit", resultVisit as Serializable)
 
         startActivity(intent)
@@ -149,9 +157,9 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                             boardConfirm,
                             tempYn,
                             reserveDate,
-                            null,
-                            null,
-                            null,
+                            path1,
+                            path2,
+                            path3,
                             //null,
                             insertDate,
                             babyName
