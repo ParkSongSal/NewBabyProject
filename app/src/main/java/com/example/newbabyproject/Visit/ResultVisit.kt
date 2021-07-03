@@ -26,7 +26,9 @@ class ResultVisit : Serializable {
     var tempYn : String? = ""
     var reserveDate : String? = ""
     var replyCnt: String? = null
-    var path: String? = null
+    var path1: String? = null
+    var path2: String? = null
+    var path3: String? = null
     var insertDate: String? = null
 
     constructor(
@@ -58,8 +60,10 @@ class ResultVisit : Serializable {
         boardConfirm: String?,
         tempYn : String?,
         reserveDate : String?,
-        path: String?,
-        replyCnt: String?,
+        path1: String?,
+        path2: String?,
+        path3: String?,
+        //replyCnt: String?,
         insertDate: String?,
         babyName : String?
     ) {
@@ -75,7 +79,9 @@ class ResultVisit : Serializable {
         this.boardConfirm = boardConfirm
         this.tempYn = tempYn
         this.reserveDate = reserveDate
-        //this.path = path;
+        this.path1 = path1;
+        this.path2 = path2;
+        this.path3 = path3;
         //this.replyCnt = replyCnt;
         this.insertDate = insertDate
         this.babyName = babyName
@@ -101,7 +107,9 @@ class ResultVisit : Serializable {
                 ", boardConfirm='" + boardConfirm + '\'' +
                 ", writeDate='" + writeDate + '\'' +
                 ", replyCnt='" + replyCnt + '\'' +
-                ", path='" + path + '\'' +
+                ", path1='" + path1 + '\'' +
+                ", path2='" + path2 + '\'' +
+                ", path3='" + path3 + '\'' +
                 ", insertDate='" + insertDate + '\'' +
                 '}'
     }

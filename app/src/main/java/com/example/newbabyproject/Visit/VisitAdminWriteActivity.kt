@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -17,6 +16,7 @@ import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.example.newbabyproject.*
 import com.example.newbabyproject.utils.Common
+import com.example.newbabyproject.utils.FileUtils
 import com.github.siyamed.shapeimageview.RoundedImageView
 import com.opensooq.supernova.gligar.GligarPicker
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.*
@@ -25,13 +25,14 @@ import kotlinx.android.synthetic.main.activity_app_introduce_modify.insertBtn
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_visit_admin_write.*
 import kotlinx.android.synthetic.main.item_toolbar.*
+import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import java.io.IOException
 import java.util.*
 
 
@@ -40,7 +41,7 @@ class VisitAdminWriteActivity : BaseActivity() {
     private val PICKER_REQUEST_CODE = 101
 
 
-    lateinit var call: Call<ResultVisit>
+    lateinit var call: Call<ResponseBody>
 
     var parentName = ""
     var parentId = ""
@@ -131,7 +132,7 @@ class VisitAdminWriteActivity : BaseActivity() {
         }
 
         insertBtn.setOnClickListener(View.OnClickListener {
-            adminWriteAct(saveGubun)
+            adminWriteAct(saveGubun, uriList2)
         })
 
         this.InitializeListener()
@@ -168,6 +169,7 @@ class VisitAdminWriteActivity : BaseActivity() {
 
 
     }
+/*
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.save_menu, menu)
@@ -183,8 +185,9 @@ class VisitAdminWriteActivity : BaseActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+*/
 
-    private fun adminWriteAct(saveGubun: Int) {
+    private fun adminWriteAct(saveGubun: Int, filePath: MutableList<Uri>? ) {
         var tempYn: String = "N"
         var tempYnPart : RequestBody? = null
 
@@ -237,50 +240,140 @@ class VisitAdminWriteActivity : BaseActivity() {
         val updateIdPart = RequestBody.create(MultipartBody.FORM, loginId)
         val updateDatePart = RequestBody.create(MultipartBody.FORM, date)
 
-        call = mVisitApi.toParentInsert(
-            parentIdPart,
-            parentNamePart,
-            visitNoticePart,
-            babyWeightPart,
-            babyLactationPart,
-            babyRequireItemPart,
-            babyEtcPart,
-            writeDatePart,
-            tempYnPart,
-            reserveDatePart,
-            insertIdPart,
-            insertDatePart,
-            updateIdPart,
-            updateDatePart
-        )
+        when(filePath?.size){
+            0 ->{
+                call = mVisitApi.toParentInsertNoImage(
+                    parentIdPart,
+                    parentNamePart,
+                    visitNoticePart,
+                    babyWeightPart,
+                    babyLactationPart,
+                    babyRequireItemPart,
+                    babyEtcPart,
+                    writeDatePart,
+                    tempYnPart,
+                    reserveDatePart,
+                    insertIdPart,
+                    insertDatePart,
+                    updateIdPart,
+                    updateDatePart
+                )
+            }
+            1 ->{
+                val f1 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
+                val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
 
-        call.enqueue(object : Callback<ResultVisit> {
-            override fun onResponse(call: Call<ResultVisit>, response: Response<ResultVisit>) {
+                call = mVisitApi.toParentInsert(
+                    parentIdPart,
+                    parentNamePart,
+                    visitNoticePart,
+                    babyWeightPart,
+                    babyLactationPart,
+                    babyRequireItemPart,
+                    babyEtcPart,
+                    writeDatePart,
+                    tempYnPart,
+                    reserveDatePart,
+                    file1,
+                    null,
+                    null,
+                    insertIdPart,
+                    insertDatePart,
+                    updateIdPart,
+                    updateDatePart
+                )
+            }
+            2 ->{
+                val f1 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
+                val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
 
-                // 정상결과
-                if (response.body()!!.result == "success") {
-                    intent = Intent(
-                        this@VisitAdminWriteActivity,
-                        VisitAdmintoParentListActivity::class.java
-                    )
+                val f2 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[1])
+                val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2)
+                val file2 = MultipartBody.Part.createFormData("image[]", f2.name, imagePart2)
+
+                call = mVisitApi.toParentInsert(
+                    parentIdPart,
+                    parentNamePart,
+                    visitNoticePart,
+                    babyWeightPart,
+                    babyLactationPart,
+                    babyRequireItemPart,
+                    babyEtcPart,
+                    writeDatePart,
+                    tempYnPart,
+                    reserveDatePart,
+                    file1,
+                    file2,
+                    null,
+                    insertIdPart,
+                    insertDatePart,
+                    updateIdPart,
+                    updateDatePart
+                )
+            }
+            3 ->{
+                val f1 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
+                val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
+
+                val f2 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[1])
+                val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2)
+                val file2 = MultipartBody.Part.createFormData("image[]", f2.name, imagePart2)
+
+                val f3 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[2])
+                val imagePart3 = RequestBody.create(MediaType.parse("multipart/form-data"), f3)
+                val file3 = MultipartBody.Part.createFormData("image[]", f3.name, imagePart3)
+                call = mVisitApi.toParentInsert(
+                    parentIdPart,
+                    parentNamePart,
+                    visitNoticePart,
+                    babyWeightPart,
+                    babyLactationPart,
+                    babyRequireItemPart,
+                    babyEtcPart,
+                    writeDatePart,
+                    tempYnPart,
+                    reserveDatePart,
+                    file1,
+                    file2,
+                    file3,
+                    insertIdPart,
+                    insertDatePart,
+                    updateIdPart,
+                    updateDatePart
+                )
+            }
+        }
+
+
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                Log.d("TAG","response : " + response.body())
+                Log.d("TAG","response : " + response.body().toString())
+                if(response.isSuccessful){
+                    Log.d("TAG","response : " + response.isSuccessful)
+
+                    intent = Intent(this@VisitAdminWriteActivity,VisitAdmintoParentListActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     intent.putExtra("parentId", parentId)
                     startActivity(intent)
                     finish()
-                    Toast.makeText(
-                        this@VisitAdminWriteActivity,
-                        "등록되었습니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                } else {
+                    Toast.makeText(this@VisitAdminWriteActivity, "등록되었습니다.", Toast.LENGTH_LONG).show()
+                }else{
                     dlg.setMessage("다시 시도 바랍니다.")
                         .setNegativeButton("확인", null)
                     dlg.show()
                 }
+
             }
 
-            override fun onFailure(call: Call<ResultVisit>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("TAG","Error : " + t.message)
+                Log.d("TAG","Error : " + t.localizedMessage)
                 // 네트워크 문제
                 Toast.makeText(
                     this@VisitAdminWriteActivity,

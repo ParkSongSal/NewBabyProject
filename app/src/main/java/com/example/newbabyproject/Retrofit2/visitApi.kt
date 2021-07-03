@@ -1,7 +1,9 @@
 package com.example.newbabyproject.Retrofit2
 
 import com.example.newbabyproject.Visit.ResultVisit
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -19,21 +21,43 @@ interface visitApi {
     /* 관리자To보호자 게시글 등록*/
     @Multipart
     @POST("to_parent_board_insert.php")
-    fun toParentInsert(@Part("parentId") parentId : RequestBody,
-                       @Part("parentName") parentName : RequestBody,
-                       @Part("visitNotice") visitNotice : RequestBody,
-                       @Part("babyWeight") babyWeight : RequestBody,
-                       @Part("babyLactation") babyLactation : RequestBody,
-                       @Part("babyRequireItem") babyRequireItem : RequestBody,
-                       @Part("babyEtc") babyEtc : RequestBody,
-                       @Part("writeDate") writeDate : RequestBody,
-                       @Part("tempYn") tempYn : RequestBody?,
-                       @Part("reserveDate") reserveDate : RequestBody?,
-                       @Part("insertId") insertId : RequestBody,
-                       @Part("insertDate") insertDate : RequestBody,
-                       @Part("updateId") updateId : RequestBody,
-                       @Part("updateDate") updateDate : RequestBody
-    ) : Call<ResultVisit>
+    fun toParentInsert(@Part("parentId") parentId: RequestBody,
+                       @Part("parentName") parentName: RequestBody,
+                       @Part("visitNotice") visitNotice: RequestBody,
+                       @Part("babyWeight") babyWeight: RequestBody,
+                       @Part("babyLactation") babyLactation: RequestBody,
+                       @Part("babyRequireItem") babyRequireItem: RequestBody,
+                       @Part("babyEtc") babyEtc: RequestBody,
+                       @Part("writeDate") writeDate: RequestBody,
+                       @Part("tempYn") tempYn: RequestBody?,
+                       @Part("reserveDate") reserveDate: RequestBody?,
+                       @Part image: MultipartBody.Part,
+                       @Part image2: MultipartBody.Part?,
+                       @Part image3: MultipartBody.Part?,
+                       @Part("insertId") insertId: RequestBody,
+                       @Part("insertDate") insertDate: RequestBody,
+                       @Part("updateId") updateId: RequestBody,
+                       @Part("updateDate") updateDate: RequestBody
+    ) : Call<ResponseBody>
+
+    /* 관리자To보호자 게시글 등록*/
+    @Multipart
+    @POST("to_parent_board_insert_NoImage.php")
+    fun toParentInsertNoImage(@Part("parentId") parentId : RequestBody,
+                              @Part("parentName") parentName : RequestBody,
+                              @Part("visitNotice") visitNotice : RequestBody,
+                              @Part("babyWeight") babyWeight : RequestBody,
+                              @Part("babyLactation") babyLactation : RequestBody,
+                              @Part("babyRequireItem") babyRequireItem : RequestBody,
+                              @Part("babyEtc") babyEtc : RequestBody,
+                              @Part("writeDate") writeDate : RequestBody,
+                              @Part("tempYn") tempYn : RequestBody?,
+                              @Part("reserveDate") reserveDate : RequestBody?,
+                              @Part("insertId") insertId : RequestBody,
+                              @Part("insertDate") insertDate : RequestBody,
+                              @Part("updateId") updateId : RequestBody,
+                              @Part("updateDate") updateDate : RequestBody
+    ) : Call<ResponseBody>
 
 
     /* 관리자To보호자 게시글 리스트 */

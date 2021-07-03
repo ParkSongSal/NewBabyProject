@@ -129,7 +129,9 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                         val boardConfirm = result[i].boardConfirm
                         val tempYn = result[i].tempYn
                         val reserveDate = result[i].reserveDate
-                        //val path = result[i].path
+                        val path1 = result[i].path1
+                        val path2 = result[i].path2
+                        val path3 = result[i].path3
                         //val replyCnt = result[i].replyCnt
                         val insertDate = result[i].insertDate
                         val babyName = result[i].babyName
@@ -149,6 +151,8 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                             reserveDate,
                             null,
                             null,
+                            null,
+                            //null,
                             insertDate,
                             babyName
                         )
