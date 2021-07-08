@@ -74,9 +74,17 @@ class VisitParentCalendarActivity : BaseActivity() {
             val Month = date.month + 1
             val Day = date.day
             val shot_Day = if (Month < 10) {
-                "$Year-0$Month-$Day"
+                if(Day < 10){
+                    "$Year-0$Month-0$Day"
+                }else{
+                    "$Year-0$Month-$Day"
+                }
             } else {
-                "$Year-$Month-$Day"
+                if(Day < 10){
+                    "$Year-$Month-0$Day"
+                }else{
+                    "$Year-$Month-$Day"
+                }
             }
             calendarView.clearSelection()
             for (i in writeDateAry.indices) {

@@ -66,6 +66,7 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
                 pathList = intent.getSerializableExtra("pathList") as ArrayList<String>
                 Log.d("TAG", "Detail Activity Exceptilon $pathList")
 
+
                 for (j in pathList.indices){
                     if("null" == pathList[j] || "" == pathList[j]){
                         pathList[j] = "android.resource://$packageName/drawable/deleteiconblack2"
