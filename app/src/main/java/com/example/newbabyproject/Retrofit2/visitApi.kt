@@ -1,5 +1,6 @@
 package com.example.newbabyproject.Retrofit2
 
+import com.example.newbabyproject.Notice.ResultNotice
 import com.example.newbabyproject.Visit.ResultVisit
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -78,4 +79,10 @@ interface visitApi {
                                        @Part("boardConfirm") boardConfirm : RequestBody,
                                        @Part("boardConfirmDate") boardConfirmDate : RequestBody
     ) : Call<ResultVisit>
+
+
+    /* 관리자To보호자 게시글 삭제*/
+    @Multipart
+    @POST("admin_to_parent_board_delete.php")
+    fun admin_to_parent_board_delete(@Part("seq") seq : RequestBody) : Call<ResultVisit>
 }
