@@ -111,7 +111,7 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
                         toolbar_layout.title = ""
                     }
                     Math.abs(verticalOffset) >= app_bar.totalScrollRange -> { // 이미지 안보이고 툴바만 보일떄
-                        supportActionBar?.title = babyName
+                        supportActionBar?.title = "$babyName 면회소식"
 
                     }
                     Math.abs(verticalOffset) <= app_bar.totalScrollRange -> {// 중간

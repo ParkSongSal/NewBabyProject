@@ -7,12 +7,23 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.denzcoskun.imageslider.models.SlideModel
 import com.example.newbabyproject.BaseActivity
 import com.example.newbabyproject.R
 import com.example.newbabyproject.utils.Common
 import com.example.newbabyproject.utils.Common.dataSplitFormat
+import com.google.android.material.appbar.AppBarLayout
+import kotlinx.android.synthetic.main.activity_visit_admin_to_parent_detail.*
 import kotlinx.android.synthetic.main.activity_visit_user_detail.*
-import kotlinx.android.synthetic.main.item_toolbar.*
+import kotlinx.android.synthetic.main.activity_visit_user_detail.babyEtcTxt
+import kotlinx.android.synthetic.main.activity_visit_user_detail.babyLactationTxt
+import kotlinx.android.synthetic.main.activity_visit_user_detail.babyNameTxt
+import kotlinx.android.synthetic.main.activity_visit_user_detail.babyRequireItemTxt
+import kotlinx.android.synthetic.main.activity_visit_user_detail.babyWeightTxt
+import kotlinx.android.synthetic.main.activity_visit_user_detail.img_slider
+import kotlinx.android.synthetic.main.activity_visit_user_detail.visitNoticeTxt
+import kotlinx.android.synthetic.main.activity_visit_user_detail.writeDateTxt
+import kotlinx.android.synthetic.main.activity_visit_user_detail.writeNameTxt
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -26,15 +37,15 @@ class VisitUserDetailActivity : BaseActivity() {
     var writeDateAry: ArrayList<String>? = ArrayList<String>()
     lateinit var call: Call<ResultVisit>
 
+    var slideModels : ArrayList<SlideModel> = ArrayList<SlideModel>()
+    var pathList = ArrayList<String>()
+    private var count = 0
+    var babyName : String? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visit_user_detail)
-
-        toolbar.setTitleTextColor(getColor(R.color.whiteColor))
-        toolbar.title = "면회내용 상세보기"
-        setSupportActionBar(toolbar)
 
         init(this@VisitUserDetailActivity)
 
@@ -46,6 +57,8 @@ class VisitUserDetailActivity : BaseActivity() {
                 if("N" == resultVisit.boardConfirm){
                     boardConfirmAct(resultVisit.parentId, resultVisit.seq)
                 }
+                babyName = resultVisit.babyName
+
                 babyNameTxt.text = resultVisit.babyName + "아기 면회소식"
                 writeNameTxt.text = "관리자"
                 writeDateTxt.text = dataSplitFormat(resultVisit.writeDate,"date")
@@ -55,12 +68,64 @@ class VisitUserDetailActivity : BaseActivity() {
                 babyRequireItemTxt.text = resultVisit.babyRequireItem
                 babyEtcTxt.text = resultVisit.babyEtc
                 Log.d("TAG", "Detail Activity Exceptilon ")
+                pathList = intent.getSerializableExtra("pathList") as ArrayList<String>
+
+                for (j in pathList.indices){
+                    if("null" == pathList[j] || "" == pathList[j]){
+                        pathList[j] = "android.resource://$packageName/drawable/deleteiconblack2"
+                    }else{
+                        continue
+                    }
+                }
+
+                for (i in pathList.indices) {
+                    if(pathList[i].isNotEmpty()){
+                        if(pathList[i].contains("deleteiconblack2")) {
+                            continue
+                        }else{
+                            count++
+                            slideModels.add(SlideModel(pathList[i]))
+                            //slideModels.add(SlideModel(pathList[i],resultVisit.babyName))
+                            //setImage(pathList[i], i)
+                        }
+                    }else{
+                        continue
+                    }
+                }
+
             }
 
         } catch (e: Exception) {
             e.printStackTrace()
             Log.d("TAG", "Detail Activity Exceptilon ${e.toString()}")
         }
+
+        img_slider.setImageList(slideModels, true)
+        setSupportActionBar(toolbar3)
+        supportActionBar?.title = ""
+
+        app_bar2.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+                when {
+                    verticalOffset == 0 -> { //  이미지가 보일때
+                        supportActionBar?.title = ""
+                        toolbar_layout2.title = ""
+                    }
+                    Math.abs(verticalOffset) >= app_bar2.totalScrollRange -> { // 이미지 안보이고 툴바만 보일떄
+                        supportActionBar?.title = "$babyName 면회소식"
+
+                    }
+                    Math.abs(verticalOffset) <= app_bar2.totalScrollRange -> {// 중간
+                        toolbar_layout2.title = ""
+                        supportActionBar?.subtitle=""
+                    }
+                    else -> {
+                        supportActionBar?.title = ""
+                        toolbar_layout2.title = ""
+                    }
+                }
+            }
+        })
 
     }
 
