@@ -1,17 +1,20 @@
 package com.example.newbabyproject.Visit
 
+import android.Manifest
+import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.newbabyproject.*
-import com.example.newbabyproject.Notice.ResultNotice
 import com.example.newbabyproject.utils.Common
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_visit_admin_to_parent_detail.*
@@ -21,7 +24,6 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 import java.util.*
 
 class VisitAdminToParentDetailActivity : BaseActivity() {
@@ -111,12 +113,11 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
                         toolbar_layout.title = ""
                     }
                     Math.abs(verticalOffset) >= app_bar.totalScrollRange -> { // 이미지 안보이고 툴바만 보일떄
-                        supportActionBar?.title = "$babyName 면회소식"
-
+                        supportActionBar?.title = "면회소식 상세"
                     }
                     Math.abs(verticalOffset) <= app_bar.totalScrollRange -> {// 중간
                         toolbar_layout.title = ""
-                        supportActionBar?.subtitle=""
+                        supportActionBar?.subtitle = ""
                     }
                     else -> {
                         supportActionBar?.title = ""
@@ -126,6 +127,30 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
             }
         })
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.btn_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            R.id.delBtn -> {
+                dlg.setTitle("삭제 알림")
+                    .setMessage("게시물을 삭제 하시겠습니까?")
+                    .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                        deleteToParentBoard()
+                    })
+                    .setNegativeButton("아니오", null)
+                dlg.show()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     fun deleteToParentBoard(){
         val boardSeqPart = RequestBody.create(MultipartBody.FORM, seq.toString())
         call = mVisitApi.admin_to_parent_board_delete(boardSeqPart)
@@ -136,7 +161,10 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
                 // 정상결과
                 if (response.body()!!.result == "success") {
-                    intent = Intent(this@VisitAdminToParentDetailActivity, VisitAdminUserSelActivity::class.java)
+                    intent = Intent(
+                        this@VisitAdminToParentDetailActivity,
+                        VisitAdminUserSelActivity::class.java
+                    )
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivity(intent)
                     finish()
@@ -164,18 +192,5 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
             }
         })
     }
-    fun onClick(view: View) {
-        when (view.id) {
-            // 삭제
-            R.id.deleteBtn -> {
-                dlg.setTitle("삭제 알림")
-                    .setMessage("게시물을 삭제 하시겠습니까?")
-                    .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
-                        deleteToParentBoard()
-                    })
-                    .setNegativeButton("아니오",null)
-                dlg.show()
-            }
-        }
-    }
+
 }
