@@ -1,10 +1,7 @@
 package com.example.newbabyproject.Visit
 
-import android.Manifest
-import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +12,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.newbabyproject.*
+import com.example.newbabyproject.Notice.ResultNotice
 import com.example.newbabyproject.utils.Common
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_visit_admin_to_parent_detail.*
@@ -30,6 +28,7 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
     lateinit var call: Call<ResultVisit>
 
+    lateinit var replyCall: Call<ResultReply>
 
     var slideModels : ArrayList<SlideModel> = ArrayList<SlideModel>()
     var pathList = ArrayList<String>()
@@ -47,6 +46,9 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
         setSupportActionBar(toolbar)*/
 
         init(this@VisitAdminToParentDetailActivity)
+
+        loginId = setting.getString("loginId", "").toString()
+
 
         try {
             val intent : Intent = intent
@@ -151,6 +153,68 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
         }
     }
 
+    /* 댓글달기 */
+    fun replyInsert(){
+
+        val boardSeq = seq.toString()
+        val userId = loginId
+        val replyContent = ReplyTxt.text.toString()
+        val insertDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
+        if (replyContent == "" || replyContent.isEmpty()) {
+
+            dlg.setMessage("빈칸은 등록할 수 없습니다.")
+                .setNegativeButton("확인", null)
+                .create()
+            dlg.show()
+
+            return
+        }
+
+
+        val replyBoardSeqPart = RequestBody.create(MultipartBody.FORM, boardSeq)
+        val replyUserIdPart = RequestBody.create(MultipartBody.FORM, userId)
+        val replyContentPart = RequestBody.create(MultipartBody.FORM, replyContent)
+        val replyInsertDatePart = RequestBody.create(MultipartBody.FORM, insertDate)
+
+        replyCall = mVisitApi.replyInsert(
+            replyBoardSeqPart,
+            replyUserIdPart,
+            replyContentPart,
+            replyInsertDatePart
+        )
+        replyCall.enqueue(object : Callback<ResultReply> {
+
+            override fun onResponse(call: Call<ResultReply>, response: Response<ResultReply>) {
+
+                // 정상결과
+                if (response.body()!!.result == "success") {
+                    Toast.makeText(
+                        this@VisitAdminToParentDetailActivity,
+                        "등록되었습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    //replyList.clear()
+                    ReplyTxt.text.clear()
+                    //getReplyList()
+                } else {
+                    dlg.setMessage("다시 시도 바랍니다.")
+                        .setNegativeButton("확인", null)
+                    dlg.show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultReply>, t: Throwable) {
+                // 네트워크 문제
+                Toast.makeText(
+                    this@VisitAdminToParentDetailActivity,
+                    "데이터 접속 상태를 확인 후 다시 시도해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+    }
+    /* 면회소식 삭제 */
     fun deleteToParentBoard(){
         val boardSeqPart = RequestBody.create(MultipartBody.FORM, seq.toString())
         call = mVisitApi.admin_to_parent_board_delete(boardSeqPart)
@@ -191,6 +255,17 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
                 ).show()
             }
         })
+    }
+
+    fun onClick(view: View) {
+        when (view.id) {
+
+            /* 댓글등록 버튼 */
+            R.id.replyBtn -> {
+                replyInsert()
+            }
+
+        }
     }
 
 }
