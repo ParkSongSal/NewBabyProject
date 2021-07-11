@@ -1,6 +1,7 @@
 package com.example.newbabyproject.Retrofit2
 
 import com.example.newbabyproject.Notice.ResultNotice
+import com.example.newbabyproject.Visit.ResultData
 import com.example.newbabyproject.Visit.ResultReply
 import com.example.newbabyproject.Visit.ResultVisit
 import okhttp3.MultipartBody
@@ -94,5 +95,10 @@ interface visitApi {
                     @Part("userId") parentId : RequestBody,
                     @Part("replyContent") parentName : RequestBody,
                     @Part("insertDate") visitNotice : RequestBody
-    ) : Call<ResultReply>
+    ) : Call<ResultData>
+
+    /* 면회소식 댓글 리스트 */
+    @Multipart
+    @POST("to_parent_board_reply_list.php")
+    fun replyList(@Part("boardSeq") boardSeq : RequestBody) : Call<List<ResultReply>>
 }

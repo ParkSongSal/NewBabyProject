@@ -12,10 +12,13 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.newbabyproject.*
-import com.example.newbabyproject.Notice.ResultNotice
 import com.example.newbabyproject.utils.Common
 import com.google.android.material.appbar.AppBarLayout
+import kotlinx.android.synthetic.main.activity_notice_list.*
+import kotlinx.android.synthetic.main.activity_notice_list.recycle_view
 import kotlinx.android.synthetic.main.activity_visit_admin_to_parent_detail.*
+import kotlinx.android.synthetic.main.activity_visit_admin_to_parent_detail.noDataLl
+import kotlinx.android.synthetic.main.activity_visit_adminto_parent_list.*
 import kotlinx.android.synthetic.main.item_toolbar.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -28,7 +31,12 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
     lateinit var call: Call<ResultVisit>
 
-    lateinit var replyCall: Call<ResultReply>
+    lateinit var replyCall: Call<ResultData>
+
+    var replyList: MutableList<ResultReply> = arrayListOf()
+
+    private var mAdapter: BoardReplyDataAdapter? = null
+
 
     var slideModels : ArrayList<SlideModel> = ArrayList<SlideModel>()
     var pathList = ArrayList<String>()
@@ -93,7 +101,7 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
                         continue
                     }
                 }
-
+                getReplyList(seq)
 
             }
 
@@ -128,6 +136,8 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
                 }
             }
         })
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -151,6 +161,60 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun getReplyList(seq : Int){
+        val boardSeq = seq.toString()
+        val replyBoardSeqPart = RequestBody.create(MultipartBody.FORM, boardSeq)
+
+        val call2 : Call<List<ResultReply>> = mVisitApi.replyList(replyBoardSeqPart)
+        call2.enqueue(object : Callback<List<ResultReply>> {
+            override fun onResponse(
+                call: Call<List<ResultReply>>,
+                response: Response<List<ResultReply>>
+            ) {
+
+                Log.d("TAG", "replyList Response ${response.body()}")
+                //정상 결과
+                val result: List<ResultReply> = response.body()!!
+                if(result.isNotEmpty()){
+                    for (i in result.indices) {
+                        val seq: String = result[i].seq
+                        val userId: String = result[i].userId
+                        val replyContent: String = result[i].replyContent
+                        val insertDate: String = result[i].insertDate
+                        val parentName : String = result[i].parentName
+                        val getServerdata = ResultReply(
+                            seq,
+                            userId,
+                            replyContent,
+                            insertDate,
+                            parentName
+                        )
+                        replyList.add(getServerdata)
+                        mAdapter = BoardReplyDataAdapter(applicationContext, replyList)
+                        reply_list.adapter = mAdapter
+                        mAdapter!!.notifyDataSetChanged()
+
+                    }
+                }else{
+                    replyScrollView.visibility = View.GONE
+                    noDataLl.visibility = View.VISIBLE
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<ResultReply>>, t: Throwable) {
+                // 네트워크 문제
+                Toast.makeText(
+                    this@VisitAdminToParentDetailActivity,
+                    "데이터 접속 상태를 확인 후 다시 시도해주세요.",
+                    Toast.LENGTH_LONG
+                ).show()
+                Log.d("TAG", "replyList Response " + t.message)
+
+            }
+        })
     }
 
     /* 댓글달기 */
@@ -182,9 +246,9 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
             replyContentPart,
             replyInsertDatePart
         )
-        replyCall.enqueue(object : Callback<ResultReply> {
+        replyCall.enqueue(object : Callback<ResultData> {
 
-            override fun onResponse(call: Call<ResultReply>, response: Response<ResultReply>) {
+            override fun onResponse(call: Call<ResultData>, response: Response<ResultData>) {
 
                 // 정상결과
                 if (response.body()!!.result == "success") {
@@ -193,9 +257,11 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
                         "등록되었습니다.",
                         Toast.LENGTH_SHORT
                     ).show()
-                    //replyList.clear()
+                    replyScrollView.visibility = View.VISIBLE
+                    noDataLl.visibility = View.GONE
+                    replyList.clear()
                     ReplyTxt.text.clear()
-                    //getReplyList()
+                    getReplyList(seq)
                 } else {
                     dlg.setMessage("다시 시도 바랍니다.")
                         .setNegativeButton("확인", null)
@@ -203,7 +269,7 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ResultReply>, t: Throwable) {
+            override fun onFailure(call: Call<ResultData>, t: Throwable) {
                 // 네트워크 문제
                 Toast.makeText(
                     this@VisitAdminToParentDetailActivity,
