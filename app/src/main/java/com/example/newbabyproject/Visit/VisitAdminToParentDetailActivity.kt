@@ -44,6 +44,8 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
     private var count = 0
     var seq = -1
     var babyName : String? = null
+    var parentId: String? = null
+    var parentName: String? = null
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +67,8 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
                 Log.d("TAG", "Detail Activity writeDateArray : ${resultVisit.toString()}")
                 seq = resultVisit.seq
                 babyName = resultVisit.babyName
+                parentName = resultVisit.parentName
+                parentId = resultVisit.parentId
                 babyNameTxt.text = resultVisit.babyName + "아기 면회소식"
                 writeNameTxt.text = "관리자"
                 writeDateTxt.text = Common.dataSplitFormat(resultVisit.writeDate, "date")
@@ -333,5 +337,13 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
         }
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(this@VisitAdminToParentDetailActivity, VisitAdmintoParentListActivity::class.java)
+        intent.putExtra("parentId", parentId)
+        intent.putExtra("parentName", parentName)
+        startActivity(intent)
+        finish()
+    } //뒤로가기 종료버튼
 
 }

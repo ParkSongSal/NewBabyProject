@@ -8,11 +8,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.example.newbabyproject.BaseActivity
-import com.example.newbabyproject.MainActivity
+import com.example.newbabyproject.*
 import com.example.newbabyproject.Notice.NoticeDataAdapter
 import com.example.newbabyproject.Notice.NoticeDetailActivity
-import com.example.newbabyproject.R
 import com.example.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_visit_admin_calendar.*
 import kotlinx.android.synthetic.main.activity_visit_adminto_parent_list.*
@@ -189,4 +187,9 @@ class VisitAdmintoParentListActivity : BaseActivity() {
             }
         })
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@VisitAdmintoParentListActivity, VisitAdminUserSelActivity::class.java))
+        finish()
+    } //뒤로가기 종료버튼
 }
