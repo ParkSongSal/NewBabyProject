@@ -24,6 +24,8 @@ import retrofit2.Retrofit
 
 abstract class BaseActivity : AppCompatActivity() {
 
+    val PICKER_REQUEST_CODE = 101
+
     val IMG_REQUEST = 777
 
     var loginId = ""
@@ -78,7 +80,7 @@ abstract class BaseActivity : AppCompatActivity() {
         editor = setting.edit()
         editor.apply()
 
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
     }
 

@@ -38,7 +38,6 @@ import java.util.*
 
 class VisitAdminWriteActivity : BaseActivity() {
 
-    private val PICKER_REQUEST_CODE = 101
 
 
     lateinit var call: Call<ResponseBody>

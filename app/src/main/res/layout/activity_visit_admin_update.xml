@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Visit.VisitAdminUpdateActivity">
+
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbarTab"
+            layout="@layout/item_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/border_edit"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="면회시 주의사항" />
+
+            <ScrollView
+                android:id="@+id/contentScroll"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/border_edit"
+                android:fillViewport="true">
+
+                <EditText
+                    android:id="@+id/contentTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:padding="6dp" />
+            </ScrollView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="아기 체중" />
+
+            <EditText
+                android:id="@+id/babyWeightTxt"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit"
+                android:hint="ex) 2.4kg"
+                android:padding="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="수유량" />
+
+            <EditText
+                android:id="@+id/babyLactationTxt"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit"
+                android:hint="ex) 0.5L"
+                android:padding="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="필요물품" />
+
+            <EditText
+                android:id="@+id/babyRequireItemTxt"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit"
+                android:hint="필요물품을 입력해주세요"
+                android:padding="6dp" />
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="기타" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/border_edit"
+                android:fillViewport="true">
+
+                <EditText
+                    android:id="@+id/babyEtcTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:padding="6dp" />
+
+            </ScrollView>
+
+            <LinearLayout
+                android:id="@+id/imageLinear"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:paddingStart="5dp"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp">
+
+                <RelativeLayout
+                    android:id="@+id/imgRL"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/main_border"
+                    android:onClick="onClick"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp">
+
+                    <ImageView
+                        android:id="@+id/cameraIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:onClick="onClick"
+                        android:src="@drawable/ic_baseline_camera_alt_24" />
+
+                    <TextView
+                        android:id="@+id/imageTxtCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/cameraIcon"
+                        android:onClick="onClick"
+                        android:layout_centerHorizontal="true"
+                        android:text="3/3" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/insertBtn"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/ripple_ok_btn"
+            android:text="등록"
+            android:textColor="@color/whiteColor"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

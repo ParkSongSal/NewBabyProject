@@ -25,6 +25,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 import java.util.*
 
 class VisitAdminToParentDetailActivity : BaseActivity() {
@@ -46,6 +47,7 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
     var babyName : String? = null
     var parentId: String? = null
     var parentName: String? = null
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,6 +154,16 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
 
+            // 면회소식 Update
+            R.id.updateBtn ->{
+                intent = Intent(this@VisitAdminToParentDetailActivity, VisitAdminUpdateActivity::class.java)
+                //intent.putExtra("resultVisit", resultVisit as Serializable)
+                startActivity(intent)
+                finish()
+                true
+            }
+
+            // 면회소식 Delete
             R.id.delBtn -> {
                 dlg.setTitle("삭제 알림")
                     .setMessage("게시물을 삭제 하시겠습니까?")
