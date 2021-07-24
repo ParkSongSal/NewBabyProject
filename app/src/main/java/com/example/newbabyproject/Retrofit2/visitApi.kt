@@ -37,6 +37,9 @@ interface visitApi {
                        @Part image: MultipartBody.Part,
                        @Part image2: MultipartBody.Part?,
                        @Part image3: MultipartBody.Part?,
+                       @Part("originalPath1") originalPath : RequestBody?,
+                       @Part("originalPath2") originalPath2 : RequestBody?,
+                       @Part("originalPath3") originalPath3 : RequestBody?,
                        @Part("insertId") insertId: RequestBody,
                        @Part("insertDate") insertDate: RequestBody,
                        @Part("updateId") updateId: RequestBody,
@@ -58,6 +61,40 @@ interface visitApi {
                               @Part("reserveDate") reserveDate : RequestBody?,
                               @Part("insertId") insertId : RequestBody,
                               @Part("insertDate") insertDate : RequestBody,
+                              @Part("updateId") updateId : RequestBody,
+                              @Part("updateDate") updateDate : RequestBody
+    ) : Call<ResponseBody>
+
+    /* 관리자To보호자 게시글 수정 이미지 o */
+    @Multipart
+    @POST("to_parent_board_update_Image.php")
+    fun toParentUpdate(@Part("seq") seq : RequestBody,
+                       @Part("parentId") parentId: RequestBody,
+                       @Part("visitNotice") visitNotice: RequestBody,
+                       @Part("babyWeight") babyWeight: RequestBody,
+                       @Part("babyLactation") babyLactation: RequestBody,
+                       @Part("babyRequireItem") babyRequireItem: RequestBody,
+                       @Part("babyEtc") babyEtc: RequestBody,
+                       @Part image: MultipartBody.Part,
+                       @Part image2: MultipartBody.Part?,
+                       @Part image3: MultipartBody.Part?,
+                       @Part("originalPath1") originalPath : RequestBody?,
+                       @Part("originalPath2") originalPath2 : RequestBody?,
+                       @Part("originalPath3") originalPath3 : RequestBody?,
+                       @Part("updateId") updateId: RequestBody,
+                       @Part("updateDate") updateDate: RequestBody
+    ) : Call<ResponseBody>
+
+    /* 관리자To보호자 게시글 수정 이미지 x*/
+    @Multipart
+    @POST("to_parent_board_update_NoImage.php")
+    fun toParentUpdateNoImage(@Part("seq") seq : RequestBody,
+                              @Part("parentId") parentId : RequestBody,
+                              @Part("visitNotice") visitNotice : RequestBody,
+                              @Part("babyWeight") babyWeight : RequestBody,
+                              @Part("babyLactation") babyLactation : RequestBody,
+                              @Part("babyRequireItem") babyRequireItem : RequestBody,
+                              @Part("babyEtc") babyEtc : RequestBody,
                               @Part("updateId") updateId : RequestBody,
                               @Part("updateDate") updateDate : RequestBody
     ) : Call<ResponseBody>

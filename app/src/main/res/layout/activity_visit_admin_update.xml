@@ -147,7 +147,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/main_border"
-                    android:onClick="onClick"
                     android:gravity="center"
                     android:layout_marginRight="10dp">
 
@@ -156,7 +155,6 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_centerHorizontal="true"
-                        android:onClick="onClick"
                         android:src="@drawable/ic_baseline_camera_alt_24" />
 
                     <TextView
@@ -164,7 +162,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/cameraIcon"
-                        android:onClick="onClick"
                         android:layout_centerHorizontal="true"
                         android:text="3/3" />
 
@@ -176,13 +173,13 @@
 
 
         <Button
-            android:id="@+id/insertBtn"
+            android:id="@+id/updateBtn"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginBottom="15dp"
             android:background="@drawable/ripple_ok_btn"
-            android:text="등록"
+            android:text="수정"
             android:textColor="@color/whiteColor"
             android:textSize="20sp" />
     </LinearLayout>

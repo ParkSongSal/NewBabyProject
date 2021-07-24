@@ -95,9 +95,23 @@ class VisitAdmintoParentListActivity : BaseActivity() {
         list.add(boardList[event.position].path1.toString())
         list.add(boardList[event.position].path2.toString())
         list.add(boardList[event.position].path3.toString())
-        intent.putExtra("pathList", list)
+        intent.putExtra("pathList", list as Serializable)
+
+        var list2 =  ArrayList<String>()
+
+        list2.add(boardList[event.position].originalPath.toString())
+        list2.add(boardList[event.position].originalPath2.toString())
+        list2.add(boardList[event.position].originalPath3.toString())
+
+
+        intent.putExtra("originalPathList",list2)
+
+        Log.d("TAG", "pathList $list")
+        Log.d("TAG", "originalPathList $list2")
 
         intent.putExtra("resultVisit", resultVisit as Serializable)
+
+
 
         startActivity(intent)
         finish()
@@ -138,6 +152,9 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                         val path1 = result[i].path1
                         val path2 = result[i].path2
                         val path3 = result[i].path3
+                        val originalPath1 = result[i].originalPath
+                        val originalPath2 = result[i].originalPath2
+                        val originalPath3 = result[i].originalPath3
                         //val replyCnt = result[i].replyCnt
                         val insertDate = result[i].insertDate
                         val babyName = result[i].babyName
@@ -158,6 +175,9 @@ class VisitAdmintoParentListActivity : BaseActivity() {
                             path1,
                             path2,
                             path3,
+                            originalPath1,
+                            originalPath2,
+                            originalPath3,
                             //null,
                             insertDate,
                             babyName

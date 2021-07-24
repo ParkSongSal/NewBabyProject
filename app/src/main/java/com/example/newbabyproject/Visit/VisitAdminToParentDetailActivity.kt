@@ -41,49 +41,54 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
     var slideModels : ArrayList<SlideModel> = ArrayList<SlideModel>()
     var pathList = ArrayList<String>()
+    var originalPathList = ArrayList<String>()
 
     private var count = 0
     var seq = -1
     var babyName : String? = null
     var parentId: String? = null
     var parentName: String? = null
+    var visitNotice : String? = null
+    var babyWeight : String? = null
+    var babyLactation : String? = null
+    var babyRequireItem : String? = null
+    var babyEtc : String? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visit_admin_to_parent_detail)
 
-        /*toolbar.setTitleTextColor(getColor(R.color.whiteColor))
-        toolbar.title = "면회내용 상세보기"
-        setSupportActionBar(toolbar)*/
-
         init(this@VisitAdminToParentDetailActivity)
 
         loginId = setting.getString("loginId", "").toString()
-
 
         try {
             val intent : Intent = intent
             if(intent.hasExtra("resultVisit")){
                 val resultVisit = intent.getSerializableExtra("resultVisit") as ResultVisit
-                Log.d("TAG", "Detail Activity writeDateArray : ${resultVisit.toString()}")
+                Log.d("TAG", "VisitAdminToParentDetailActivity : resultVisit : $resultVisit")
                 seq = resultVisit.seq
                 babyName = resultVisit.babyName
                 parentName = resultVisit.parentName
                 parentId = resultVisit.parentId
+                visitNotice = resultVisit.visitNotice
+                babyWeight = resultVisit.babyWeight
+                babyLactation = resultVisit.babyLactation
+                babyRequireItem = resultVisit.babyRequireItem
+                babyEtc = resultVisit.babyEtc
+
                 babyNameTxt.text = resultVisit.babyName + "아기 면회소식"
                 writeNameTxt.text = "관리자"
                 writeDateTxt.text = Common.dataSplitFormat(resultVisit.writeDate, "date")
-                visitNoticeTxt.text = resultVisit.visitNotice
-                babyWeightTxt.text = resultVisit.babyWeight
-                babyLactationTxt.text = resultVisit.babyLactation
-                babyRequireItemTxt.text = resultVisit.babyRequireItem
-                babyEtcTxt.text = resultVisit.babyEtc
-                Log.d("TAG", "Detail Activity Exceptilon ")
+                visitNoticeTxt.text = visitNotice
+                babyWeightTxt.text = babyWeight
+                babyLactationTxt.text = babyLactation
+                babyRequireItemTxt.text = babyRequireItem
+                babyEtcTxt.text = babyEtc
 
                 pathList = intent.getSerializableExtra("pathList") as ArrayList<String>
-                Log.d("TAG", "Detail Activity Exceptilon $pathList")
-
+                originalPathList = intent.getSerializableExtra("originalPathList") as ArrayList<String>
 
                 for (j in pathList.indices){
                     if("null" == pathList[j] || "" == pathList[j]){
@@ -157,7 +162,40 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
             // 면회소식 Update
             R.id.updateBtn ->{
                 intent = Intent(this@VisitAdminToParentDetailActivity, VisitAdminUpdateActivity::class.java)
-                //intent.putExtra("resultVisit", resultVisit as Serializable)
+
+                intent.putExtra("seq", seq)
+
+                intent.putExtra("parentId", parentId)
+                intent.putExtra("babyName", babyName)
+                intent.putExtra("visitNotice", visitNotice)
+                intent.putExtra("babyWeight", babyWeight)
+                intent.putExtra("babyLactation", babyLactation)
+                intent.putExtra("babyRequireItem", babyRequireItem)
+                intent.putExtra("babyEtc", babyEtc)
+                intent.putExtra("visitNotice", visitNotice)
+
+                val list = ArrayList<String>()
+                var originalList = ArrayList<String>()
+
+                for (i in pathList.indices) {
+                    if(pathList[i].isNotEmpty()){
+                        if(pathList[i].contains("deleteiconblack2")) {
+                            continue
+                        }else{
+                            list.add(pathList[i])
+                        }
+                    }else{
+                        continue
+                    }
+                }
+                for(i in originalPathList.indices){
+                    if(originalPathList[i].isNotEmpty()){
+                        originalList.add(originalPathList[i])
+                    }
+                }
+
+                intent.putExtra("originalPathList",originalList)
+                intent.putExtra("pathList",list)
                 startActivity(intent)
                 finish()
                 true

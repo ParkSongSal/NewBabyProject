@@ -259,6 +259,8 @@ class VisitAdminWriteActivity : BaseActivity() {
                 )
             }
             1 ->{
+                val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
+
                 val f1 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
                 val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
@@ -277,6 +279,9 @@ class VisitAdminWriteActivity : BaseActivity() {
                     file1,
                     null,
                     null,
+                    originalPath,
+                    null,
+                    null,
                     insertIdPart,
                     insertDatePart,
                     updateIdPart,
@@ -284,6 +289,10 @@ class VisitAdminWriteActivity : BaseActivity() {
                 )
             }
             2 ->{
+
+                val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
+                val originalPath2 = RequestBody.create(MultipartBody.FORM, filePath[1].toString())
+
                 val f1 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
                 val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
@@ -306,6 +315,9 @@ class VisitAdminWriteActivity : BaseActivity() {
                     file1,
                     file2,
                     null,
+                    originalPath,
+                    originalPath2,
+                    null,
                     insertIdPart,
                     insertDatePart,
                     updateIdPart,
@@ -313,6 +325,11 @@ class VisitAdminWriteActivity : BaseActivity() {
                 )
             }
             3 ->{
+
+                val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
+                val originalPath2 = RequestBody.create(MultipartBody.FORM, filePath[1].toString())
+                val originalPath3 = RequestBody.create(MultipartBody.FORM, filePath[2].toString())
+
                 val f1 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
                 val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
@@ -338,6 +355,9 @@ class VisitAdminWriteActivity : BaseActivity() {
                     file1,
                     file2,
                     file3,
+                    originalPath,
+                    originalPath2,
+                    originalPath3,
                     insertIdPart,
                     insertDatePart,
                     updateIdPart,
