@@ -317,4 +317,11 @@ class VisitUserDetailActivity : BaseActivity() {
         }
 
     }
+
+    //뒤로가기 종료버튼
+    override fun onBackPressed() {
+        val intent = Intent(this@VisitUserDetailActivity, VisitParentCalendarActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }
