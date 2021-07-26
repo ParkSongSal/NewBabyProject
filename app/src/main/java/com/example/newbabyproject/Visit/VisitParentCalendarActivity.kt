@@ -100,9 +100,18 @@ class VisitParentCalendarActivity : BaseActivity() {
         })
 
         detailBtn.setOnClickListener{
-            val resultVisit : ResultVisit = detailAry[0]
 
             intent = Intent(this@VisitParentCalendarActivity, VisitUserDetailActivity::class.java)
+
+            val resultVisit : ResultVisit = detailAry[0]
+
+            val list =  ArrayList<String>()
+
+            list.add(detailAry[0].path1.toString())
+            list.add(detailAry[0].path2.toString())
+            list.add(detailAry[0].path3.toString())
+
+            intent.putExtra("pathList", list as Serializable)
             intent.putExtra("resultVisit", resultVisit as Serializable)
             startActivity(intent)
             finish()
@@ -157,9 +166,9 @@ class VisitParentCalendarActivity : BaseActivity() {
                         boardConfirm,
                         tempYn,
                         reserveDate,
-                        null,
-                        null,
-                        null,
+                        path1,
+                        path2,
+                        path3,
                         null,
                         null,
                         null,

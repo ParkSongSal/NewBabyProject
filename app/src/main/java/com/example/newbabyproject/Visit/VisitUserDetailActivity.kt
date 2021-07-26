@@ -4,23 +4,25 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.newbabyproject.BaseActivity
 import com.example.newbabyproject.R
 import com.example.newbabyproject.utils.Common
 import com.example.newbabyproject.utils.Common.dataSplitFormat
 import com.google.android.material.appbar.AppBarLayout
-import kotlinx.android.synthetic.main.activity_visit_admin_to_parent_detail.*
 import kotlinx.android.synthetic.main.activity_visit_user_detail.*
+import kotlinx.android.synthetic.main.activity_visit_user_detail.ReplyTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.babyEtcTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.babyLactationTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.babyNameTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.babyRequireItemTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.babyWeightTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.img_slider
+import kotlinx.android.synthetic.main.activity_visit_user_detail.noDataLl
+import kotlinx.android.synthetic.main.activity_visit_user_detail.reply_list
 import kotlinx.android.synthetic.main.activity_visit_user_detail.visitNoticeTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.writeDateTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.writeNameTxt
@@ -36,11 +38,16 @@ class VisitUserDetailActivity : BaseActivity() {
 
     var writeDateAry: ArrayList<String>? = ArrayList<String>()
     lateinit var call: Call<ResultVisit>
+    lateinit var replyCall: Call<ResultData>
 
     var slideModels : ArrayList<SlideModel> = ArrayList<SlideModel>()
     var pathList = ArrayList<String>()
     private var count = 0
     var babyName : String? = null
+    var seq = -1
+
+    var replyList: MutableList<ResultReply> = arrayListOf()
+    private var mAdapter: BoardReplyDataAdapter? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +55,8 @@ class VisitUserDetailActivity : BaseActivity() {
         setContentView(R.layout.activity_visit_user_detail)
 
         init(this@VisitUserDetailActivity)
+
+        loginId = setting.getString("loginId", "").toString()
 
         try {
             val intent : Intent = intent
@@ -57,6 +66,7 @@ class VisitUserDetailActivity : BaseActivity() {
                 if("N" == resultVisit.boardConfirm){
                     boardConfirmAct(resultVisit.parentId, resultVisit.seq)
                 }
+                seq = resultVisit.seq
                 babyName = resultVisit.babyName
 
                 babyNameTxt.text = resultVisit.babyName + "아기 면회소식"
@@ -92,6 +102,7 @@ class VisitUserDetailActivity : BaseActivity() {
                         continue
                     }
                 }
+                getReplyList(seq)
 
             }
 
@@ -124,6 +135,122 @@ class VisitUserDetailActivity : BaseActivity() {
                         toolbar_layout2.title = ""
                     }
                 }
+            }
+        })
+
+    }
+
+    fun getReplyList(seq : Int){
+        val boardSeq = seq.toString()
+        val replyBoardSeqPart = RequestBody.create(MultipartBody.FORM, boardSeq)
+
+        val call2 : Call<List<ResultReply>> = mVisitApi.replyList(replyBoardSeqPart)
+        call2.enqueue(object : Callback<List<ResultReply>> {
+            override fun onResponse(
+                call: Call<List<ResultReply>>,
+                response: Response<List<ResultReply>>
+            ) {
+
+                Log.d("TAG", "replyList Response ${response.body()}")
+                //정상 결과
+                val result: List<ResultReply> = response.body()!!
+                if(result.isNotEmpty()){
+                    for (i in result.indices) {
+                        val seq: String = result[i].seq
+                        val userId: String = result[i].userId
+                        val replyContent: String = result[i].replyContent
+                        val insertDate: String = result[i].insertDate
+                        val parentName : String = result[i].parentName
+                        val getServerdata = ResultReply(
+                            seq,
+                            userId,
+                            replyContent,
+                            insertDate,
+                            parentName
+                        )
+                        replyList.add(getServerdata)
+                        mAdapter = BoardReplyDataAdapter(applicationContext, replyList)
+                        reply_list.adapter = mAdapter
+                        mAdapter!!.notifyDataSetChanged()
+
+                    }
+                }else{
+                    scroll_view.visibility = View.GONE
+                    noDataLl.visibility = View.VISIBLE
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<ResultReply>>, t: Throwable) {
+                // 네트워크 문제
+                Toast.makeText(
+                    this@VisitUserDetailActivity,
+                    "데이터 접속 상태를 확인 후 다시 시도해주세요.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        })
+    }
+
+    /* 댓글달기 */
+    fun replyInsert(){
+
+        val boardSeq = seq.toString()
+        val userId = loginId
+        val replyContent = ReplyTxt.text.toString()
+        val insertDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
+        if (replyContent == "" || replyContent.isEmpty()) {
+
+            dlg.setMessage("빈칸은 등록할 수 없습니다.")
+                .setNegativeButton("확인", null)
+                .create()
+            dlg.show()
+
+            return
+        }
+
+
+        val replyBoardSeqPart = RequestBody.create(MultipartBody.FORM, boardSeq)
+        val replyUserIdPart = RequestBody.create(MultipartBody.FORM, userId)
+        val replyContentPart = RequestBody.create(MultipartBody.FORM, replyContent)
+        val replyInsertDatePart = RequestBody.create(MultipartBody.FORM, insertDate)
+
+        replyCall = mVisitApi.replyInsert(
+            replyBoardSeqPart,
+            replyUserIdPart,
+            replyContentPart,
+            replyInsertDatePart
+        )
+        replyCall.enqueue(object : Callback<ResultData> {
+
+            override fun onResponse(call: Call<ResultData>, response: Response<ResultData>) {
+
+                // 정상결과
+                if (response.body()!!.result == "success") {
+                    Toast.makeText(
+                        this@VisitUserDetailActivity,
+                        "등록되었습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    scroll_view.visibility = View.VISIBLE
+                    noDataLl.visibility = View.GONE
+                    replyList.clear()
+                    ReplyTxt.text.clear()
+                    getReplyList(seq)
+                } else {
+                    dlg.setMessage("다시 시도 바랍니다.")
+                        .setNegativeButton("확인", null)
+                    dlg.show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultData>, t: Throwable) {
+                // 네트워크 문제
+                Toast.makeText(
+                    this@VisitUserDetailActivity,
+                    "데이터 접속 상태를 확인 후 다시 시도해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
@@ -177,5 +304,17 @@ class VisitUserDetailActivity : BaseActivity() {
         }else{
             Log.d("TAG", "userId Null...")
         }
+    }
+
+    fun onClick(view: View) {
+        when (view.id) {
+
+            /* 댓글등록 버튼 */
+            R.id.replyBtn -> {
+                replyInsert()
+            }
+
+        }
+
     }
 }
