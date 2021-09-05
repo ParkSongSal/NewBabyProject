@@ -326,5 +326,14 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="16dp"
+        android:text="본 앱은 '류지민'님의 의뢰로 제작되었습니다."
+        android:textColor="#4D4D4D"
+        android:textSize="15sp" />
 </RelativeLayout>

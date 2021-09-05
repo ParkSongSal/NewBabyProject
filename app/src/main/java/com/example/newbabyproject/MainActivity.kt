@@ -56,6 +56,7 @@ class MainActivity : BaseActivity() {
                 Common.intentCommon(this@MainActivity, OutIntroduceActivity::class.java)
             }
 
+            /* 설정 */
             R.id.logoutImg -> {
                 Common.intentCommon(this@MainActivity, SettingActivity::class.java)
 

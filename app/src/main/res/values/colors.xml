@@ -19,7 +19,7 @@
     <color name="mainLightTextColor">#C6C6C6</color>
 
     <!--메인텍스트(진한 회색)-->
-    <color name="mainTextBoldColor">#2e2e2e</color>
+    <color name="mainTextBoldColor">#4D4D4D</color>
 
     <!--강조노란색-->
     <color name="mainAccentColor">#ebd58d</color>

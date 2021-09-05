@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+
+        tools:targetApi="m">
+
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="2dp"
+                android:color="@color/mainTextColor" />
+
+        </shape>
+
+
+    </item>
+
+
+</layer-list>

@@ -4,27 +4,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mainColor"
     android:orientation="vertical"
     tools:context=".SettingActivity">
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="로그아웃"
-        android:onClick="mOnClick"
-        android:id="@+id/logoutBtn"/>
+        android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="회원탈퇴"
-        android:onClick="mOnClick"
-        android:id="@+id/unRegisterBtn"/>
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/termsborder"
+            android:orientation="horizontal">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="문의하기"
-        android:onClick="mOnClick"
-        android:id="@+id/inquireBtn"/>
+            <Button
+                android:id="@+id/noticeBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:gravity="start|center"
+                android:onClick="mOnClick"
+                android:text="공지게시판"
+                android:textSize="17sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll1"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/termsborder"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/contact_us"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:onClick="mOnClick"
+                android:background="#00000000"
+                android:gravity="start|center"
+                android:text="관리자에게 문의하기"
+                android:textSize="17sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll4"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/termsborder"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/logoutBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:onClick="mOnClick"
+                android:gravity="start|center"
+                android:text="로그아웃"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll5"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/termsborder"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/unRegisterBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:onClick="mOnClick"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:gravity="start|center"
+                android:text="회원탈퇴"
+                android:textSize="17sp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="16dp"
+            android:text="본 앱은 '류지민'님의 의뢰로 제작되었습니다."
+            android:textColor="#4D4D4D"
+            android:textSize="15sp" />
+    </RelativeLayout>
 </LinearLayout>
