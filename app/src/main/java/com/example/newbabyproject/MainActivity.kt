@@ -57,21 +57,8 @@ class MainActivity : BaseActivity() {
             }
 
             R.id.logoutImg -> {
-                dlg.setTitle("로그아웃 알림")
-                    .setMessage("로그아웃 하시겠습니까?")
-                    .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
-                        Logout()
-                        Toast.makeText(applicationContext, "로그아웃되었습니다", Toast.LENGTH_SHORT).show()
-                    })
-                    .setNegativeButton("아니오",
-                        DialogInterface.OnClickListener { dialog, which ->
-                            Toast.makeText(
-                                this@MainActivity,
-                                "로그아웃하지 않습니다",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        })
-                dlg.show()
+                Common.intentCommon(this@MainActivity, SettingActivity::class.java)
+
             }
 
             /* 공지사항 */

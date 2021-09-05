@@ -8,9 +8,23 @@
     tools:context=".SettingActivity">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="로그아웃"
+        android:onClick="mOnClick"
         android:id="@+id/logoutBtn"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="회원탈퇴"
+        android:onClick="mOnClick"
+        android:id="@+id/unRegisterBtn"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="문의하기"
+        android:onClick="mOnClick"
+        android:id="@+id/inquireBtn"/>
 </LinearLayout>
