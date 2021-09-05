@@ -46,7 +46,7 @@ class SettingActivity : BaseActivity() {
                         if ("admin" == loginId) {
                             Toast.makeText(applicationContext, "관리자 계정은 탈퇴할수 없습니다.", Toast.LENGTH_SHORT).show()
                         }else{
-                            //UnRegister()
+                            Logout()
                         }
                         Toast.makeText(applicationContext, "로그아웃되었습니다", Toast.LENGTH_SHORT).show()
                     })
