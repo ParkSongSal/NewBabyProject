@@ -16,6 +16,10 @@ import com.example.newbabyproject.Notice.NoticeDetailActivity
 import com.example.newbabyproject.Notice.ResultNotice
 import kotlinx.android.synthetic.main.activity_app_introduce.*
 import kotlinx.android.synthetic.main.activity_notice_list.*
+import kotlinx.android.synthetic.main.activity_notice_list.fab
+import kotlinx.android.synthetic.main.activity_notice_list.noDataLl
+import kotlinx.android.synthetic.main.activity_notice_list.recycle_view
+import kotlinx.android.synthetic.main.activity_visit_adminto_parent_list.*
 import kotlinx.android.synthetic.main.item_toolbar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -88,28 +92,34 @@ class NoticeListActivity : BaseActivity() {
                 Log.d("TAG", "response ${response.body()}")
                 //정상 결과
                 val result: List<ResultNotice> = response.body()!!
-                for (i in result.indices) {
-                    val SEQ: Int = result[i].seq
-                    val TITLE: String = result[i].title
-                    val CONTENT: String = result[i].content
-                    val INSERT_ID: String = result[i].insertId
-                    val INSERT_DATE: String = result[i].insertDate
-                    val UPDATE_ID: String = result[i].updateId
-                    val UPDATE_DATE: String = result[i].updateDate
-                    val getServerdata = ResultNotice(
-                        SEQ,
-                        TITLE,
-                        CONTENT,
-                        INSERT_ID,
-                        INSERT_DATE,
-                        UPDATE_ID,
-                        UPDATE_DATE
-                    )
-                    boardList.add(getServerdata)
-                    //saveList.add(getServerdata)
-                    mAdapter = NoticeDataAdapter(applicationContext, boardList)
-                    recycle_view.adapter = mAdapter
+                if(result.isNotEmpty()){
+                    for (i in result.indices) {
+                        val SEQ: Int = result[i].seq
+                        val TITLE: String = result[i].title
+                        val CONTENT: String = result[i].content
+                        val INSERT_ID: String = result[i].insertId
+                        val INSERT_DATE: String = result[i].insertDate
+                        val UPDATE_ID: String = result[i].updateId
+                        val UPDATE_DATE: String = result[i].updateDate
+                        val getServerdata = ResultNotice(
+                            SEQ,
+                            TITLE,
+                            CONTENT,
+                            INSERT_ID,
+                            INSERT_DATE,
+                            UPDATE_ID,
+                            UPDATE_DATE
+                        )
+                        boardList.add(getServerdata)
+                        //saveList.add(getServerdata)
+                        mAdapter = NoticeDataAdapter(applicationContext, boardList)
+                        recycle_view.adapter = mAdapter
+                    }
+                }else{
+                    recycle_view.visibility = View.GONE
+                    noDataLl.visibility = View.VISIBLE
                 }
+
             }
 
             override fun onFailure(call: Call<List<ResultNotice>>, t: Throwable) {
