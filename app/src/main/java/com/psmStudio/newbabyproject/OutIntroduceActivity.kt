@@ -2,13 +2,11 @@ package com.psmStudio.newbabyproject
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import kotlinx.android.synthetic.main.activity_app_introduce.*
-import kotlinx.android.synthetic.main.activity_app_introduce.appIntroTxt
 import kotlinx.android.synthetic.main.activity_app_introduce.modifyBtn
 import kotlinx.android.synthetic.main.activity_out_introduce.*
 import kotlinx.android.synthetic.main.item_toolbar.*

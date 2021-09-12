@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.SearchView
 import com.psmStudio.newbabyproject.Notice.NoticeDataAdapter
 import com.psmStudio.newbabyproject.Notice.NoticeDetailActivity
 import com.psmStudio.newbabyproject.Notice.ResultNotice

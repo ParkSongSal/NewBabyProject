@@ -1,17 +1,12 @@
 package com.psmStudio.newbabyproject
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import com.psmStudio.newbabyproject.Retrofit2.ResultModel
-import com.psmStudio.newbabyproject.Retrofit2.RetrofitClient
-import com.psmStudio.newbabyproject.Retrofit2.boardApi
 import com.psmStudio.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_app_introduce.*
 import kotlinx.android.synthetic.main.activity_app_introduce_modify.*
@@ -22,7 +17,6 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class AppIntroduceModifyActivity : BaseActivity() {
 

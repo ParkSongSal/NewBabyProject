@@ -1,20 +1,16 @@
 package com.psmStudio.newbabyproject
 
 import android.Manifest
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.core.app.ActivityCompat
 import com.psmStudio.newbabyproject.Retrofit2.*
-import com.psmStudio.newbabyproject.utils.Common
-import com.psmStudio.newbabyproject.utils.CustomProgressDialog
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Callback
 import retrofit2.Response

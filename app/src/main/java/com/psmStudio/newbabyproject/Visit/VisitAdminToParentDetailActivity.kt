@@ -15,7 +15,6 @@ import com.psmStudio.newbabyproject.*
 import com.psmStudio.newbabyproject.utils.Common
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_notice_list.*
-import kotlinx.android.synthetic.main.activity_notice_list.recycle_view
 import kotlinx.android.synthetic.main.activity_visit_admin_to_parent_detail.*
 import kotlinx.android.synthetic.main.activity_visit_admin_to_parent_detail.noDataLl
 import kotlinx.android.synthetic.main.activity_visit_adminto_parent_list.*
@@ -25,7 +24,6 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.Serializable
 import java.util.*
 
 class VisitAdminToParentDetailActivity : BaseActivity() {

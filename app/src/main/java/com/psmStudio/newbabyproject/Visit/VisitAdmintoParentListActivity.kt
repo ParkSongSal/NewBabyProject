@@ -9,8 +9,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.psmStudio.newbabyproject.*
-import com.psmStudio.newbabyproject.Notice.NoticeDataAdapter
-import com.psmStudio.newbabyproject.Notice.NoticeDetailActivity
 import com.psmStudio.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_visit_admin_calendar.*
 import kotlinx.android.synthetic.main.activity_visit_adminto_parent_list.*

@@ -9,7 +9,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.psmStudio.newbabyproject.Notice.ResultNotice
 import com.psmStudio.newbabyproject.R
 import com.github.siyamed.shapeimageview.RoundedImageView
 import org.greenrobot.eventbus.EventBus

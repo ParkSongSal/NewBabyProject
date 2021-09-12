@@ -1,6 +1,5 @@
 package com.psmStudio.newbabyproject.Retrofit2
 
-import com.psmStudio.newbabyproject.Notice.ResultNotice
 import com.psmStudio.newbabyproject.Visit.ResultData
 import com.psmStudio.newbabyproject.Visit.ResultReply
 import com.psmStudio.newbabyproject.Visit.ResultVisit

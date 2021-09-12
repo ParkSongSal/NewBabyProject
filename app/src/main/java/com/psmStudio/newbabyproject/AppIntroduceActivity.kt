@@ -1,30 +1,14 @@
 package com.psmStudio.newbabyproject
 
 import android.content.Intent
-import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import com.psmStudio.newbabyproject.Retrofit2.ResultModel
-import com.psmStudio.newbabyproject.Retrofit2.RetrofitClient
-import com.psmStudio.newbabyproject.Retrofit2.boardApi
 import kotlinx.android.synthetic.main.activity_app_introduce.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.item_toolbar.*
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
 class AppIntroduceActivity : BaseActivity() {
 

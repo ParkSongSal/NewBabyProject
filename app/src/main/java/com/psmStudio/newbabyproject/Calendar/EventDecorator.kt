@@ -1,7 +1,5 @@
 package com.psmStudio.fastcampusandroid.Calendar
 
-import android.graphics.Color
-import android.text.style.ForegroundColorSpan
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade

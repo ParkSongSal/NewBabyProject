@@ -1,12 +1,10 @@
 package com.psmStudio.newbabyproject
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.psmStudio.newbabyproject.Retrofit2.ResultIntroduce
 import com.psmStudio.newbabyproject.Visit.ResultVisit
 import com.psmStudio.newbabyproject.Visit.VisitParentCalendarActivity
 import com.psmStudio.newbabyproject.utils.Common

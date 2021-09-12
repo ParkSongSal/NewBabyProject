@@ -1,12 +1,10 @@
 package com.psmStudio.newbabyproject
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import com.psmStudio.newbabyproject.Notice.ResultNotice
-import com.psmStudio.newbabyproject.Retrofit2.ResultModel
 import com.psmStudio.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_notice_insert.*
 import kotlinx.android.synthetic.main.activity_register.*
