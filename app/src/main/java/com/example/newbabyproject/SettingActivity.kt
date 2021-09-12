@@ -26,6 +26,11 @@ class SettingActivity : BaseActivity() {
                 Toast.makeText(applicationContext, "현재 등록된 공지가 없습니다.", Toast.LENGTH_SHORT).show()
             }
 
+            // 회원정보 수정
+            R.id.userUpdateBtn ->{
+                userInfoUpdate();
+            }
+
             // 로그아웃
             R.id.logoutBtn -> {
                 dlg.setTitle("로그아웃 알림")
@@ -71,6 +76,10 @@ class SettingActivity : BaseActivity() {
         }
     }
 
+    private fun userInfoUpdate(){
+        startActivity(Intent(this@SettingActivity, UserInfoUpdateActivity::class.java))
+        finish()
+    }
 
     // 로그아웃
     private fun Logout() {

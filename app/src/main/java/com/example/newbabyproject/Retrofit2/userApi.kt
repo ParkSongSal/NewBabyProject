@@ -37,4 +37,22 @@ interface userApi {
     @POST("mainBabyInfo.php")
     fun mainBabyInfo(@Part("loginId") loginId : RequestBody) : Call<List<ResultVisit>>
 
+    /* 회원 정보 */
+    @Multipart
+    @POST("getUserInfo.php")
+    fun getUserInfo(@Part("loginId") loginId : RequestBody) : Call<List<ResultVisit>>
+
+
+    /* 회원정보 수정 */
+    @GET("userInfoUpdate.php")
+    fun userUpdate(@Query("userId") userId : String,
+                     @Query("userPw") userPw: String,
+                     @Query("userName") userName : String,
+                     @Query("userPhone") userPhone : String,
+                     @Query("babyName") babyName : String,
+                     @Query("babyNum") babyNum : String,
+                     @Query("babyBirthDate") babyBirthDate : String,
+                     @Query("babyBirthTime") babyBirthTime : String,
+                     @Query("regDate") regDate : String) : Call<ResultModel>
+
 }

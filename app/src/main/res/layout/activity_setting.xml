@@ -38,7 +38,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll4"
+            android:id="@+id/ll2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll1"
@@ -64,10 +64,35 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll5"
+            android:id="@+id/ll3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll4"
+            android:layout_below="@+id/ll2"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/termsborder"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/userUpdateBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:onClick="mOnClick"
+                android:gravity="start|center"
+                android:text="회원정보 수정"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll3"
             android:layout_marginStart="30dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
@@ -89,10 +114,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll6"
+            android:id="@+id/ll5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll5"
+            android:layout_below="@+id/ll4"
             android:layout_marginStart="30dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
