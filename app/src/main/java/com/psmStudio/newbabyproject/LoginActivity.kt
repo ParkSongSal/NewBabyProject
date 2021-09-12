@@ -44,6 +44,9 @@ class LoginActivity : BaseActivity() {
             ) !== PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_PHONE_STATE
+            ) !== PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
             ) !== PackageManager.PERMISSION_GRANTED
         ){
 
@@ -54,7 +57,8 @@ class LoginActivity : BaseActivity() {
                 this, arrayOf(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,  // 저장공간
                     Manifest.permission.READ_EXTERNAL_STORAGE,  // 저장공간
-                    Manifest.permission.READ_PHONE_STATE
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.CAMERA,
                 ),
                 PERMISSION_ALLOW
             )
