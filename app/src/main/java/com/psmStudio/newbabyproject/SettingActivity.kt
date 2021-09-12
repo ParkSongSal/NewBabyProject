@@ -22,12 +22,20 @@ class SettingActivity : BaseActivity() {
         when (view.id) {
 
             // 공지게시판
-            R.id.noticeBtn ->{
+            R.id.noticeBtn -> {
                 Toast.makeText(applicationContext, "현재 등록된 공지가 없습니다.", Toast.LENGTH_SHORT).show()
             }
 
+            // 개인정보 처리방침
+            R.id.privacyBtn -> {
+                intent = Intent(this@SettingActivity, privacyDetailActivity::class.java)
+                intent.putExtra("title", "개인정보처리방침")
+                intent.putExtra("fileNm", "개인정보처리방침.html")
+                startActivity(intent)
+            }
+
             // 회원정보 수정
-            R.id.userUpdateBtn ->{
+            R.id.userUpdateBtn -> {
                 userInfoUpdate();
             }
 
@@ -39,8 +47,10 @@ class SettingActivity : BaseActivity() {
                         Logout()
                         Toast.makeText(applicationContext, "로그아웃되었습니다", Toast.LENGTH_SHORT).show()
                     })
-                    .setNegativeButton("아니오",
-                        null)
+                    .setNegativeButton(
+                        "아니오",
+                        null
+                    )
                 dlg.show()
             }
 
@@ -49,21 +59,26 @@ class SettingActivity : BaseActivity() {
                     .setMessage("탈퇴시 회원님이 작성한 모든 게시물과\n회원정보가 삭제됩니다.\n탈퇴를 진행하시겠습니까?")
                     .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
                         if ("admin" == loginId) {
-                            Toast.makeText(applicationContext, "관리자 계정은 탈퇴할수 없습니다.", Toast.LENGTH_SHORT).show()
-                        }else{
+                            Toast.makeText(
+                                applicationContext,
+                                "관리자 계정은 탈퇴할수 없습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
                             Logout()
                         }
                         Toast.makeText(applicationContext, "로그아웃되었습니다", Toast.LENGTH_SHORT).show()
                     })
-                    .setNegativeButton("아니오",
+                    .setNegativeButton(
+                        "아니오",
                         null
-                        )
+                    )
                 dlg.show()
 
             }
 
             R.id.contact_us -> {
-                val intent= Intent(Intent.ACTION_SEND)
+                val intent = Intent(Intent.ACTION_SEND)
                 intent.type = "plain/text"
                 // email setting 배열로 해놔서 복수 발송 가능
                 // email setting 배열로 해놔서 복수 발송 가능

@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".UserInfoUpdateActivity"></activity>
+        <activity android:name=".privacyDetailActivity"></activity>
+        <activity android:name=".UserInfoUpdateActivity" />
         <activity android:name=".Visit.VisitAdminUpdateActivity" />
         <activity android:name=".Visit.VisitAdminToParentDetailActivity" />
         <activity android:name=".Visit.VisitUserDetailActivity" />
