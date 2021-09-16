@@ -34,14 +34,20 @@
             android:text="신생아중환자실 면회앱"
             android:textColor="@color/mainTextBoldColor"
             android:textSize="25sp" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            app:passwordToggleEnabled="true">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/idEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/mainAccentColor"
                 android:drawableLeft="@drawable/ic_person_black_24dp"
                 android:drawableStart="@drawable/ic_person_black_24dp"
                 android:hint="아이디"
@@ -49,11 +55,12 @@
                 android:textColorHint="@color/mainTextColor"
                 android:textSize="20sp"/>
 
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/idEditText"
+            android:layout_below="@id/idInputLayout"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"

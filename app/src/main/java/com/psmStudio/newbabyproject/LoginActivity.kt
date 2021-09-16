@@ -9,11 +9,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
-import androidx.core.app.ActivityCompat
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import com.psmStudio.newbabyproject.Retrofit2.*
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class LoginActivity : BaseActivity() {
 
@@ -33,9 +35,20 @@ class LoginActivity : BaseActivity() {
         // Retrofit 서버연결
         init(this@LoginActivity)
 
+        //권한 체크
+        TedPermission.with(applicationContext)
+            .setPermissionListener(permissionListener)
+            .setDeniedMessage("접근 거부하셨습니다.\n[설정] - [권한]에서 권한을 허용해주세요.")
+            .setPermissions(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.CAMERA
+            )
+            .check()
 
 
-        if (ActivityCompat.checkSelfPermission(
+        /*if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) !== PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
@@ -62,7 +75,7 @@ class LoginActivity : BaseActivity() {
                 ),
                 PERMISSION_ALLOW
             )
-        }
+        }*/
 
         chk_auto.setOnCheckedChangeListener { buttonView, isChecked ->
             if (chk_auto.isChecked) {
@@ -187,6 +200,17 @@ class LoginActivity : BaseActivity() {
 
             }
         })
+
+    }
+
+    var permissionListener: PermissionListener = object : PermissionListener {
+        override fun onPermissionGranted() {
+            Toast.makeText(applicationContext, "권한이 허용됨", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+            Toast.makeText(applicationContext, "권한이 거부됨", Toast.LENGTH_SHORT).show()
+        }
 
     }
 
