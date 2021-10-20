@@ -24,7 +24,6 @@ import retrofit2.Retrofit
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    val PICKER_REQUEST_CODE = 101
 
     val IMG_REQUEST = 777
 

@@ -38,6 +38,7 @@ import java.util.*
 
 class VisitAdminWriteActivity : BaseActivity() {
 
+    val PICKER_REQUEST_CODE = 101
 
 
     lateinit var call: Call<ResponseBody>
@@ -544,11 +545,6 @@ class VisitAdminWriteActivity : BaseActivity() {
                     imageTxtCount.text = "$count/3"
 
                 }
-                Toast.makeText(
-                    this@VisitAdminWriteActivity,
-                    "ImageView $imagePath",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
             Glide.with(applicationContext)
                 .load(myBitmap)

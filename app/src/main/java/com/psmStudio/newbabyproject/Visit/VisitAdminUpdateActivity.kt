@@ -44,6 +44,8 @@ import java.io.File
 
 class VisitAdminUpdateActivity : BaseActivity() {
 
+    val PICKER_REQUEST_CODE = 101
+
     lateinit var updateCall: Call<ResponseBody>
 
 
