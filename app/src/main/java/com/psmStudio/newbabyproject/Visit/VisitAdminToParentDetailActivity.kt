@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.denzcoskun.imageslider.models.SlideModel
+import com.github.tntkhang.fullscreenimageview.library.FullScreenImageViewActivity
 import com.psmStudio.newbabyproject.*
 import com.psmStudio.newbabyproject.utils.Common
 import com.google.android.material.appbar.AppBarLayout
@@ -148,6 +149,14 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
 
     }
+
+    private fun onImageClickAction(uriString: ArrayList<String>, pos: Int) {
+        val fullImageIntent = Intent(this, FullScreenImageViewActivity::class.java)
+        fullImageIntent.putExtra(FullScreenImageViewActivity.URI_LIST_DATA, uriString)
+        fullImageIntent.putExtra(FullScreenImageViewActivity.IMAGE_FULL_SCREEN_CURRENT_POS, pos)
+        startActivity(fullImageIntent)
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.btn_menu, menu)

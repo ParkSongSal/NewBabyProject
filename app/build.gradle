@@ -72,4 +72,7 @@ dependencies {
 
     // Ted Permission 라이브러리
     implementation 'gun0912.ted:tedpermission:2.2.3'
+
+    //FullScreen Image
+    implementation 'com.github.tntkhang:full-screen-image-view-library:1.1.0'
 }
