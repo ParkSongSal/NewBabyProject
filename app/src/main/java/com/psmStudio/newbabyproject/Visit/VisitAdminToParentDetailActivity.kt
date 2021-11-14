@@ -80,7 +80,6 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
                 babyNameTxt.text = resultVisit.babyName + "아기 면회소식"
                 writeNameTxt.text = "관리자"
                 writeDateTxt.text = Common.dataSplitFormat(resultVisit.writeDate, "date")
-                visitNoticeTxt.text = visitNotice
                 babyWeightTxt.text = babyWeight
                 babyLactationTxt.text = babyLactation
                 babyRequireItemTxt.text = babyRequireItem

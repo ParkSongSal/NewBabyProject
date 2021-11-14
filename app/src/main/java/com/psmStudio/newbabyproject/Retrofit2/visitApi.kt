@@ -25,7 +25,7 @@ interface visitApi {
     @POST("to_parent_board_insert.php")
     fun toParentInsert(@Part("parentId") parentId: RequestBody,
                        @Part("parentName") parentName: RequestBody,
-                       @Part("visitNotice") visitNotice: RequestBody,
+                       @Part("visitNotice") visitNotice: RequestBody?,
                        @Part("babyWeight") babyWeight: RequestBody,
                        @Part("babyLactation") babyLactation: RequestBody,
                        @Part("babyRequireItem") babyRequireItem: RequestBody,
@@ -50,7 +50,7 @@ interface visitApi {
     @POST("to_parent_board_insert_NoImage.php")
     fun toParentInsertNoImage(@Part("parentId") parentId : RequestBody,
                               @Part("parentName") parentName : RequestBody,
-                              @Part("visitNotice") visitNotice : RequestBody,
+                              @Part("visitNotice") visitNotice : RequestBody?,
                               @Part("babyWeight") babyWeight : RequestBody,
                               @Part("babyLactation") babyLactation : RequestBody,
                               @Part("babyRequireItem") babyRequireItem : RequestBody,
@@ -69,11 +69,13 @@ interface visitApi {
     @POST("to_parent_board_update_Image.php")
     fun toParentUpdate(@Part("seq") seq : RequestBody,
                        @Part("parentId") parentId: RequestBody,
-                       @Part("visitNotice") visitNotice: RequestBody,
+                       @Part("visitNotice") visitNotice: RequestBody?,
                        @Part("babyWeight") babyWeight: RequestBody,
                        @Part("babyLactation") babyLactation: RequestBody,
                        @Part("babyRequireItem") babyRequireItem: RequestBody,
                        @Part("babyEtc") babyEtc: RequestBody,
+                       @Part("tempYn") tempYn : RequestBody?,
+                       @Part("reserveDate") reserveDate : RequestBody?,
                        @Part image: MultipartBody.Part,
                        @Part image2: MultipartBody.Part?,
                        @Part image3: MultipartBody.Part?,
@@ -89,11 +91,13 @@ interface visitApi {
     @POST("to_parent_board_update_NoImage.php")
     fun toParentUpdateNoImage(@Part("seq") seq : RequestBody,
                               @Part("parentId") parentId : RequestBody,
-                              @Part("visitNotice") visitNotice : RequestBody,
+                              @Part("visitNotice") visitNotice : RequestBody?,
                               @Part("babyWeight") babyWeight : RequestBody,
                               @Part("babyLactation") babyLactation : RequestBody,
                               @Part("babyRequireItem") babyRequireItem : RequestBody,
                               @Part("babyEtc") babyEtc : RequestBody,
+                              @Part("tempYn") tempYn : RequestBody?,
+                              @Part("reserveDate") reserveDate : RequestBody?,
                               @Part("updateId") updateId : RequestBody,
                               @Part("updateDate") updateDate : RequestBody
     ) : Call<ResponseBody>

@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.activity_visit_user_detail.babyWeightTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.img_slider
 import kotlinx.android.synthetic.main.activity_visit_user_detail.noDataLl
 import kotlinx.android.synthetic.main.activity_visit_user_detail.reply_list
-import kotlinx.android.synthetic.main.activity_visit_user_detail.visitNoticeTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.writeDateTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.writeNameTxt
 import okhttp3.MultipartBody
@@ -72,7 +71,6 @@ class VisitUserDetailActivity : BaseActivity() {
                 babyNameTxt.text = resultVisit.babyName + "아기 면회소식"
                 writeNameTxt.text = "관리자"
                 writeDateTxt.text = dataSplitFormat(resultVisit.writeDate,"date")
-                visitNoticeTxt.text = resultVisit.visitNotice
                 babyWeightTxt.text = resultVisit.babyWeight
                 babyLactationTxt.text = resultVisit.babyLactation
                 babyRequireItemTxt.text = resultVisit.babyRequireItem
