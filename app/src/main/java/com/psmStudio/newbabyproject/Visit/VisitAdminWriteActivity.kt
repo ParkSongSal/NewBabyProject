@@ -19,9 +19,6 @@ import com.psmStudio.newbabyproject.utils.Common
 import com.psmStudio.newbabyproject.utils.FileUtils
 import com.github.siyamed.shapeimageview.RoundedImageView
 import com.opensooq.supernova.gligar.GligarPicker
-import kotlinx.android.synthetic.main.activity_app_introduce_modify.*
-import kotlinx.android.synthetic.main.activity_app_introduce_modify.contentTxt
-import kotlinx.android.synthetic.main.activity_app_introduce_modify.insertBtn
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_visit_admin_write.*
 import kotlinx.android.synthetic.main.item_toolbar.*
@@ -101,26 +98,18 @@ class VisitAdminWriteActivity : BaseActivity() {
                 when (position) {
                     0 -> {
                         saveGubun = 0
-                        contentScroll.layoutParams = layoutParams
                         reservLl.visibility = View.GONE
                     }
                     1 -> {
                         saveGubun = 1
-                        contentScroll.layoutParams = layoutParams
                         reservLl.visibility = View.GONE
                     }
                     2 -> {
                         saveGubun = 2
-                        layoutParams = LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            (60 * dp).toInt()
-                        )
-                        contentScroll.layoutParams = layoutParams
                         reservLl.visibility = View.VISIBLE
                     }
                     else -> {
                         saveGubun = 0
-                        contentScroll.layoutParams = layoutParams
                         reservLl.visibility = View.GONE
                     }
                 }
@@ -204,22 +193,19 @@ class VisitAdminWriteActivity : BaseActivity() {
                 tempYn = "N"
                 tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
 
-                reserveDate =
-                    saveReserveDate.text.toString() + " " + saveReserveTime.text.toString()
+                reserveDate = saveReserveDate.text.toString() + " " + saveReserveTime.text.toString()
                 writeDate = saveReserveDate.text.toString()
                 reserveDatePart = RequestBody.create(MultipartBody.FORM, reserveDate)
             }
             else -> {
                 tempYn = "N"
                 tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
-
                 reserveDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
                 reserveDatePart = RequestBody.create(MultipartBody.FORM, reserveDate)
             }
         }
 
 
-        val visitNotice = contentTxt.text.toString()
         val babyWeight = babyWeightTxt.text.toString()
         val babyLactation = babyLactationTxt.text.toString()
         val babyRequireItem = babyRequireItemTxt.text.toString()
@@ -229,7 +215,6 @@ class VisitAdminWriteActivity : BaseActivity() {
 
         val parentIdPart = RequestBody.create(MultipartBody.FORM, parentId)
         val parentNamePart = RequestBody.create(MultipartBody.FORM, parentName)
-        val visitNoticePart = RequestBody.create(MultipartBody.FORM, visitNotice)
         val babyWeightPart = RequestBody.create(MultipartBody.FORM, babyWeight)
         val babyLactationPart = RequestBody.create(MultipartBody.FORM, babyLactation)
         val babyRequireItemPart = RequestBody.create(MultipartBody.FORM, babyRequireItem)
@@ -245,7 +230,7 @@ class VisitAdminWriteActivity : BaseActivity() {
                 call = mVisitApi.toParentInsertNoImage(
                     parentIdPart,
                     parentNamePart,
-                    visitNoticePart,
+                    null,
                     babyWeightPart,
                     babyLactationPart,
                     babyRequireItemPart,
@@ -262,14 +247,14 @@ class VisitAdminWriteActivity : BaseActivity() {
             1 ->{
                 val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
 
-                val f1 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
+                val f1 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
-                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
 
                 call = mVisitApi.toParentInsert(
                     parentIdPart,
                     parentNamePart,
-                    visitNoticePart,
+                    null,
                     babyWeightPart,
                     babyLactationPart,
                     babyRequireItemPart,
@@ -294,18 +279,18 @@ class VisitAdminWriteActivity : BaseActivity() {
                 val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
                 val originalPath2 = RequestBody.create(MultipartBody.FORM, filePath[1].toString())
 
-                val f1 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
+                val f1 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
-                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
 
-                val f2 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[1])
+                val f2 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[1])
                 val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2)
-                val file2 = MultipartBody.Part.createFormData("image[]", f2.name, imagePart2)
+                val file2 = MultipartBody.Part.createFormData("image[]", f2?.name, imagePart2)
 
                 call = mVisitApi.toParentInsert(
                     parentIdPart,
                     parentNamePart,
-                    visitNoticePart,
+                    null,
                     babyWeightPart,
                     babyLactationPart,
                     babyRequireItemPart,
@@ -331,21 +316,21 @@ class VisitAdminWriteActivity : BaseActivity() {
                 val originalPath2 = RequestBody.create(MultipartBody.FORM, filePath[1].toString())
                 val originalPath3 = RequestBody.create(MultipartBody.FORM, filePath[2].toString())
 
-                val f1 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
+                val f1 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
-                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
 
-                val f2 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[1])
+                val f2 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[1])
                 val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2)
-                val file2 = MultipartBody.Part.createFormData("image[]", f2.name, imagePart2)
+                val file2 = MultipartBody.Part.createFormData("image[]", f2?.name, imagePart2)
 
-                val f3 : File = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[2])
+                val f3 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[2])
                 val imagePart3 = RequestBody.create(MediaType.parse("multipart/form-data"), f3)
-                val file3 = MultipartBody.Part.createFormData("image[]", f3.name, imagePart3)
+                val file3 = MultipartBody.Part.createFormData("image[]", f3?.name, imagePart3)
                 call = mVisitApi.toParentInsert(
                     parentIdPart,
                     parentNamePart,
-                    visitNoticePart,
+                    null,
                     babyWeightPart,
                     babyLactationPart,
                     babyRequireItemPart,

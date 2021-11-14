@@ -4,7 +4,7 @@ import java.io.Serializable
 
 class ResultVisit : Serializable {
 
-    var seq : Int = 0
+    var seq: Int = 0
     var result: String? = null
     var userId: String? = null
     var userName: String? = null
@@ -23,15 +23,15 @@ class ResultVisit : Serializable {
     var babyEtc: String? = null
     var boardConfirm: String? = null
     var writeDate: String = ""
-    var tempYn : String? = ""
-    var reserveDate : String? = ""
+    var tempYn: String? = ""
+    var reserveDate: String? = ""
     var replyCnt: String? = null
     var path1: String? = null
     var path2: String? = null
     var path3: String? = null
-    var originalPath : String? = null
-    var originalPath2 : String? = null
-    var originalPath3 : String? = null
+    var originalPath: String? = null
+    var originalPath2: String? = null
+    var originalPath3: String? = null
     var insertDate: String? = null
 
     constructor(
@@ -51,7 +51,7 @@ class ResultVisit : Serializable {
     }
 
     constructor(
-        seq : Int,
+        seq: Int,
         parentId: String?,
         parentName: String?,
         visitNotice: String?,
@@ -61,17 +61,17 @@ class ResultVisit : Serializable {
         babyEtc: String?,
         writeDate: String,
         boardConfirm: String?,
-        tempYn : String?,
-        reserveDate : String?,
+        tempYn: String?,
+        reserveDate: String?,
         path1: String?,
         path2: String?,
         path3: String?,
-        originalPath : String?,
-        originalPath2 : String?,
-        originalPath3 : String?,
+        originalPath: String?,
+        originalPath2: String?,
+        originalPath3: String?,
         //replyCnt: String?,
         insertDate: String?,
-        babyName : String?
+        babyName: String?
     ) {
         this.seq = seq
         this.parentId = parentId
@@ -97,29 +97,8 @@ class ResultVisit : Serializable {
     }
 
     override fun toString(): String {
-        return "ResultVisit{" +
-                "result='" + result + '\'' +
-                ", seq = '" + seq + '\'' +
-                ", userId='" + userId + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPhone='" + userPhone + '\'' +
-                ", babyName='" + babyName + '\'' +
-                ", babyNum='" + babyNum + '\'' +
-                ", babyRelation='" + babyRelation + '\'' +
-                ", parentId='" + parentId + '\'' +
-                ", parentName='" + parentName + '\'' +
-                ", visitNotice='" + visitNotice + '\'' +
-                ", babyWeight='" + babyWeight + '\'' +
-                ", babyLactation='" + babyLactation + '\'' +
-                ", babyRequireItem='" + babyRequireItem + '\'' +
-                ", babyEtc='" + babyEtc + '\'' +
-                ", boardConfirm='" + boardConfirm + '\'' +
-                ", writeDate='" + writeDate + '\'' +
-                ", replyCnt='" + replyCnt + '\'' +
-                ", path1='" + path1 + '\'' +
-                ", path2='" + path2 + '\'' +
-                ", path3='" + path3 + '\'' +
-                ", insertDate='" + insertDate + '\'' +
-                '}'
+        return "ResultVisit(seq=$seq, result=$result, userId=$userId, userName=$userName, userPhone=$userPhone, babyName=$babyName, babyNum=$babyNum, babyBirthDate=$babyBirthDate, babyBirthTime=$babyBirthTime, babyRelation=$babyRelation, parentId=$parentId, parentName=$parentName, visitNotice=$visitNotice, babyWeight=$babyWeight, babyLactation=$babyLactation, babyRequireItem=$babyRequireItem, babyEtc=$babyEtc, boardConfirm=$boardConfirm, writeDate='$writeDate', tempYn=$tempYn, reserveDate=$reserveDate, replyCnt=$replyCnt, path1=$path1, path2=$path2, path3=$path3, originalPath=$originalPath, originalPath2=$originalPath2, originalPath3=$originalPath3, insertDate=$insertDate)"
     }
+
+
 }
