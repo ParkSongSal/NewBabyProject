@@ -199,7 +199,9 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
                 intent.putExtra("seq", seq)
 
+
                 intent.putExtra("parentId", parentId)
+                intent.putExtra("parentName",parentName)
                 intent.putExtra("babyName", babyName)
                 intent.putExtra("visitNotice", visitNotice)
                 intent.putExtra("babyWeight", babyWeight)
