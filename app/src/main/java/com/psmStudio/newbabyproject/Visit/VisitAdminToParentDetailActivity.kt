@@ -1,5 +1,6 @@
 package com.psmStudio.newbabyproject.Visit
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
@@ -22,6 +23,8 @@ import kotlinx.android.synthetic.main.activity_visit_adminto_parent_list.*
 import kotlinx.android.synthetic.main.item_toolbar.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,6 +40,7 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
     private var mAdapter: BoardReplyDataAdapter? = null
 
+    var mViewPagerAdapter: ImageSlideViewPagerAdapter? = null
 
     var slideModels : ArrayList<SlideModel> = ArrayList<SlideModel>()
     var pathList = ArrayList<String>()
@@ -119,7 +123,12 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
             Log.d("TAG", "Detail Activity Exceptilon ${e.toString()}")
         }
 
-        img_slider.setImageList(slideModels, true)
+        mViewPagerAdapter = ImageSlideViewPagerAdapter(applicationContext, pathList)
+
+        viewPagerMain.adapter = mViewPagerAdapter
+
+
+        //img_slider.setImageList(slideModels, true)
 
         setSupportActionBar(toolbar2)
         supportActionBar?.title = ""
@@ -147,6 +156,25 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
         })
 
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+
+    // 보낸이 : MemoRecyclerAdapter
+    @SuppressLint("RestrictedApi")
+    @Subscribe
+    fun onItemClick(event: ImageSlideViewPagerAdapter.ItemClickEvent) {
+
+        onImageClickAction(pathList, event.position)
     }
 
     private fun onImageClickAction(uriString: ArrayList<String>, pos: Int) {

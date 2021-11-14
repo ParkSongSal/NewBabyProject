@@ -1,5 +1,6 @@
 package com.psmStudio.newbabyproject.Visit
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -8,11 +9,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.denzcoskun.imageslider.models.SlideModel
+import com.github.tntkhang.fullscreenimageview.library.FullScreenImageViewActivity
 import com.psmStudio.newbabyproject.BaseActivity
 import com.psmStudio.newbabyproject.R
 import com.psmStudio.newbabyproject.utils.Common
 import com.psmStudio.newbabyproject.utils.Common.dataSplitFormat
 import com.google.android.material.appbar.AppBarLayout
+import kotlinx.android.synthetic.main.activity_visit_admin_to_parent_detail.*
 import kotlinx.android.synthetic.main.activity_visit_user_detail.*
 import kotlinx.android.synthetic.main.activity_visit_user_detail.ReplyTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.babyEtcTxt
@@ -20,13 +23,15 @@ import kotlinx.android.synthetic.main.activity_visit_user_detail.babyLactationTx
 import kotlinx.android.synthetic.main.activity_visit_user_detail.babyNameTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.babyRequireItemTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.babyWeightTxt
-import kotlinx.android.synthetic.main.activity_visit_user_detail.img_slider
 import kotlinx.android.synthetic.main.activity_visit_user_detail.noDataLl
 import kotlinx.android.synthetic.main.activity_visit_user_detail.reply_list
+import kotlinx.android.synthetic.main.activity_visit_user_detail.viewPagerMain
 import kotlinx.android.synthetic.main.activity_visit_user_detail.writeDateTxt
 import kotlinx.android.synthetic.main.activity_visit_user_detail.writeNameTxt
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +43,7 @@ class VisitUserDetailActivity : BaseActivity() {
     var writeDateAry: ArrayList<String>? = ArrayList<String>()
     lateinit var call: Call<ResultVisit>
     lateinit var replyCall: Call<ResultData>
+    var mViewPagerAdapter: ImageSlideViewPagerAdapter? = null
 
     var slideModels : ArrayList<SlideModel> = ArrayList<SlideModel>()
     var pathList = ArrayList<String>()
@@ -109,7 +115,10 @@ class VisitUserDetailActivity : BaseActivity() {
             Log.d("TAG", "Detail Activity Exceptilon ${e.toString()}")
         }
 
-        img_slider.setImageList(slideModels, true)
+        mViewPagerAdapter = ImageSlideViewPagerAdapter(applicationContext, pathList)
+
+        viewPagerMain.adapter = mViewPagerAdapter
+        //img_slider.setImageList(slideModels, true)
         setSupportActionBar(toolbar3)
         supportActionBar?.title = ""
 
@@ -136,6 +145,32 @@ class VisitUserDetailActivity : BaseActivity() {
             }
         })
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+
+    // 보낸이 : MemoRecyclerAdapter
+    @SuppressLint("RestrictedApi")
+    @Subscribe
+    fun onItemClick(event: ImageSlideViewPagerAdapter.ItemClickEvent) {
+
+        onImageClickAction(pathList, event.position)
+    }
+
+    private fun onImageClickAction(uriString: ArrayList<String>, pos: Int) {
+        val fullImageIntent = Intent(this, FullScreenImageViewActivity::class.java)
+        fullImageIntent.putExtra(FullScreenImageViewActivity.URI_LIST_DATA, uriString)
+        fullImageIntent.putExtra(FullScreenImageViewActivity.IMAGE_FULL_SCREEN_CURRENT_POS, pos)
+        startActivity(fullImageIntent)
     }
 
     fun getReplyList(seq : Int){

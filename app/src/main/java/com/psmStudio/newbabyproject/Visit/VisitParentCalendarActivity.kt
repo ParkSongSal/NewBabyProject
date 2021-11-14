@@ -91,7 +91,6 @@ class VisitParentCalendarActivity : BaseActivity() {
                 if (shot_Day == writeDateAry[i].writeDate) {
                     parentNameTxt.text = writeDateAry[i].parentName + " 보호자님께"
                     writeDateTxt.text = "작성일자 : " + writeDateAry[i].writeDate
-                    visitNoticeTxt.text = "면회시 주의사항 : " + writeDateAry[i].visitNotice
                     detailBtn.visibility = View.VISIBLE
                     detailAry.add(writeDateAry[i])
                 }
