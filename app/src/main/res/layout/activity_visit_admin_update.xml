@@ -31,32 +31,6 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:paddingStart="5dp"
-                android:paddingLeft="5dp"
-                android:text="면회시 주의사항" />
-
-            <ScrollView
-                android:id="@+id/contentScroll"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:background="@drawable/border_edit"
-                android:fillViewport="true">
-
-                <EditText
-                    android:id="@+id/contentTxt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:gravity="top"
-                    android:padding="6dp" />
-            </ScrollView>
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -167,6 +141,63 @@
 
                 </RelativeLayout>
 
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:text="저장방법" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/saveSpinner"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:spinnerMode="dialog" />
+
+            <LinearLayout
+                android:id="@+id/reservLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingLeft="5dp"
+                    android:text="예약일시" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_edit"
+                    android:orientation="horizontal"
+                    android:padding="6dp"
+                    android:weightSum="2">
+
+                    <EditText
+                        android:id="@+id/saveReserveDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableRight="@drawable/ic_baseline_date_range_24"
+                        android:hint="예약날짜"
+                        android:imeOptions="actionNext" />
+
+                    <EditText
+                        android:id="@+id/saveReserveTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableRight="@drawable/ic_baseline_access_time_24"
+                        android:hint="예약시간"
+                        android:imeOptions="actionDone" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
