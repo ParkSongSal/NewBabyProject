@@ -1,6 +1,8 @@
 package com.psmStudio.newbabyproject.Visit
 
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -11,26 +13,29 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.psmStudio.newbabyproject.BaseActivity
 import com.psmStudio.newbabyproject.R
 import com.psmStudio.newbabyproject.utils.Common
-import com.psmStudio.newbabyproject.utils.FileUtils
 import com.github.siyamed.shapeimageview.RoundedImageView
 import com.opensooq.supernova.gligar.GligarPicker
+import com.psmStudio.newbabyproject.utils.FileUtils
 import kotlinx.android.synthetic.main.activity_visit_admin_update.*
 import kotlinx.android.synthetic.main.activity_visit_admin_update.babyEtcTxt
 import kotlinx.android.synthetic.main.activity_visit_admin_update.babyLactationTxt
 import kotlinx.android.synthetic.main.activity_visit_admin_update.babyRequireItemTxt
 import kotlinx.android.synthetic.main.activity_visit_admin_update.babyWeightTxt
 import kotlinx.android.synthetic.main.activity_visit_admin_update.cameraIcon
-import kotlinx.android.synthetic.main.activity_visit_admin_update.contentTxt
 import kotlinx.android.synthetic.main.activity_visit_admin_update.imageLinear
 import kotlinx.android.synthetic.main.activity_visit_admin_update.imageTxtCount
+import kotlinx.android.synthetic.main.activity_visit_admin_update.saveSpinner
+import kotlinx.android.synthetic.main.activity_visit_admin_update.reservLl
+import kotlinx.android.synthetic.main.activity_visit_admin_update.saveReserveDate
+import kotlinx.android.synthetic.main.activity_visit_admin_update.saveReserveTime
 import kotlinx.android.synthetic.main.activity_visit_admin_write.*
 import kotlinx.android.synthetic.main.item_toolbar.*
 import okhttp3.MediaType
@@ -52,6 +57,7 @@ class VisitAdminUpdateActivity : BaseActivity() {
     private var pathsList = emptyArray<String>()
 
     var count =0
+    var saveGubun = 0
 
     var seq = 0
     var babyName : String? = null
@@ -101,18 +107,69 @@ class VisitAdminUpdateActivity : BaseActivity() {
             pathList = intent.getSerializableExtra("pathList") as ArrayList<String>
             originalPathList = intent.getSerializableExtra("originalPathList") as ArrayList<String>
 
-            contentTxt.setText(visitNotice)
             babyWeightTxt.setText(babyWeight)
             babyLactationTxt.setText(babyLactation)
             babyRequireItemTxt.setText(babyRequireItem)
             babyEtcTxt.setText(babyEtc)
 
+            Log.d("TAG", " pathList 1 : $pathList")
+
+            Log.d("TAG", " originalPathList 1 : $originalPathList")
+
             for(i in pathList.indices){
+
                 uriList2.add(Uri.fromFile(File(originalPathList[i])))
                 count++
-                setImageUpdate(pathList[i])
+                setImageUpdate(pathList[i], originalPathList[i])
             }
         }
+
+
+
+        val items = resources.getStringArray(R.array.saveWay)
+        val myAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
+        saveSpinner.adapter = myAdapter
+        saveSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+
+                var dp =  resources.displayMetrics.density
+                var layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    (80 * dp).toInt()
+                )
+                //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
+                when (position) {
+                    0 -> {
+                        saveGubun = 0
+                        reservLl.visibility = View.GONE
+                    }
+                    1 -> {
+                        saveGubun = 1
+                        reservLl.visibility = View.GONE
+                    }
+                    2 -> {
+                        saveGubun = 2
+                        reservLl.visibility = View.VISIBLE
+                    }
+                    else -> {
+                        saveGubun = 0
+                        reservLl.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+
+        this.InitializeListener()
+
 
         //이미지 불러오기기
         cameraIcon.setOnClickListener{
@@ -124,19 +181,17 @@ class VisitAdminUpdateActivity : BaseActivity() {
 
 
             Handler().postDelayed(Runnable {
-                updateBoard(uriList2)
+                updateBoard(saveGubun, uriList2)
                 //여기에 딜레이 후 시작할 작업들을 입력
             }, 2000) // 0.5초 정도 딜레이를 준 후 시작
 
         }
-
     }
 
-    private fun updateBoard(filePath : MutableList<Uri>?){
+    private fun updateBoard(saveGubun: Int, filePath : MutableList<Uri>?){
 
         val Seq = seq
         val User = loginId
-        val visitNotice = contentTxt.text.toString()
         val babyWeight = babyWeightTxt.text.toString()
         val babyLactation = babyLactationTxt.text.toString()
         val babyRequireItem = babyRequireItemTxt.text.toString()
@@ -146,7 +201,6 @@ class VisitAdminUpdateActivity : BaseActivity() {
 
         val seqPart = RequestBody.create(MultipartBody.FORM, Seq.toString())
         val parentIdPart = RequestBody.create(MultipartBody.FORM, parentId)
-        val visitNoticePart = RequestBody.create(MultipartBody.FORM, visitNotice)
         val babyWeightPart = RequestBody.create(MultipartBody.FORM, babyWeight)
         val babyLactationPart = RequestBody.create(MultipartBody.FORM, babyLactation)
         val babyRequireItemPart = RequestBody.create(MultipartBody.FORM, babyRequireItem)
@@ -155,36 +209,77 @@ class VisitAdminUpdateActivity : BaseActivity() {
         val updateIdPart = RequestBody.create(MultipartBody.FORM, User)
         val updateDatePart = RequestBody.create(MultipartBody.FORM, date)
 
+        var tempYn: String = "N"
+        var tempYnPart : RequestBody? = null
+        val reserveDate: String
+        var reserveDatePart : RequestBody? = null
+
+        Log.d("TAG", "Parent Id  $parentId")
+
+        when (saveGubun) {
+            1 -> {     //임시저장
+                tempYn = "Y"
+                tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
+            }
+            2 -> {      // 예약저장
+                tempYn = "N"
+                tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
+
+                reserveDate = saveReserveDate.text.toString() + " " + saveReserveTime.text.toString()
+                reserveDatePart = RequestBody.create(MultipartBody.FORM, reserveDate)
+            }
+            else -> {
+                tempYn = "N"
+                tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
+                reserveDate = Common.nowDate("yyyy-MM-dd HH:mm:ss")
+                reserveDatePart = RequestBody.create(MultipartBody.FORM, reserveDate)
+            }
+        }
+
         when (filePath?.size) {
             0 ->{
                 updateCall = mVisitApi.toParentUpdateNoImage(
                     seqPart,
                     parentIdPart,
-                    visitNoticePart,
+                    null,
                     babyWeightPart,
                     babyLactationPart,
                     babyRequireItemPart,
                     babyEtcPart,
+                    tempYnPart,
+                    reserveDatePart,
                     updateIdPart,
                     updateDatePart
                 )
             }
             1 ->{
-                val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
 
+                var fileFormat : Uri? = null
+                var f1 : File? = null
+                if (filePath[0].toString().contains("(")) {
+                    val idx = filePath[0].toString().indexOf("(")
+                    val path = filePath[0].toString().substring(0, idx)
 
-                val f1 : File = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[0])
+                    fileFormat = Uri.parse(path)
+                    f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat)
+                } else {
+                    f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[0])
+                }
+
+                val originalPath = RequestBody.create(MultipartBody.FORM, fileFormat.toString())
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
-                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
 
                 updateCall = mVisitApi.toParentUpdate(
                     seqPart,
                     parentIdPart,
-                    visitNoticePart,
+                    null,
                     babyWeightPart,
                     babyLactationPart,
                     babyRequireItemPart,
                     babyEtcPart,
+                    tempYnPart,
+                    reserveDatePart,
                     file1,
                     null,
                     null,
@@ -197,25 +292,50 @@ class VisitAdminUpdateActivity : BaseActivity() {
             }
             2 ->{
 
-                val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
-                val originalPath2 = RequestBody.create(MultipartBody.FORM, filePath[1].toString())
+                var fileFormat : Uri? = null
+                var f1 : File?
+                if (filePath[0].toString().contains("(")) {
+                    val idx = filePath[0].toString().indexOf("(")
+                    val path = filePath[0].toString().substring(0, idx)
 
-                val f1 : File = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[0])
+                    fileFormat = Uri.parse(path)
+                    f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat)
+                } else {
+                    f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[0])
+                }
+
+                var fileFormat2 : Uri? = null
+                var f2: File?
+                if (filePath[1].toString().contains("(")) {
+                    val idx = filePath[1].toString().indexOf("(")
+                    val path = filePath[1].toString().substring(0, idx)
+
+                    fileFormat2 = Uri.parse(path)
+                    f2 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat2)
+                } else {
+                    f2 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[1])
+                }
+
+
+                val originalPath = RequestBody.create(MultipartBody.FORM, fileFormat.toString())
+                val originalPath2 = RequestBody.create(MultipartBody.FORM, fileFormat2.toString())
+
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
-                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
 
-                val f2 : File = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[1])
                 val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2)
-                val file2 = MultipartBody.Part.createFormData("image[]", f2.name, imagePart2)
+                val file2 = MultipartBody.Part.createFormData("image[]", f2?.name, imagePart2)
 
                 updateCall = mVisitApi.toParentUpdate(
                     seqPart,
                     parentIdPart,
-                    visitNoticePart,
+                    null,
                     babyWeightPart,
                     babyLactationPart,
                     babyRequireItemPart,
                     babyEtcPart,
+                    tempYnPart,
+                    reserveDatePart,
                     file1,
                     file2,
                     null,
@@ -228,29 +348,64 @@ class VisitAdminUpdateActivity : BaseActivity() {
             }
             3 ->{
 
-                val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
-                val originalPath2 = RequestBody.create(MultipartBody.FORM, filePath[1].toString())
-                val originalPath3 = RequestBody.create(MultipartBody.FORM, filePath[2].toString())
+                var fileFormat : Uri? = null
+                var f1 : File?
+                if (filePath[0].toString().contains("(")) {
+                    val idx = filePath[0].toString().indexOf("(")
+                    val path = filePath[0].toString().substring(0, idx)
 
-                val f1 : File = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[0])
+                    fileFormat = Uri.parse(path)
+                    f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat)
+                } else {
+                    f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[0])
+                }
+
+                var fileFormat2 : Uri? = null
+                var f2: File?
+                if (filePath[1].toString().contains("(")) {
+                    val idx = filePath[1].toString().indexOf("(")
+                    val path = filePath[1].toString().substring(0, idx)
+
+                    fileFormat2 = Uri.parse(path)
+                    f2 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat2)
+                } else {
+                    f2 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[1])
+                }
+
+                var fileFormat3 : Uri? = null
+                var f3: File?
+                if (filePath[2].toString().contains("(")) {
+                    val idx = filePath[2].toString().indexOf("(")
+                    val path = filePath[2].toString().substring(0, idx)
+
+                    fileFormat3 = Uri.parse(path)
+                    f3 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat3)
+                } else {
+                    f3 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[2])
+                }
+
+                val originalPath = RequestBody.create(MultipartBody.FORM, fileFormat.toString())
+                val originalPath2 = RequestBody.create(MultipartBody.FORM, fileFormat2.toString())
+                val originalPath3 = RequestBody.create(MultipartBody.FORM, fileFormat3.toString())
+
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
-                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
 
-                val f2 : File = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[1])
                 val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2)
-                val file2 = MultipartBody.Part.createFormData("image[]", f2.name, imagePart2)
+                val file2 = MultipartBody.Part.createFormData("image[]", f2?.name, imagePart2)
 
-                val f3 : File = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[2])
                 val imagePart3 = RequestBody.create(MediaType.parse("multipart/form-data"), f3)
-                val file3 = MultipartBody.Part.createFormData("image[]", f3.name, imagePart3)
+                val file3 = MultipartBody.Part.createFormData("image[]", f3?.name, imagePart3)
                 updateCall = mVisitApi.toParentUpdate(
                     seqPart,
                     parentIdPart,
-                    visitNoticePart,
+                    null,
                     babyWeightPart,
                     babyLactationPart,
                     babyRequireItemPart,
                     babyEtcPart,
+                    tempYnPart,
+                    reserveDatePart,
                     file1,
                     file2,
                     file3,
@@ -304,7 +459,8 @@ class VisitAdminUpdateActivity : BaseActivity() {
 
 
     }
-    fun setImageUpdate(imagePath: String) {
+    fun setImageUpdate(imagePath: String, oriPath: String) {
+        Log.d("TAG","oriPath : $oriPath")
         val inflater2 =
             getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val statLayoutItem2 =
@@ -314,7 +470,22 @@ class VisitAdminUpdateActivity : BaseActivity() {
             statLayoutItem2.findViewById<ImageView>(R.id.delImage)
         delImg.setOnClickListener {
 
+            Log.d("TAG","imagePath 222 : $imagePath")
+            Log.d("TAG","oriPat 222h : $oriPath")
+
             if (pathList.contains(imagePath)) {
+                val idx = imagePath.indexOf("(")
+                val fileIdx = imagePath.substring(idx+1, idx+2)
+
+                val idx2 = oriPath.indexOf("(")
+                val fileIdx2 = oriPath.substring(idx2+1, idx2+2)
+                if(fileIdx == fileIdx2){
+                    Log.d("TAG","oriPat 3333 : $oriPath")
+                    uriList2.remove(Uri.fromFile(File(oriPath)))
+                    Log.d("TAG","uriList2 3333 : $uriList2")
+
+                }
+
                 pathList.remove(imagePath)
                 count--
                 imageLinear.removeView(statLayoutItem2)
@@ -412,6 +583,7 @@ class VisitAdminUpdateActivity : BaseActivity() {
 
                 if (uriList.contains(imagePath)) {
                     uriList.remove(imagePath)
+
                     count--
                     imageLinear.removeView(statLayoutItem)
                     imageTxtCount.text = "$count/3"
@@ -434,6 +606,70 @@ class VisitAdminUpdateActivity : BaseActivity() {
             imageLinear.addView(statLayoutItem)
             imageTxtCount.text = "$count/3"
         }
+    }
+
+    fun InitializeListener() {
+        dateCallbackMethod =
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+                val month = when (monthOfYear+1) {
+                    1 -> "01"
+                    2 -> "02"
+                    3 -> "03"
+                    4 -> "04"
+                    5 -> "05"
+                    6 -> "06"
+                    7 -> "07"
+                    8 -> "08"
+                    9 -> "09"
+                    else -> monthOfYear.toString()
+                }
+                val day = when (dayOfMonth) {
+                    1 -> "01"
+                    2 -> "02"
+                    3 -> "03"
+                    4 -> "04"
+                    5 -> "05"
+                    6 -> "06"
+                    7 -> "07"
+                    8 -> "08"
+                    9 -> "09"
+                    else -> dayOfMonth.toString()
+                }
+
+                saveReserveDate.setText(
+                    "$year-$month-$day"
+                )
+            }
+
+        timeCallbackMethod =
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                val hour = when (hourOfDay) {
+                    1 -> "01"
+                    2 -> "02"
+                    3 -> "03"
+                    4 -> "04"
+                    5 -> "05"
+                    6 -> "06"
+                    7 -> "07"
+                    8 -> "08"
+                    9 -> "09"
+                    else -> hourOfDay.toString()
+                }
+                val min = when (minute) {
+                    1 -> "01"
+                    2 -> "02"
+                    3 -> "03"
+                    4 -> "04"
+                    5 -> "05"
+                    6 -> "06"
+                    7 -> "07"
+                    8 -> "08"
+                    9 -> "09"
+                    else -> minute.toString()
+                }
+                saveReserveTime.setText("$hour:$min")
+            }
     }
 
 }
