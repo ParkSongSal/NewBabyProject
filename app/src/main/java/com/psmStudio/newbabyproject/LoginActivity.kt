@@ -141,7 +141,7 @@ class LoginActivity : BaseActivity() {
             }
 
             // 회원가입
-            R.id.registerTxt -> Register()
+            R.id.registerBtn -> Register()
 
             // 문의하기
             //R.id.inquireTxt -> Inquire()
