@@ -1,110 +1,18 @@
-package com.psmStudio.newbabyproject.Retrofit2;
+package com.psmStudio.newbabyproject.Retrofit2
 
-public class ResultModel {
-    int seq;
-    String result;
-    String user_id;
-    String title;
-    String content;
-    String date;
-    String path;
-    String Lasted_Date;
-    String Nick_Name;
-    String Student_Id;
-    String reply_count;
-
-    public String getStudent_Id() {
-        return Student_Id;
-    }
-
-    public void setStudent_Id(String student_Id) {
-        Student_Id = student_Id;
-    }
-
-    public int getSeq() {
-        return seq;
-    }
-
-    public void setSeq(int seq) {
-        this.seq = seq;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getLasted_Date() {
-        return Lasted_Date;
-    }
-
-    public void setLasted_Date(String lasted_Date) {
-        Lasted_Date = lasted_Date;
-    }
-
-    public String getNick_Name() {
-        return Nick_Name;
-    }
-
-    public void setNick_Name(String nick_Name) {
-        Nick_Name = nick_Name;
-    }
-
-
-    public String getReply_count() {
-        return reply_count;
-    }
-
-    public void setReply_count(String reply_count) {
-        this.reply_count = reply_count;
-    }
-
-
-    @Override
-    public String toString() {
+class ResultModel {
+    var seq = 0
+    var result: String? = null
+    var user_id: String? = null
+    var title: String? = null
+    var content: String? = null
+    var date: String? = null
+    var path: String? = null
+    var lasted_Date: String? = null
+    var nick_Name: String? = null
+    var student_Id: String? = null
+    var reply_count: String? = null
+    override fun toString(): String {
         return "ResultModel{" +
                 "seq=" + seq +
                 ", result='" + result + '\'' +
@@ -113,10 +21,10 @@ public class ResultModel {
                 ", content='" + content + '\'' +
                 ", date='" + date + '\'' +
                 ", path='" + path + '\'' +
-                ", Lasted_Date='" + Lasted_Date + '\'' +
-                ", Nick_Name='" + Nick_Name + '\'' +
-                ", Student_Id='" + Student_Id + '\'' +
+                ", Lasted_Date='" + lasted_Date + '\'' +
+                ", Nick_Name='" + nick_Name + '\'' +
+                ", Student_Id='" + student_Id + '\'' +
                 ", reply_count='" + reply_count + '\'' +
-                '}';
+                '}'
     }
 }

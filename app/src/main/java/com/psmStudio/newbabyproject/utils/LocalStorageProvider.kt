@@ -1,235 +1,256 @@
+package com.psmStudio.newbabyproject.utils
 
-        package com.psmStudio.newbabyproject.utils;
+import android.content.res.AssetFileDescriptor
+import android.database.Cursor
+import android.database.MatrixCursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Point
+import android.os.Build
+import android.os.CancellationSignal
+import android.os.Environment
+import android.os.ParcelFileDescriptor
+import android.provider.DocumentsContract
+import android.provider.DocumentsProvider
+import android.util.Log
+import android.webkit.MimeTypeMap
+import androidx.annotation.RequiresApi
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
-        import android.content.res.AssetFileDescriptor;
-        import android.database.Cursor;
-        import android.database.MatrixCursor;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.graphics.Point;
-        import android.os.Build;
-        import android.os.CancellationSignal;
-        import android.os.Environment;
-        import android.os.ParcelFileDescriptor;
-        import android.provider.DocumentsContract.Document;
-        import android.provider.DocumentsContract.Root;
-        import android.provider.DocumentsProvider;
-        import android.util.Log;
-        import android.webkit.MimeTypeMap;
-
-        import androidx.annotation.RequiresApi;
-
-        import java.io.File;
-        import java.io.FileNotFoundException;
-        import java.io.FileOutputStream;
-        import java.io.IOException;
-
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        public class LocalStorageProvider extends DocumentsProvider {
-
-        public static final String AUTHORITY = "com.ianhanniballake.localstorage.documents";
-
-        /**
-         * Default root projection: everything but Root.COLUMN_MIME_TYPES
-         */
-        private final static String[] DEFAULT_ROOT_PROJECTION = new String[] {
-        Root.COLUMN_ROOT_ID,
-        Root.COLUMN_FLAGS, Root.COLUMN_TITLE, Root.COLUMN_DOCUMENT_ID, Root.COLUMN_ICON,
-        Root.COLUMN_AVAILABLE_BYTES
-        };
-        /**
-         * Default document projection: everything but Document.COLUMN_ICON and
-         * Document.COLUMN_SUMMARY
-         */
-        private final static String[] DEFAULT_DOCUMENT_PROJECTION = new String[] {
-        Document.COLUMN_DOCUMENT_ID,
-        Document.COLUMN_DISPLAY_NAME, Document.COLUMN_FLAGS, Document.COLUMN_MIME_TYPE,
-        Document.COLUMN_SIZE,
-        Document.COLUMN_LAST_MODIFIED
-        };
-
-        @Override
-        public Cursor queryRoots(final String[] projection) throws FileNotFoundException {
+@RequiresApi(api = Build.VERSION_CODES.KITKAT)
+class LocalStorageProvider : DocumentsProvider() {
+    @Throws(FileNotFoundException::class)
+    override fun queryRoots(projection: Array<String>): Cursor {
         // Create a cursor with either the requested fields, or the default
         // projection if "projection" is null.
-        final MatrixCursor result = new MatrixCursor(projection != null ? projection
-        : DEFAULT_ROOT_PROJECTION);
+        val result = MatrixCursor(
+            projection
+                ?: DEFAULT_ROOT_PROJECTION
+        )
         // Add Home directory
-        File homeDir = Environment.getExternalStorageDirectory();
-        final MatrixCursor.RowBuilder row = result.newRow();
+        val homeDir = Environment.getExternalStorageDirectory()
+        val row = result.newRow()
         // These columns are required
-        row.add(Root.COLUMN_ROOT_ID, homeDir.getAbsolutePath());
-        row.add(Root.COLUMN_DOCUMENT_ID, homeDir.getAbsolutePath());
+        row.add(DocumentsContract.Root.COLUMN_ROOT_ID, homeDir.absolutePath)
+        row.add(DocumentsContract.Root.COLUMN_DOCUMENT_ID, homeDir.absolutePath)
         //row.add(Root.COLUMN_TITLE, getContext().getString(R.string.internal_storage));
-        row.add(Root.COLUMN_FLAGS, Root.FLAG_LOCAL_ONLY | Root.FLAG_SUPPORTS_CREATE);
+        row.add(
+            DocumentsContract.Root.COLUMN_FLAGS,
+            DocumentsContract.Root.FLAG_LOCAL_ONLY or DocumentsContract.Root.FLAG_SUPPORTS_CREATE
+        )
         //row.add(Root.COLUMN_ICON, R.drawable.ic_provider);
         // These columns are optional
-        row.add(Root.COLUMN_AVAILABLE_BYTES, homeDir.getFreeSpace());
+        row.add(DocumentsContract.Root.COLUMN_AVAILABLE_BYTES, homeDir.freeSpace)
         // Root.COLUMN_MIME_TYPE is another optional column and useful if you
         // have multiple roots with different
         // types of mime types (roots that don't match the requested mime type
         // are automatically hidden)
-        return result;
-        }
+        return result
+    }
 
-        @Override
-        public String createDocument(final String parentDocumentId, final String mimeType,
-                                     final String displayName) throws FileNotFoundException {
-        File newFile = new File(parentDocumentId, displayName);
+    @Throws(FileNotFoundException::class)
+    override fun createDocument(
+        parentDocumentId: String, mimeType: String,
+        displayName: String
+    ): String? {
+        val newFile = File(parentDocumentId, displayName)
         try {
-        newFile.createNewFile();
-        return newFile.getAbsolutePath();
-        } catch (IOException e) {
-        Log.e(LocalStorageProvider.class.getSimpleName(), "Error creating new file " + newFile);
+            newFile.createNewFile()
+            return newFile.absolutePath
+        } catch (e: IOException) {
+            Log.e(LocalStorageProvider::class.java.simpleName, "Error creating new file $newFile")
         }
-        return null;
-        }
+        return null
+    }
 
-        @Override
-        public AssetFileDescriptor openDocumentThumbnail(final String documentId, final Point sizeHint,
-                                                         final CancellationSignal signal) throws FileNotFoundException {
+    @Throws(FileNotFoundException::class)
+    override fun openDocumentThumbnail(
+        documentId: String, sizeHint: Point,
+        signal: CancellationSignal
+    ): AssetFileDescriptor? {
         // Assume documentId points to an image file. Build a thumbnail no
         // larger than twice the sizeHint
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(documentId, options);
-        final int targetHeight = 2 * sizeHint.y;
-        final int targetWidth = 2 * sizeHint.x;
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        options.inSampleSize = 1;
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(documentId, options)
+        val targetHeight = 2 * sizeHint.y
+        val targetWidth = 2 * sizeHint.x
+        val height = options.outHeight
+        val width = options.outWidth
+        options.inSampleSize = 1
         if (height > targetHeight || width > targetWidth) {
-        final int halfHeight = height / 2;
-        final int halfWidth = width / 2;
-        // Calculate the largest inSampleSize value that is a power of 2 and
-        // keeps both
-        // height and width larger than the requested height and width.
-        while ((halfHeight / options.inSampleSize) > targetHeight
-        || (halfWidth / options.inSampleSize) > targetWidth) {
-        options.inSampleSize *= 2;
+            val halfHeight = height / 2
+            val halfWidth = width / 2
+            // Calculate the largest inSampleSize value that is a power of 2 and
+            // keeps both
+            // height and width larger than the requested height and width.
+            while (halfHeight / options.inSampleSize > targetHeight
+                || halfWidth / options.inSampleSize > targetWidth
+            ) {
+                options.inSampleSize *= 2
+            }
         }
-        }
-        options.inJustDecodeBounds = false;
-        Bitmap bitmap = BitmapFactory.decodeFile(documentId, options);
+        options.inJustDecodeBounds = false
+        val bitmap = BitmapFactory.decodeFile(documentId, options)
         // Write out the thumbnail to a temporary file
-        File tempFile = null;
-        FileOutputStream out = null;
+        var tempFile: File? = null
+        var out: FileOutputStream? = null
         try {
-        tempFile = File.createTempFile("thumbnail", null, getContext().getCacheDir());
-        out = new FileOutputStream(tempFile);
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
-        } catch (IOException e) {
-        Log.e(LocalStorageProvider.class.getSimpleName(), "Error writing thumbnail", e);
-        return null;
+            tempFile = File.createTempFile("thumbnail", null, context!!.cacheDir)
+            out = FileOutputStream(tempFile)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
+        } catch (e: IOException) {
+            Log.e(LocalStorageProvider::class.java.simpleName, "Error writing thumbnail", e)
+            return null
         } finally {
-        if (out != null)
-        try {
-        out.close();
-        } catch (IOException e) {
-        Log.e(LocalStorageProvider.class.getSimpleName(), "Error closing thumbnail", e);
-        }
+            if (out != null) try {
+                out.close()
+            } catch (e: IOException) {
+                Log.e(LocalStorageProvider::class.java.simpleName, "Error closing thumbnail", e)
+            }
         }
         // It appears the Storage Framework UI caches these results quite
         // aggressively so there is little reason to
         // write your own caching layer beyond what you need to return a single
         // AssetFileDescriptor
-        return new AssetFileDescriptor(ParcelFileDescriptor.open(tempFile,
-        ParcelFileDescriptor.MODE_READ_ONLY), 0,
-        AssetFileDescriptor.UNKNOWN_LENGTH);
-        }
+        return AssetFileDescriptor(
+            ParcelFileDescriptor.open(
+                tempFile,
+                ParcelFileDescriptor.MODE_READ_ONLY
+            ), 0,
+            AssetFileDescriptor.UNKNOWN_LENGTH
+        )
+    }
 
-        @Override
-        public Cursor queryChildDocuments(final String parentDocumentId, final String[] projection,
-                                          final String sortOrder) throws FileNotFoundException {
+    @Throws(FileNotFoundException::class)
+    override fun queryChildDocuments(
+        parentDocumentId: String, projection: Array<String>,
+        sortOrder: String
+    ): Cursor {
         // Create a cursor with either the requested fields, or the default
         // projection if "projection" is null.
-        final MatrixCursor result = new MatrixCursor(projection != null ? projection
-        : DEFAULT_DOCUMENT_PROJECTION);
-        final File parent = new File(parentDocumentId);
-        for (File file : parent.listFiles()) {
-        // Don't show hidden files/folders
-        if (!file.getName().startsWith(".")) {
-        // Adds the file's display name, MIME type, size, and so on.
-        includeFile(result, file);
+        val result = MatrixCursor(
+            projection
+                ?: DEFAULT_DOCUMENT_PROJECTION
+        )
+        val parent = File(parentDocumentId)
+        for (file in parent.listFiles()) {
+            // Don't show hidden files/folders
+            if (!file.name.startsWith(".")) {
+                // Adds the file's display name, MIME type, size, and so on.
+                includeFile(result, file)
+            }
         }
-        }
-        return result;
-        }
+        return result
+    }
 
-        @Override
-        public Cursor queryDocument(final String documentId, final String[] projection)
-        throws FileNotFoundException {
+    @Throws(FileNotFoundException::class)
+    override fun queryDocument(documentId: String, projection: Array<String>): Cursor {
         // Create a cursor with either the requested fields, or the default
         // projection if "projection" is null.
-        final MatrixCursor result = new MatrixCursor(projection != null ? projection
-        : DEFAULT_DOCUMENT_PROJECTION);
-        includeFile(result, new File(documentId));
-        return result;
-        }
+        val result = MatrixCursor(
+            projection
+                ?: DEFAULT_DOCUMENT_PROJECTION
+        )
+        includeFile(result, File(documentId))
+        return result
+    }
 
-        private void includeFile(final MatrixCursor result, final File file)
-        throws FileNotFoundException {
-        final MatrixCursor.RowBuilder row = result.newRow();
+    @Throws(FileNotFoundException::class)
+    private fun includeFile(result: MatrixCursor, file: File) {
+        val row = result.newRow()
         // These columns are required
-        row.add(Document.COLUMN_DOCUMENT_ID, file.getAbsolutePath());
-        row.add(Document.COLUMN_DISPLAY_NAME, file.getName());
-        String mimeType = getDocumentType(file.getAbsolutePath());
-        row.add(Document.COLUMN_MIME_TYPE, mimeType);
-        int flags = file.canWrite() ? Document.FLAG_SUPPORTS_DELETE | Document.FLAG_SUPPORTS_WRITE
-        : 0;
+        row.add(DocumentsContract.Document.COLUMN_DOCUMENT_ID, file.absolutePath)
+        row.add(DocumentsContract.Document.COLUMN_DISPLAY_NAME, file.name)
+        val mimeType = getDocumentType(file.absolutePath)
+        row.add(DocumentsContract.Document.COLUMN_MIME_TYPE, mimeType)
+        var flags =
+            if (file.canWrite()) DocumentsContract.Document.FLAG_SUPPORTS_DELETE or DocumentsContract.Document.FLAG_SUPPORTS_WRITE else 0
         // We only show thumbnails for image files - expect a call to
         // openDocumentThumbnail for each file that has
         // this flag set
-        if (mimeType.startsWith("image/"))
-        flags |= Document.FLAG_SUPPORTS_THUMBNAIL;
-        row.add(Document.COLUMN_FLAGS, flags);
+        if (mimeType.startsWith("image/")) flags =
+            flags or DocumentsContract.Document.FLAG_SUPPORTS_THUMBNAIL
+        row.add(DocumentsContract.Document.COLUMN_FLAGS, flags)
         // COLUMN_SIZE is required, but can be null
-        row.add(Document.COLUMN_SIZE, file.length());
+        row.add(DocumentsContract.Document.COLUMN_SIZE, file.length())
         // These columns are optional
-        row.add(Document.COLUMN_LAST_MODIFIED, file.lastModified());
+        row.add(DocumentsContract.Document.COLUMN_LAST_MODIFIED, file.lastModified())
         // Document.COLUMN_ICON can be a resource id identifying a custom icon.
         // The system provides default icons
         // based on mime type
         // Document.COLUMN_SUMMARY is optional additional information about the
         // file
-        }
+    }
 
-        @Override
-        public String getDocumentType(final String documentId) throws FileNotFoundException {
-        File file = new File(documentId);
-        if (file.isDirectory())
-        return Document.MIME_TYPE_DIR;
+    @Throws(FileNotFoundException::class)
+    override fun getDocumentType(documentId: String): String {
+        val file = File(documentId)
+        if (file.isDirectory) return DocumentsContract.Document.MIME_TYPE_DIR
         // From FileProvider.getType(Uri)
-        final int lastDot = file.getName().lastIndexOf('.');
+        val lastDot = file.name.lastIndexOf('.')
         if (lastDot >= 0) {
-        final String extension = file.getName().substring(lastDot + 1);
-        final String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-        if (mime != null) {
-        return mime;
+            val extension = file.name.substring(lastDot + 1)
+            val mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+            if (mime != null) {
+                return mime
+            }
         }
-        }
-        return "application/octet-stream";
-        }
+        return "application/octet-stream"
+    }
 
-        @Override
-        public void deleteDocument(final String documentId) throws FileNotFoundException {
-        new File(documentId).delete();
-        }
+    @Throws(FileNotFoundException::class)
+    override fun deleteDocument(documentId: String) {
+        File(documentId).delete()
+    }
 
-        @Override
-        public ParcelFileDescriptor openDocument(final String documentId, final String mode,
-                                                 final CancellationSignal signal) throws FileNotFoundException {
-        File file = new File(documentId);
-        final boolean isWrite = (mode.indexOf('w') != -1);
-        if (isWrite) {
-        return ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_WRITE);
+    @Throws(FileNotFoundException::class)
+    override fun openDocument(
+        documentId: String, mode: String,
+        signal: CancellationSignal?
+    ): ParcelFileDescriptor {
+        val file = File(documentId)
+        val isWrite = mode.indexOf('w') != -1
+        return if (isWrite) {
+            ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_WRITE)
         } else {
-        return ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
+            ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
         }
-        }
+    }
 
-        @Override
-        public boolean onCreate() {
-        return true;
-        }
-        }
+    override fun onCreate(): Boolean {
+        return true
+    }
+
+    companion object {
+        const val AUTHORITY = "com.ianhanniballake.localstorage.documents"
+
+        /**
+         * Default root projection: everything but Root.COLUMN_MIME_TYPES
+         */
+        private val DEFAULT_ROOT_PROJECTION = arrayOf(
+            DocumentsContract.Root.COLUMN_ROOT_ID,
+            DocumentsContract.Root.COLUMN_FLAGS,
+            DocumentsContract.Root.COLUMN_TITLE,
+            DocumentsContract.Root.COLUMN_DOCUMENT_ID,
+            DocumentsContract.Root.COLUMN_ICON,
+            DocumentsContract.Root.COLUMN_AVAILABLE_BYTES
+        )
+
+        /**
+         * Default document projection: everything but Document.COLUMN_ICON and
+         * Document.COLUMN_SUMMARY
+         */
+        private val DEFAULT_DOCUMENT_PROJECTION = arrayOf(
+            DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+            DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+            DocumentsContract.Document.COLUMN_FLAGS,
+            DocumentsContract.Document.COLUMN_MIME_TYPE,
+            DocumentsContract.Document.COLUMN_SIZE,
+            DocumentsContract.Document.COLUMN_LAST_MODIFIED
+        )
+    }
+}
