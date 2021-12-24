@@ -6,7 +6,6 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -18,11 +17,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
+import com.denzcoskun.imageslider.models.SlideModel
+import com.github.siyamed.shapeimageview.RoundedImageView
 import com.psmStudio.newbabyproject.BaseActivity
 import com.psmStudio.newbabyproject.R
 import com.psmStudio.newbabyproject.utils.Common
-import com.github.siyamed.shapeimageview.RoundedImageView
-import com.opensooq.supernova.gligar.GligarPicker
 import com.psmStudio.newbabyproject.utils.FileUtils
 import kotlinx.android.synthetic.main.activity_visit_admin_update.*
 import kotlinx.android.synthetic.main.activity_visit_admin_update.babyEtcTxt
@@ -32,10 +31,10 @@ import kotlinx.android.synthetic.main.activity_visit_admin_update.babyWeightTxt
 import kotlinx.android.synthetic.main.activity_visit_admin_update.cameraIcon
 import kotlinx.android.synthetic.main.activity_visit_admin_update.imageLinear
 import kotlinx.android.synthetic.main.activity_visit_admin_update.imageTxtCount
-import kotlinx.android.synthetic.main.activity_visit_admin_update.saveSpinner
 import kotlinx.android.synthetic.main.activity_visit_admin_update.reservLl
 import kotlinx.android.synthetic.main.activity_visit_admin_update.saveReserveDate
 import kotlinx.android.synthetic.main.activity_visit_admin_update.saveReserveTime
+import kotlinx.android.synthetic.main.activity_visit_admin_update.saveSpinner
 import kotlinx.android.synthetic.main.activity_visit_admin_write.*
 import kotlinx.android.synthetic.main.item_toolbar.*
 import okhttp3.MediaType
@@ -113,11 +112,16 @@ class VisitAdminUpdateActivity : BaseActivity() {
             babyRequireItemTxt.setText(babyRequireItem)
             babyEtcTxt.setText(babyEtc)
 
+            Log.d("TAG","pathList : $pathList")
+            Log.d("TAG","originalList : $originalPathList")
             for(i in pathList.indices){
-                mUriList.add(Uri.parse(originalPathList[i]))
-                uriList2.add(Uri.fromFile(File(originalPathList[i])))
-                count++
-                setImageUpdate(pathList[i], originalPathList[i])
+                if(pathList[i].contains("app_icon")) {
+                    continue
+                }else{
+                    mUriList.add(Uri.parse(originalPathList[i]))
+                    count++
+                    setImageUpdate(pathList[i], originalPathList[i])
+                }
             }
         }
 
