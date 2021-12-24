@@ -161,9 +161,6 @@ class VisitAdminWriteActivity : BaseActivity() {
                     //  .. 포커스 뺏겼을 때
                 }
             }
-
-
-
     }
 
     private fun adminWriteAct(saveGubun: Int, filePath: MutableList<Uri>?) {
@@ -348,11 +345,7 @@ class VisitAdminWriteActivity : BaseActivity() {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 
-                Log.d("TAG", "response : " + response.body())
-                Log.d("TAG", "response : " + response.body().toString())
                 if (response.isSuccessful) {
-                    Log.d("TAG", "response : " + response.isSuccessful)
-
                     intent = Intent(
                         this@VisitAdminWriteActivity,
                         VisitAdmintoParentListActivity::class.java
@@ -372,8 +365,6 @@ class VisitAdminWriteActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d("TAG", "Error : " + t.message)
-                Log.d("TAG", "Error : " + t.localizedMessage)
                 // 네트워크 문제
                 Toast.makeText(
                     this@VisitAdminWriteActivity,
@@ -482,40 +473,27 @@ class VisitAdminWriteActivity : BaseActivity() {
         if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK && null != data) {
             // Get the Image from data
             if (data.clipData != null) {
-                val mClipData = data.clipData
-
                 val cout = data.clipData!!.itemCount
-                Log.d("TAG","onActivityResult cout : $cout")
                 if(cout > IMAGE_LIMIT){
                     Toast.makeText(this, "이미지는 최대 3장까지 등록 가능합니다.", Toast.LENGTH_LONG).show()
                     selectImage()
                 }else{
                     for (i in 0 until cout) {
                         ++count
-                        // adding imageuri in array
                         val imageurl = data.clipData!!.getItemAt(i).uri
                         mUriList.add(imageurl)
                         setImage(imageurl)
-                        //setImage(imageurl.path.toString())
-
                     }
-                    // setting 1st selected image into image switcher
-                    //imageSwitcher?.setImageURI(mArrayUri!![0])
                 }
             } else {    // 이미지 1장인경우
                 count++
                 val imageurl = data.data
                 mUriList.add(imageurl!!)
-                //setImage(imageurl.path.toString())
                 setImage(imageurl)
-                //imageSwitcher?.setImageURI(mArrayUri!![0])
             }
         } else {
-            // show this if no image is selected
-            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "이미지를 선택하지 않으셨습니다.", Toast.LENGTH_LONG).show()
         }
-        Log.d("TAG","onActivityResult count : $count" )
-        Log.d("TAG","onActivityResult mUriList : ${mUriList.toString()}" )
     }
     private fun setImage(imageUri : Uri){
         val inflater =
@@ -532,15 +510,8 @@ class VisitAdminWriteActivity : BaseActivity() {
                 imageLinear.removeView(statLayoutItem)
                 imageTxtCount.text = "$count/3"
             }
-            /*if (uriList.contains(imagePath)) {
-                uriList.remove(imagePath)
-                count--
-                imageLinear.removeView(statLayoutItem)
-                imageTxtCount.text = "$count/3"
 
-            }*/
         }
-        Log.d("TAG","setImage count : $count" )
 
         Glide.with(applicationContext)
             .load(imageUri)
@@ -550,38 +521,5 @@ class VisitAdminWriteActivity : BaseActivity() {
         imageLinear.addView(statLayoutItem)
         imageTxtCount.text = "$count/3"
     }
-    // 파일 경로를 받아와 Bitmap 으로 변환후 ImageView 적용
-    /*private fun setImage(imagePath: String) {
-        Log.d("TAG","setImage imagePath : $imagePath" )
-        val imgFile = File(imagePath)
-        if (imgFile.exists()) {
-            Log.d("TAG","setImage imgFile exists : $imagePath" )
-
-            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
-            val inflater =
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val statLayoutItem = inflater.inflate(R.layout.addimage, null) as LinearLayout
-            val addImg: RoundedImageView = statLayoutItem.findViewById(R.id.addImage)
-            val delImg =
-                statLayoutItem.findViewById<ImageView>(R.id.delImage)
-            delImg.setOnClickListener {
-
-                if (uriList.contains(imagePath)) {
-                    uriList.remove(imagePath)
-                    count--
-                    imageLinear.removeView(statLayoutItem)
-                    imageTxtCount.text = "$count/3"
-
-                }
-            }
-            Glide.with(applicationContext)
-                .load(myBitmap)
-                .override(300, 300)
-                .fitCenter()
-                .into(addImg)
-            imageLinear.addView(statLayoutItem)
-            imageTxtCount.text = "$count/3"
-        }
-    }*/
 
 }

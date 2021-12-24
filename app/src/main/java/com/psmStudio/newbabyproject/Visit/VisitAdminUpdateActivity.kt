@@ -92,9 +92,6 @@ class VisitAdminUpdateActivity : BaseActivity() {
 
         loginId = setting.getString("loginId", "").toString()
 
-
-
-
         if(intent != null){
             seq = intent.getIntExtra("seq",0)
 
@@ -116,17 +113,10 @@ class VisitAdminUpdateActivity : BaseActivity() {
             babyRequireItemTxt.setText(babyRequireItem)
             babyEtcTxt.setText(babyEtc)
 
-            Log.d("TAG", " pathList 1 : $pathList")
-
-            Log.d("TAG", " originalPathList 1 : $originalPathList")
-
             for(i in pathList.indices){
                 mUriList.add(Uri.parse(originalPathList[i]))
                 uriList2.add(Uri.fromFile(File(originalPathList[i])))
                 count++
-                //setImageUpdate(pathList[i], originalPathList[i])
-                Log.d("TAG", " mUriList 1 : $mUriList")
-
                 setImageUpdate(pathList[i], originalPathList[i])
             }
         }
@@ -453,7 +443,6 @@ class VisitAdminUpdateActivity : BaseActivity() {
                 call: Call<ResponseBody?>,
                 t: Throwable
             ) {
-                Log.d("TAG","Error : " + t.message)
                 Toast.makeText(
                     this@VisitAdminUpdateActivity,
                     "데이터 접속 상태를 확인 후 다시 시도해주세요.",
@@ -461,18 +450,10 @@ class VisitAdminUpdateActivity : BaseActivity() {
                 ).show()
 
             }
-
-
         })
-
-
     }
 
     fun setImageUpdate(imagePath : String, uriPath : String){
-
-        Log.d("TAG", " setImageUpdate uriPath : $uriPath")
-        Log.d("TAG", " setImageUpdate imagePath : $imagePath")
-
 
         val inflater2 =
             getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -490,10 +471,7 @@ class VisitAdminUpdateActivity : BaseActivity() {
                 val idx2 = uriPath.indexOf("(")
                 val fileIdx2 = uriPath.substring(idx2+1, idx2+2)
                 if(fileIdx == fileIdx2){
-                    //uriList2.remove(Uri.fromFile(File(oriPath)))
                     mUriList.remove(Uri.parse(uriPath))
-                    Log.d("TAG","uriList2 3333 : $mUriList")
-
                 }
 
                 pathList.remove(imagePath)
@@ -513,55 +491,6 @@ class VisitAdminUpdateActivity : BaseActivity() {
         imageLinear.addView(statLayoutItem2)
         imageTxtCount.text = "$count/3"
     }
-    /*fun setImageUpdate(imagePath: String, oriPath: String) {
-        Log.d("TAG","oriPath : $oriPath")
-        val inflater2 =
-            getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val statLayoutItem2 =
-            inflater2.inflate(R.layout.addimage, null) as LinearLayout
-        val addImg: RoundedImageView = statLayoutItem2.findViewById(R.id.addImage)
-        val delImg =
-            statLayoutItem2.findViewById<ImageView>(R.id.delImage)
-        delImg.setOnClickListener {
-
-            Log.d("TAG","imagePath 222 : $imagePath")
-            Log.d("TAG","oriPat 222h : $oriPath")
-
-            if (pathList.contains(imagePath)) {
-                val idx = imagePath.indexOf("(")
-                val fileIdx = imagePath.substring(idx+1, idx+2)
-
-                val idx2 = oriPath.indexOf("(")
-                val fileIdx2 = oriPath.substring(idx2+1, idx2+2)
-                if(fileIdx == fileIdx2){
-                    Log.d("TAG","oriPat 3333 : $oriPath")
-                    uriList2.remove(Uri.fromFile(File(oriPath)))
-                    Log.d("TAG","uriList2 3333 : $uriList2")
-
-                }
-
-                pathList.remove(imagePath)
-                count--
-                imageLinear.removeView(statLayoutItem2)
-                imageTxtCount.text = "$count/3"
-                if(count == 0){
-                    uriList2.clear()
-                }
-            }
-            Toast.makeText(
-                this@VisitAdminUpdateActivity,
-                "ImageView $imagePath",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-        Glide.with(applicationContext)
-            .load(imagePath)
-            .override(300, 300)
-            .fitCenter()
-            .into(addImg)
-        imageLinear.addView(statLayoutItem2)
-        imageTxtCount.text = "$count/3"
-    }*/
 
     override fun onBackPressed() {
 
@@ -601,10 +530,7 @@ class VisitAdminUpdateActivity : BaseActivity() {
         if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK && null != data) {
             // Get the Image from data
             if (data.clipData != null) {
-                val mClipData = data.clipData
-
                 val cout = data.clipData!!.itemCount
-                Log.d("TAG","onActivityResult cout : $cout")
                 if(cout > IMAGE_LIMIT){
                     Toast.makeText(this, "이미지는 최대 3장까지 등록 가능합니다.", Toast.LENGTH_LONG).show()
                     selectImage()
@@ -615,26 +541,18 @@ class VisitAdminUpdateActivity : BaseActivity() {
                         val imageurl = data.clipData!!.getItemAt(i).uri
                         mUriList.add(imageurl)
                         setImage(imageurl)
-                        //setImage(imageurl.path.toString())
-
                     }
-                    // setting 1st selected image into image switcher
-                    //imageSwitcher?.setImageURI(mArrayUri!![0])
                 }
             } else {    // 이미지 1장인경우
                 count++
                 val imageurl = data.data
                 mUriList.add(imageurl!!)
-                //setImage(imageurl.path.toString())
                 setImage(imageurl)
-                //imageSwitcher?.setImageURI(mArrayUri!![0])
             }
         } else {
             // show this if no image is selected
-            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "이미지를 선택하지 않으셨습니다.", Toast.LENGTH_LONG).show()
         }
-        Log.d("TAG","onActivityResult count : $count" )
-        Log.d("TAG","onActivityResult mUriList : ${mUriList.toString()}" )
     }
 
     private fun setImage(imageUri : Uri){
@@ -652,15 +570,8 @@ class VisitAdminUpdateActivity : BaseActivity() {
                 imageLinear.removeView(statLayoutItem)
                 imageTxtCount.text = "$count/3"
             }
-            /*if (uriList.contains(imagePath)) {
-                uriList.remove(imagePath)
-                count--
-                imageLinear.removeView(statLayoutItem)
-                imageTxtCount.text = "$count/3"
 
-            }*/
         }
-        Log.d("TAG","setImage count : $count" )
 
         Glide.with(applicationContext)
             .load(imageUri)
