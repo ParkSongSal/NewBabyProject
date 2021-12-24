@@ -1,5 +1,6 @@
 package com.psmStudio.newbabyproject.Visit
 
+import android.R.attr
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -14,11 +15,10 @@ import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
+import com.github.siyamed.shapeimageview.RoundedImageView
 import com.psmStudio.newbabyproject.*
 import com.psmStudio.newbabyproject.utils.Common
 import com.psmStudio.newbabyproject.utils.FileUtils
-import com.github.siyamed.shapeimageview.RoundedImageView
-import com.opensooq.supernova.gligar.GligarPicker
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_visit_admin_write.*
 import kotlinx.android.synthetic.main.item_toolbar.*
@@ -34,6 +34,9 @@ import java.util.*
 
 
 class VisitAdminWriteActivity : BaseActivity() {
+
+    var PICK_IMAGE_MULTIPLE = 1
+    val IMAGE_LIMIT = 3
 
     val PICKER_REQUEST_CODE = 101
 
@@ -51,7 +54,11 @@ class VisitAdminWriteActivity : BaseActivity() {
     private var pathsList = emptyArray<String>()
     private var uriList : MutableList<String> = mutableListOf()
     private var uriList2 : MutableList<Uri> = mutableListOf()
+
+    private var mUriList: MutableList<Uri> = mutableListOf()
+
     var count = 0
+    var position = 0
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,7 +128,7 @@ class VisitAdminWriteActivity : BaseActivity() {
         }
 
         insertBtn.setOnClickListener(View.OnClickListener {
-            adminWriteAct(saveGubun, uriList2)
+            adminWriteAct(saveGubun, mUriList)
         })
 
         this.InitializeListener()
@@ -158,25 +165,8 @@ class VisitAdminWriteActivity : BaseActivity() {
 
 
     }
-/*
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.save_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.saveBtn -> {
-                adminWriteAct(saveGubun)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-*/
-
-    private fun adminWriteAct(saveGubun: Int, filePath: MutableList<Uri>? ) {
+    private fun adminWriteAct(saveGubun: Int, filePath: MutableList<Uri>?) {
         var tempYn: String = "N"
         var tempYnPart : RequestBody? = null
 
@@ -193,7 +183,8 @@ class VisitAdminWriteActivity : BaseActivity() {
                 tempYn = "N"
                 tempYnPart = RequestBody.create(MultipartBody.FORM, tempYn)
 
-                reserveDate = saveReserveDate.text.toString() + " " + saveReserveTime.text.toString()
+                reserveDate =
+                    saveReserveDate.text.toString() + " " + saveReserveTime.text.toString()
                 writeDate = saveReserveDate.text.toString()
                 reserveDatePart = RequestBody.create(MultipartBody.FORM, reserveDate)
             }
@@ -226,7 +217,7 @@ class VisitAdminWriteActivity : BaseActivity() {
         val updateDatePart = RequestBody.create(MultipartBody.FORM, date)
 
         when(filePath?.size){
-            0 ->{
+            0 -> {
                 call = mVisitApi.toParentInsertNoImage(
                     parentIdPart,
                     parentNamePart,
@@ -244,10 +235,10 @@ class VisitAdminWriteActivity : BaseActivity() {
                     updateDatePart
                 )
             }
-            1 ->{
+            1 -> {
                 val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
 
-                val f1 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
+                val f1: File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
                 val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
 
@@ -274,16 +265,16 @@ class VisitAdminWriteActivity : BaseActivity() {
                     updateDatePart
                 )
             }
-            2 ->{
+            2 -> {
 
                 val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
                 val originalPath2 = RequestBody.create(MultipartBody.FORM, filePath[1].toString())
 
-                val f1 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
+                val f1: File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
                 val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
 
-                val f2 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[1])
+                val f2: File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[1])
                 val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2)
                 val file2 = MultipartBody.Part.createFormData("image[]", f2?.name, imagePart2)
 
@@ -310,21 +301,21 @@ class VisitAdminWriteActivity : BaseActivity() {
                     updateDatePart
                 )
             }
-            3 ->{
+            3 -> {
 
                 val originalPath = RequestBody.create(MultipartBody.FORM, filePath[0].toString())
                 val originalPath2 = RequestBody.create(MultipartBody.FORM, filePath[1].toString())
                 val originalPath3 = RequestBody.create(MultipartBody.FORM, filePath[2].toString())
 
-                val f1 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
+                val f1: File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[0])
                 val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
                 val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
 
-                val f2 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[1])
+                val f2: File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[1])
                 val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2)
                 val file2 = MultipartBody.Part.createFormData("image[]", f2?.name, imagePart2)
 
-                val f3 : File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[2])
+                val f3: File? = FileUtils.getFile(this@VisitAdminWriteActivity, filePath[2])
                 val imagePart3 = RequestBody.create(MediaType.parse("multipart/form-data"), f3)
                 val file3 = MultipartBody.Part.createFormData("image[]", f3?.name, imagePart3)
                 call = mVisitApi.toParentInsert(
@@ -357,18 +348,22 @@ class VisitAdminWriteActivity : BaseActivity() {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 
-                Log.d("TAG","response : " + response.body())
-                Log.d("TAG","response : " + response.body().toString())
-                if(response.isSuccessful){
-                    Log.d("TAG","response : " + response.isSuccessful)
+                Log.d("TAG", "response : " + response.body())
+                Log.d("TAG", "response : " + response.body().toString())
+                if (response.isSuccessful) {
+                    Log.d("TAG", "response : " + response.isSuccessful)
 
-                    intent = Intent(this@VisitAdminWriteActivity,VisitAdmintoParentListActivity::class.java)
+                    intent = Intent(
+                        this@VisitAdminWriteActivity,
+                        VisitAdmintoParentListActivity::class.java
+                    )
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     intent.putExtra("parentId", parentId)
                     startActivity(intent)
                     finish()
-                    Toast.makeText(this@VisitAdminWriteActivity, "등록되었습니다.", Toast.LENGTH_LONG).show()
-                }else{
+                    Toast.makeText(this@VisitAdminWriteActivity, "등록되었습니다.", Toast.LENGTH_LONG)
+                        .show()
+                } else {
                     dlg.setMessage("다시 시도 바랍니다.")
                         .setNegativeButton("확인", null)
                     dlg.show()
@@ -377,8 +372,8 @@ class VisitAdminWriteActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d("TAG","Error : " + t.message)
-                Log.d("TAG","Error : " + t.localizedMessage)
+                Log.d("TAG", "Error : " + t.message)
+                Log.d("TAG", "Error : " + t.localizedMessage)
                 // 네트워크 문제
                 Toast.makeText(
                     this@VisitAdminWriteActivity,
@@ -459,7 +454,7 @@ class VisitAdminWriteActivity : BaseActivity() {
             /* 앱 소개 */
             R.id.imgRL,
             R.id.cameraIcon,
-            R.id.imageTxtCount-> {
+            R.id.imageTxtCount -> {
                 selectImage()
             }
 
@@ -468,52 +463,100 @@ class VisitAdminWriteActivity : BaseActivity() {
 
 
     private fun selectImage() {
-        if (pathsList.isNotEmpty()) {
-            Toast.makeText(this@VisitAdminWriteActivity, "현재 이미지 개수 $count", Toast.LENGTH_SHORT).show()
-            if (count == 3) {
-                Toast.makeText(this@VisitAdminWriteActivity, "이미지는 최대 3장까지 선택가능합니다.", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                GligarPicker()
-                    .requestCode(PICKER_REQUEST_CODE)
-                    .limit(3 - count) // 최대 이미지 수
-                    .withActivity(this@VisitAdminWriteActivity) //Activity
-                    //.withFragment -> Fragment
-                    // .disableCamera(false) -> 카메라 캡처를 사용할지
-                    // .cameraDirect(true) -> 바로 카메라를 실행할지
-                    .show()
-            }
-        } else {
-            GligarPicker()
-                .requestCode(PICKER_REQUEST_CODE)
-                .limit(3) // 최대 이미지 수
-                .withActivity(this@VisitAdminWriteActivity) //Activity
-                //.withFragment -> Fragment
-                // .disableCamera(false) -> 카메라 캡처를 사용할지
-                // .cameraDirect(true) -> 바로 카메라를 실행할지
-                .show()
-        }
+        val intent = Intent()
+
+        // setting type to select to be image
+        intent.type = "image/*"
+
+        // allowing multiple image to be selected
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(
+            Intent.createChooser(intent, "Select Picture"),
+            PICK_IMAGE_MULTIPLE
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == PICKER_REQUEST_CODE && resultCode == RESULT_OK && data != null){
-            pathsList = data.extras?.getStringArray(GligarPicker.IMAGES_RESULT) as Array<String> // return list of selected images paths.
-            for (i in pathsList.indices) {
-                val uri : Uri = Uri.parse(pathsList[i])
-                uriList.add(pathsList[i])
-                uriList2.add(Uri.fromFile(File(pathsList[i])))
-                Log.d("TAG", "uriList2 : $uriList2")
-                count++
-                setImage(pathsList[i])
-            }
-        }
-    }
+        if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK && null != data) {
+            // Get the Image from data
+            if (data.clipData != null) {
+                val mClipData = data.clipData
 
+                val cout = data.clipData!!.itemCount
+                Log.d("TAG","onActivityResult cout : $cout")
+                if(cout > IMAGE_LIMIT){
+                    Toast.makeText(this, "이미지는 최대 3장까지 등록 가능합니다.", Toast.LENGTH_LONG).show()
+                    selectImage()
+                }else{
+                    for (i in 0 until cout) {
+                        ++count
+                        // adding imageuri in array
+                        val imageurl = data.clipData!!.getItemAt(i).uri
+                        mUriList.add(imageurl)
+                        setImage(imageurl)
+                        //setImage(imageurl.path.toString())
+
+                    }
+                    // setting 1st selected image into image switcher
+                    //imageSwitcher?.setImageURI(mArrayUri!![0])
+                }
+            } else {    // 이미지 1장인경우
+                count++
+                val imageurl = data.data
+                mUriList.add(imageurl!!)
+                //setImage(imageurl.path.toString())
+                setImage(imageurl)
+                //imageSwitcher?.setImageURI(mArrayUri!![0])
+            }
+        } else {
+            // show this if no image is selected
+            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show()
+        }
+        Log.d("TAG","onActivityResult count : $count" )
+        Log.d("TAG","onActivityResult mUriList : ${mUriList.toString()}" )
+    }
+    private fun setImage(imageUri : Uri){
+        val inflater =
+            getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val statLayoutItem = inflater.inflate(R.layout.addimage, null) as LinearLayout
+        val addImg: RoundedImageView = statLayoutItem.findViewById(R.id.addImage)
+        val delImg =
+            statLayoutItem.findViewById<ImageView>(R.id.delImage)
+        delImg.setOnClickListener {
+
+            if(mUriList.contains(imageUri)){
+                mUriList.remove(imageUri)
+                count--
+                imageLinear.removeView(statLayoutItem)
+                imageTxtCount.text = "$count/3"
+            }
+            /*if (uriList.contains(imagePath)) {
+                uriList.remove(imagePath)
+                count--
+                imageLinear.removeView(statLayoutItem)
+                imageTxtCount.text = "$count/3"
+
+            }*/
+        }
+        Log.d("TAG","setImage count : $count" )
+
+        Glide.with(applicationContext)
+            .load(imageUri)
+            .override(300, 300)
+            .fitCenter()
+            .into(addImg)
+        imageLinear.addView(statLayoutItem)
+        imageTxtCount.text = "$count/3"
+    }
     // 파일 경로를 받아와 Bitmap 으로 변환후 ImageView 적용
-    fun setImage(imagePath: String) {
+    /*private fun setImage(imagePath: String) {
+        Log.d("TAG","setImage imagePath : $imagePath" )
         val imgFile = File(imagePath)
         if (imgFile.exists()) {
+            Log.d("TAG","setImage imgFile exists : $imagePath" )
+
             val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
             val inflater =
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -539,6 +582,6 @@ class VisitAdminWriteActivity : BaseActivity() {
             imageLinear.addView(statLayoutItem)
             imageTxtCount.text = "$count/3"
         }
-    }
+    }*/
 
 }

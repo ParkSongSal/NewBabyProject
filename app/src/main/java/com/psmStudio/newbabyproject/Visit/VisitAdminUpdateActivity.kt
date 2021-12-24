@@ -50,11 +50,15 @@ import java.io.File
 class VisitAdminUpdateActivity : BaseActivity() {
 
     val PICKER_REQUEST_CODE = 101
+    var PICK_IMAGE_MULTIPLE = 1
+    val IMAGE_LIMIT = 3
 
     lateinit var updateCall: Call<ResponseBody>
 
 
     private var pathsList = emptyArray<String>()
+    private var mUriList: MutableList<Uri> = mutableListOf()
+
 
     var count =0
     var saveGubun = 0
@@ -117,9 +121,12 @@ class VisitAdminUpdateActivity : BaseActivity() {
             Log.d("TAG", " originalPathList 1 : $originalPathList")
 
             for(i in pathList.indices){
-
+                mUriList.add(Uri.parse(originalPathList[i]))
                 uriList2.add(Uri.fromFile(File(originalPathList[i])))
                 count++
+                //setImageUpdate(pathList[i], originalPathList[i])
+                Log.d("TAG", " mUriList 1 : $mUriList")
+
                 setImageUpdate(pathList[i], originalPathList[i])
             }
         }
@@ -181,7 +188,7 @@ class VisitAdminUpdateActivity : BaseActivity() {
 
 
             Handler().postDelayed(Runnable {
-                updateBoard(saveGubun, uriList2)
+                updateBoard(saveGubun, mUriList)
                 //여기에 딜레이 후 시작할 작업들을 입력
             }, 2000) // 0.5초 정도 딜레이를 준 후 시작
 
@@ -255,20 +262,22 @@ class VisitAdminUpdateActivity : BaseActivity() {
             1 ->{
 
                 var fileFormat : Uri? = null
-                var f1 : File? = null
-                if (filePath[0].toString().contains("(")) {
+                var f1 : File?
+                if(filePath[0].toString().contains("(")){
                     val idx = filePath[0].toString().indexOf("(")
-                    val path = filePath[0].toString().substring(0, idx)
-
-                    fileFormat = Uri.parse(path)
+                    val path = filePath[0].toString().substring(0,idx)
+                    fileFormat = Uri.parse("content$path")
                     f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat)
-                } else {
+                }else{
+                    fileFormat = filePath[0]
                     f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[0])
                 }
 
                 val originalPath = RequestBody.create(MultipartBody.FORM, fileFormat.toString())
-                val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
-                val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
+
+                val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1!!)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
+
 
                 updateCall = mVisitApi.toParentUpdate(
                     seqPart,
@@ -294,37 +303,36 @@ class VisitAdminUpdateActivity : BaseActivity() {
 
                 var fileFormat : Uri? = null
                 var f1 : File?
-                if (filePath[0].toString().contains("(")) {
+                if(filePath[0].toString().contains("(")){
                     val idx = filePath[0].toString().indexOf("(")
-                    val path = filePath[0].toString().substring(0, idx)
-
-                    fileFormat = Uri.parse(path)
+                    val path = filePath[0].toString().substring(0,idx)
+                    fileFormat = Uri.parse("content$path")
                     f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat)
-                } else {
+                }else{
+                    fileFormat = filePath[0]
                     f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[0])
                 }
 
                 var fileFormat2 : Uri? = null
-                var f2: File?
-                if (filePath[1].toString().contains("(")) {
+                var f2 : File?
+                if(filePath[1].toString().contains("(")){
                     val idx = filePath[1].toString().indexOf("(")
-                    val path = filePath[1].toString().substring(0, idx)
-
-                    fileFormat2 = Uri.parse(path)
+                    val path = filePath[1].toString().substring(0,idx)
+                    fileFormat2 = Uri.parse("content$path")
                     f2 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat2)
-                } else {
+                }else{
+                    fileFormat2 = filePath[1]
                     f2 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[1])
                 }
-
 
                 val originalPath = RequestBody.create(MultipartBody.FORM, fileFormat.toString())
                 val originalPath2 = RequestBody.create(MultipartBody.FORM, fileFormat2.toString())
 
-                val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
-                val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
+                val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1!!)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
 
-                val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2)
-                val file2 = MultipartBody.Part.createFormData("image[]", f2?.name, imagePart2)
+                val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2!!)
+                val file2 = MultipartBody.Part.createFormData("image[]", f2.name, imagePart2)
 
                 updateCall = mVisitApi.toParentUpdate(
                     seqPart,
@@ -350,37 +358,37 @@ class VisitAdminUpdateActivity : BaseActivity() {
 
                 var fileFormat : Uri? = null
                 var f1 : File?
-                if (filePath[0].toString().contains("(")) {
+                if(filePath[0].toString().contains("(")){
                     val idx = filePath[0].toString().indexOf("(")
-                    val path = filePath[0].toString().substring(0, idx)
-
-                    fileFormat = Uri.parse(path)
+                    val path = filePath[0].toString().substring(0,idx)
+                    fileFormat = Uri.parse("content$path")
                     f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat)
-                } else {
+                }else{
+                    fileFormat = filePath[0]
                     f1 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[0])
                 }
 
                 var fileFormat2 : Uri? = null
-                var f2: File?
-                if (filePath[1].toString().contains("(")) {
+                var f2 : File?
+                if(filePath[1].toString().contains("(")){
                     val idx = filePath[1].toString().indexOf("(")
-                    val path = filePath[1].toString().substring(0, idx)
-
-                    fileFormat2 = Uri.parse(path)
+                    val path = filePath[1].toString().substring(0,idx)
+                    fileFormat2 = Uri.parse("content$path")
                     f2 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat2)
-                } else {
+                }else{
+                    fileFormat2 = filePath[1]
                     f2 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[1])
                 }
 
                 var fileFormat3 : Uri? = null
-                var f3: File?
-                if (filePath[2].toString().contains("(")) {
+                var f3 : File?
+                if(filePath[2].toString().contains("(")){
                     val idx = filePath[2].toString().indexOf("(")
-                    val path = filePath[2].toString().substring(0, idx)
-
-                    fileFormat3 = Uri.parse(path)
+                    val path = filePath[2].toString().substring(0,idx)
+                    fileFormat3 = Uri.parse("content$path")
                     f3 = FileUtils.getFile(this@VisitAdminUpdateActivity, fileFormat3)
-                } else {
+                }else{
+                    fileFormat3 = filePath[2]
                     f3 = FileUtils.getFile(this@VisitAdminUpdateActivity, filePath[2])
                 }
 
@@ -388,14 +396,14 @@ class VisitAdminUpdateActivity : BaseActivity() {
                 val originalPath2 = RequestBody.create(MultipartBody.FORM, fileFormat2.toString())
                 val originalPath3 = RequestBody.create(MultipartBody.FORM, fileFormat3.toString())
 
-                val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1)
-                val file1 = MultipartBody.Part.createFormData("image[]", f1?.name, imagePart)
+                val imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), f1!!)
+                val file1 = MultipartBody.Part.createFormData("image[]", f1.name, imagePart)
 
-                val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2)
-                val file2 = MultipartBody.Part.createFormData("image[]", f2?.name, imagePart2)
+                val imagePart2 = RequestBody.create(MediaType.parse("multipart/form-data"), f2!!)
+                val file2 = MultipartBody.Part.createFormData("image[]", f2.name, imagePart2)
 
-                val imagePart3 = RequestBody.create(MediaType.parse("multipart/form-data"), f3)
-                val file3 = MultipartBody.Part.createFormData("image[]", f3?.name, imagePart3)
+                val imagePart3 = RequestBody.create(MediaType.parse("multipart/form-data"), f3!!)
+                val file3 = MultipartBody.Part.createFormData("image[]", f3.name, imagePart3)
                 updateCall = mVisitApi.toParentUpdate(
                     seqPart,
                     parentIdPart,
@@ -459,7 +467,53 @@ class VisitAdminUpdateActivity : BaseActivity() {
 
 
     }
-    fun setImageUpdate(imagePath: String, oriPath: String) {
+
+    fun setImageUpdate(imagePath : String, uriPath : String){
+
+        Log.d("TAG", " setImageUpdate uriPath : $uriPath")
+        Log.d("TAG", " setImageUpdate imagePath : $imagePath")
+
+
+        val inflater2 =
+            getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val statLayoutItem2 =
+            inflater2.inflate(R.layout.addimage, null) as LinearLayout
+        val addImg: RoundedImageView = statLayoutItem2.findViewById(R.id.addImage)
+        val delImg =
+            statLayoutItem2.findViewById<ImageView>(R.id.delImage)
+
+        delImg.setOnClickListener {
+            if(pathList.contains(imagePath)){
+                val idx = imagePath.indexOf("(")
+                val fileIdx = imagePath.substring(idx+1, idx+2)
+
+                val idx2 = uriPath.indexOf("(")
+                val fileIdx2 = uriPath.substring(idx2+1, idx2+2)
+                if(fileIdx == fileIdx2){
+                    //uriList2.remove(Uri.fromFile(File(oriPath)))
+                    mUriList.remove(Uri.parse(uriPath))
+                    Log.d("TAG","uriList2 3333 : $mUriList")
+
+                }
+
+                pathList.remove(imagePath)
+                count--
+                imageLinear.removeView(statLayoutItem2)
+                imageTxtCount.text = "$count/3"
+                if(count == 0){
+                    mUriList.clear()
+                }
+            }
+        }
+        Glide.with(applicationContext)
+            .load(imagePath)
+            .override(300, 300)
+            .fitCenter()
+            .into(addImg)
+        imageLinear.addView(statLayoutItem2)
+        imageTxtCount.text = "$count/3"
+    }
+    /*fun setImageUpdate(imagePath: String, oriPath: String) {
         Log.d("TAG","oriPath : $oriPath")
         val inflater2 =
             getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -507,7 +561,7 @@ class VisitAdminUpdateActivity : BaseActivity() {
             .into(addImg)
         imageLinear.addView(statLayoutItem2)
         imageTxtCount.text = "$count/3"
-    }
+    }*/
 
     override fun onBackPressed() {
 
@@ -527,85 +581,94 @@ class VisitAdminUpdateActivity : BaseActivity() {
     } //뒤로가기 종료버튼
 
     private fun selectImage() {
-        if (pathsList.isNotEmpty()) {
-            Toast.makeText(this@VisitAdminUpdateActivity, "현재 이미지 개수 $count", Toast.LENGTH_SHORT).show()
-            if (count == 3) {
-                Toast.makeText(this@VisitAdminUpdateActivity, "이미지는 최대 3장까지 선택가능합니다.", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                GligarPicker()
-                    .requestCode(PICKER_REQUEST_CODE)
-                    .limit(3 - count) // 최대 이미지 수
-                    .withActivity(this@VisitAdminUpdateActivity) //Activity
-                    //.withFragment -> Fragment
-                    // .disableCamera(false) -> 카메라 캡처를 사용할지
-                    // .cameraDirect(true) -> 바로 카메라를 실행할지
-                    .show()
-            }
-        } else {
-            GligarPicker()
-                .requestCode(PICKER_REQUEST_CODE)
-                .limit(3) // 최대 이미지 수
-                .withActivity(this@VisitAdminUpdateActivity) //Activity
-                //.withFragment -> Fragment
-                // .disableCamera(false) -> 카메라 캡처를 사용할지
-                // .cameraDirect(true) -> 바로 카메라를 실행할지
-                .show()
-        }
+        val intent = Intent()
+
+        // setting type to select to be image
+        intent.type = "image/*"
+
+        // allowing multiple image to be selected
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(
+            Intent.createChooser(intent, "Select Picture"),
+            PICK_IMAGE_MULTIPLE
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == PICKER_REQUEST_CODE && resultCode == RESULT_OK && data != null){
-            pathsList = data.extras?.getStringArray(GligarPicker.IMAGES_RESULT) as Array<String> // return list of selected images paths.
-            for (i in pathsList.indices) {
-                val uri : Uri = Uri.parse(pathsList[i])
-                uriList.add(pathsList[i])
-                uriList2.add(Uri.fromFile(File(pathsList[i])))
+
+        if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK && null != data) {
+            // Get the Image from data
+            if (data.clipData != null) {
+                val mClipData = data.clipData
+
+                val cout = data.clipData!!.itemCount
+                Log.d("TAG","onActivityResult cout : $cout")
+                if(cout > IMAGE_LIMIT){
+                    Toast.makeText(this, "이미지는 최대 3장까지 등록 가능합니다.", Toast.LENGTH_LONG).show()
+                    selectImage()
+                }else{
+                    for (i in 0 until cout) {
+                        ++count
+                        // adding imageuri in array
+                        val imageurl = data.clipData!!.getItemAt(i).uri
+                        mUriList.add(imageurl)
+                        setImage(imageurl)
+                        //setImage(imageurl.path.toString())
+
+                    }
+                    // setting 1st selected image into image switcher
+                    //imageSwitcher?.setImageURI(mArrayUri!![0])
+                }
+            } else {    // 이미지 1장인경우
                 count++
-                setImage(pathsList[i])
+                val imageurl = data.data
+                mUriList.add(imageurl!!)
+                //setImage(imageurl.path.toString())
+                setImage(imageurl)
+                //imageSwitcher?.setImageURI(mArrayUri!![0])
             }
+        } else {
+            // show this if no image is selected
+            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show()
         }
+        Log.d("TAG","onActivityResult count : $count" )
+        Log.d("TAG","onActivityResult mUriList : ${mUriList.toString()}" )
     }
 
-    // 파일 경로를 받아와 Bitmap 으로 변환후 ImageView 적용
-    fun setImage(imagePath: String) {
-        val imgFile = File(imagePath)
-        if (imgFile.exists()) {
-            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
-            val inflater =
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val statLayoutItem = inflater.inflate(R.layout.addimage, null) as LinearLayout
-            val addImg: RoundedImageView = statLayoutItem.findViewById(R.id.addImage)
-            val delImg =
-                statLayoutItem.findViewById<ImageView>(R.id.delImage)
-            delImg.setOnClickListener {
+    private fun setImage(imageUri : Uri){
+        val inflater =
+            getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val statLayoutItem = inflater.inflate(R.layout.addimage, null) as LinearLayout
+        val addImg: RoundedImageView = statLayoutItem.findViewById(R.id.addImage)
+        val delImg =
+            statLayoutItem.findViewById<ImageView>(R.id.delImage)
+        delImg.setOnClickListener {
 
-                if (uriList.contains(imagePath)) {
-                    uriList.remove(imagePath)
-
-                    count--
-                    imageLinear.removeView(statLayoutItem)
-                    imageTxtCount.text = "$count/3"
-                    if(count == 0){
-                        uriList2.clear()
-                    }
-
-                }
-                Toast.makeText(
-                    this@VisitAdminUpdateActivity,
-                    "ImageView $imagePath",
-                    Toast.LENGTH_SHORT
-                ).show()
+            if(mUriList.contains(imageUri)){
+                mUriList.remove(imageUri)
+                count--
+                imageLinear.removeView(statLayoutItem)
+                imageTxtCount.text = "$count/3"
             }
-            Glide.with(applicationContext)
-                .load(myBitmap)
-                .override(300, 300)
-                .fitCenter()
-                .into(addImg)
-            imageLinear.addView(statLayoutItem)
-            imageTxtCount.text = "$count/3"
+            /*if (uriList.contains(imagePath)) {
+                uriList.remove(imagePath)
+                count--
+                imageLinear.removeView(statLayoutItem)
+                imageTxtCount.text = "$count/3"
+
+            }*/
         }
+        Log.d("TAG","setImage count : $count" )
+
+        Glide.with(applicationContext)
+            .load(imageUri)
+            .override(300, 300)
+            .fitCenter()
+            .into(addImg)
+        imageLinear.addView(statLayoutItem)
+        imageTxtCount.text = "$count/3"
     }
 
     fun InitializeListener() {

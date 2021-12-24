@@ -94,7 +94,7 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
                 for (j in pathList.indices){
                     if("null" == pathList[j] || "" == pathList[j]){
-                        pathList[j] = "android.resource://$packageName/drawable/deleteiconblack2"
+                        pathList[j] = "android.resource://$packageName/drawable/app_icon"
                     }else{
                         continue
                     }
@@ -102,7 +102,7 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
 
                 for (i in pathList.indices) {
                     if(pathList[i].isNotEmpty()){
-                        if(pathList[i].contains("deleteiconblack2")) {
+                        if(pathList[i].contains("app_icon")) {
                             continue
                         }else{
                             count++
