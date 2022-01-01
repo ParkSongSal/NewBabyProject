@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.psmStudio.newbabyproject.Visit.ResultVisit
 import com.psmStudio.newbabyproject.Visit.VisitParentCalendarActivity
+import com.psmStudio.newbabyproject.utils.BackPressedForFinish
 import com.psmStudio.newbabyproject.utils.Common
 import kotlinx.android.synthetic.main.activity_app_introduce.*
 import kotlinx.android.synthetic.main.activity_enter_introduce.*
@@ -19,6 +20,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : BaseActivity() {
+
+    var backPressedForFinish : BackPressedForFinish? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,6 +32,8 @@ class MainActivity : BaseActivity() {
         loginId = setting.getString("loginId", "").toString()
 
         getBabyInfo(loginId)
+
+        backPressedForFinish = BackPressedForFinish(this@MainActivity)
     }
 
     fun mOnClick(view: View) {
@@ -117,8 +123,14 @@ class MainActivity : BaseActivity() {
                     for (i in result!!.indices) {
                         babyNameTxt.text = "● " + result[i].babyName
                         babyNumTxt.text = " " + result[i].babyNum
-                        babyBirthDateTxt.text = "● " + Common.dataSplitFormat(result[i].babyBirthDate,"date")
-                        babyBirthTimeTxt.text = Common.dataSplitFormat(result[i].babyBirthTime,"time")
+                        babyBirthDateTxt.text = "● " + Common.dataSplitFormat(
+                            result[i].babyBirthDate,
+                            "date"
+                        )
+                        babyBirthTimeTxt.text = Common.dataSplitFormat(
+                            result[i].babyBirthTime,
+                            "time"
+                        )
                     }
                 }
 
@@ -134,6 +146,12 @@ class MainActivity : BaseActivity() {
         }
 
     }
+
+    override fun onBackPressed() {
+        // BackPressedForFinish 클래시의 onBackPressed() 함수를 호출한다.
+        backPressedForFinish?.onBackPressed()
+    } //뒤로가기 종료버튼
+
 }
 
 
