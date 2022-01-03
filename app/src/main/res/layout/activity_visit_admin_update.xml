@@ -44,7 +44,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/border_edit"
-                android:hint="ex) 2.4kg"
                 android:padding="6dp" />
 
             <TextView
@@ -60,7 +59,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/border_edit"
-                android:hint="ex) 0.5L"
                 android:padding="6dp" />
 
             <TextView
@@ -76,7 +74,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/border_edit"
-                android:hint="필요물품을 입력해주세요"
                 android:padding="6dp" />
 
 
