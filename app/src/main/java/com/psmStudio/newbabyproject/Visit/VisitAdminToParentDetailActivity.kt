@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.Subscribe
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 import java.util.*
 
 class VisitAdminToParentDetailActivity : BaseActivity() {
@@ -174,7 +175,16 @@ class VisitAdminToParentDetailActivity : BaseActivity() {
     @Subscribe
     fun onItemClick(event: ImageSlideViewPagerAdapter.ItemClickEvent) {
 
-        onImageClickAction(pathList, event.position)
+        //onImageClickAction(pathList, event.position)
+        onImageDetailAction(pathList)
+    }
+
+    private fun onImageDetailAction(mPathList : ArrayList<String>){
+
+        val intent = Intent(applicationContext, ImageDetailActivity::class.java)
+        intent.putExtra("pathList", mPathList as Serializable)
+        intent.putExtra("prevActivity","VisitAdminToParentDetailActivity")
+        startActivity(intent)
     }
 
     private fun onImageClickAction(uriString: ArrayList<String>, pos: Int) {

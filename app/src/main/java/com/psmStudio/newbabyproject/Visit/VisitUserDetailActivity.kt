@@ -35,6 +35,7 @@ import org.greenrobot.eventbus.Subscribe
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 import java.lang.Exception
 import java.util.*
 
@@ -163,7 +164,17 @@ class VisitUserDetailActivity : BaseActivity() {
     @Subscribe
     fun onItemClick(event: ImageSlideViewPagerAdapter.ItemClickEvent) {
 
-        onImageClickAction(pathList, event.position)
+        onImageDetailAction(pathList)
+        //onImageClickAction(pathList, event.position)
+    }
+
+    private fun onImageDetailAction(mPathList : ArrayList<String>){
+
+        val intent = Intent(applicationContext, ImageDetailActivity::class.java)
+        intent.putExtra("pathList", mPathList as Serializable)
+        intent.putExtra("prevActivity","VisitUserDetailActivity")
+
+        startActivity(intent)
     }
 
     private fun onImageClickAction(uriString: ArrayList<String>, pos: Int) {

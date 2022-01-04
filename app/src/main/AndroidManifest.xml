@@ -20,7 +20,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="q">
-        <activity android:name=".CustomDialog"></activity>
+        <activity
+            android:name=".Visit.ImageDetailActivity"
+            android:exported="false" />
+        <activity android:name=".CustomDialog"
+            tools:ignore="Instantiatable" />
         <activity android:name=".privacyDetailActivity" />
         <activity android:name=".UserInfoUpdateActivity" />
         <activity android:name=".Visit.VisitAdminUpdateActivity" />
