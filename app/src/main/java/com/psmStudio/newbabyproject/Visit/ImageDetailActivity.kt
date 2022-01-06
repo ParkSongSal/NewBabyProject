@@ -1,20 +1,21 @@
 package com.psmStudio.newbabyproject.Visit
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.psmStudio.newbabyproject.MainActivity
 import com.psmStudio.newbabyproject.R
 import com.psmStudio.newbabyproject.adapter.ImageSlider_Adapter
-import java.io.Serializable
-import java.util.ArrayList
+import kotlinx.android.synthetic.main.item_toolbar.*
+import java.util.*
 
 class ImageDetailActivity : AppCompatActivity() {
 
@@ -28,6 +29,14 @@ class ImageDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_detail)
 
+        toolbar.setTitleTextColor(getColor(R.color.whiteColor))
+        toolbar.title = "이미지 상세"
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
+
+
         sliderViewPager = findViewById(R.id.sliderViewPager)
         layoutIndicator = findViewById(R.id.layoutIndicators)
 
@@ -38,7 +47,7 @@ class ImageDetailActivity : AppCompatActivity() {
 
 
 
-        Log.d("TAG","ImageDetail : $pathList" )
+        Log.d("TAG", "ImageDetail : $pathList")
         images[0] = pathList[0]
         images[1] = pathList[1]
         images[2] = pathList[2]
@@ -54,6 +63,17 @@ class ImageDetailActivity : AppCompatActivity() {
 
         setupIndicators(images.size)
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                //toolbar의 back키 눌렀을 때 동작
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupIndicators(count: Int) {
